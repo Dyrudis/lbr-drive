@@ -1,6 +1,6 @@
 #main{
-    padding-left: 3vw;
-    padding-top: 2vh;
+    padding-left: 30px;
+    padding-top: 15px;
 }
 
 #description{
@@ -29,5 +29,21 @@ h1{
     height: 90px;
     position: absolute;
     top:140px;
-    left:255px;
+    left:300px;
+}
+
+#RoleCompte{
+    background-color: #850606;
+    width: 60px;
+    height: 20px;
+    text-align: center;
+    line-height: 0px;
+    font-size: 10px;
+    color : #ffffff;
+    border-radius: 30%;
+    border: solid 2px #000000;
+    position: absolute;
+    top:130px;
+    left:215px;
+
 }
