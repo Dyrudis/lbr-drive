@@ -1,17 +1,151 @@
-#header{
-    background-color: #161920;
+*,
+html,
+body {
+    box-sizing: border-box;
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+#content {
+    display: flex;
+
+    height: calc(100vh - 85px);
+}
+
+#taglist {
+    display: inline-block;
+    width: 49.5%;
+    height: 100%;
+    margin: 0%;
+    width: 90%;
+    height: 200px;
+    margin-bottom: 0%;
+    background-color: #393939;
+    overflow: hidden;
+    text-align: center;
+    border: solid #f0f0e6;
+}
+#title-tag {
+    margin-bottom: 5%;
+}
+
+
+/* Header */
+
+header {
+    position: relative;
+    background-color: #07080a;
     color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    height: 85px;
+}
+
+#home {
+    margin: 0;
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+header > img {
+   height: 100%;
+}
+
+#lienCompte {
+    text-decoration: none;
+    color: #ffffff;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#lienCompte:hover {
+    color: #ea001c;
+}
+
+/* Sidebar */
+
+#barre {
+    background-color: #161920;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
     padding: 15px;
-    display:flex;
-    justify-content: space-between;
-    list-style:none;
-
+    width: 50%;
+    text-align: center;
+    overflow: hidden;
 }
 
-#test{
-    background-color: "green";
-    font-size:70px;
+#barre::-webkit-scrollbar {
+    visibility:hidden;
+    width: 0px;
 }
+
+/* Gallerie */
+
+#gallery {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    overflow-y: auto;
+}
+
+#gallery::-webkit-scrollbar {
+    visibility: hidden;
+    width: 0;
+}
+
+#gallery > div {
+    width: 20%;
+    height: fit-content;
+}
+
+#gallery > div > .file-container {
+    width: 100%;
+    display: inline-flex;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+#gallery > div > .file-container > img {
+    width: 100%;
+}
+
+#gallery > div > .file-container > .file-hover {
+    height: 0;
+    max-height: 0;
+    transition: all .5s ease;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+}
+
+#gallery > div > .file-container:hover > .file-hover {
+    height: 100%;
+    max-height: 150px;
+}
+
+#gallery > div > .file-container > .file-hover > .file-hover-tags {
+    display: flex;
+    gap: 5px;
+}
+
+

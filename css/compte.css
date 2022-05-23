@@ -1,0 +1,33 @@
+#main{
+    padding-left: 3vw;
+    padding-top: 2vh;
+}
+
+#description{
+    width: 400px;
+}
+
+h1{
+    font-size : 30px;
+    margin-bottom: 20px
+    
+}
+
+.bouton{
+    text-align: center;
+    background-color: #000000;
+    color : #ffffff;
+    font-size: 15px;
+    padding:10px 20px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+#pp{
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top:140px;
+    left:255px;
+}
