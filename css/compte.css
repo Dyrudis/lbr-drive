@@ -47,3 +47,24 @@ h1{
     left:215px;
 
 }
+
+#compte{
+    margin: 0;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#lienHome{
+    text-decoration: none;
+    color: #ffffff;
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#lienHome:hover {
+    color: #ea001c;
+}
