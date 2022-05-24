@@ -12,6 +12,16 @@ body {
     background-color: #fffee6;
 }
 
+.category {
+    
+}
+
+#lineunderfilter {
+    border: solid #f0f0e6;
+    width: 100%;
+    height: 1px;
+}
+
 #content {
     display: flex;
     height: calc(100vh - 85px);
@@ -74,6 +84,19 @@ header > img {
     color: #ea001c;
 }
 
+#lienUpload {
+    text-decoration: none;
+    color: #ffffff;
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#lienUpload:hover {
+    color: blue;
+}
+
 /* Sidebar */
 
 #barre {
@@ -82,7 +105,7 @@ header > img {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 15px;
-    width: 50%;
+    width: 70%;
     text-align: center;
     overflow-y: auto;
 }
