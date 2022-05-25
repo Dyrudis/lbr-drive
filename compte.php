@@ -80,24 +80,40 @@ foreach($infoUtilisateur as $info){
                 <h1>Espace admin :</h1>
                 <h2>Création d'un compte :</h2>
                 <form action="back/dataSignUp.php" method="post">
-                <input type="text" name="prenom" placeholder="prenom" required>
-                <input type="text" name="nom" placeholder="nom" required >
-                <br>
-                <input type="password" name="motdepasse" placeholder="motdepasse" required >
-                <input type="checkbox" name="mdpTemporaire" >
-                <label id="labelmdp"for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
-                <br>
-                <input type="email" name="email" placeholder="email">
-                <input type="text" name="description" placeholder="description">
-                <select name="role">
-                    <option value="">--choix d'un role--</option>
-                    <option value="lecture">lecture</option>
-                    <option value="ecriturre">ecriture</option>
-                    <option value="admin">admin</option>
-                    <option value="invite">invite</option>
-                </select>
+                    <input type="text" name="prenom" placeholder="prenom" required>
+                    <input type="text" name="nom" placeholder="nom" required >
+                    <br>
+                    <input type="password" name="motdepasse" placeholder="motdepasse" required >
+                    <input type="checkbox" name="mdpTemporaire" >
+                    <label id="labelmdp"for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
+                    <br>
+                    <input type="email" name="email" placeholder="email">
+                    <input type="text" name="description" placeholder="description">
+                    <select name="role">
+                        <option value="">--choix d'un role--</option>
+                        <option value="lecture">lecture</option>
+                        <option value="ecriturre">ecriture</option>
+                        <option value="admin">admin</option>
+                        <option value="invite">invite</option>
+                    </select>
 
-                <input type="submit" value="Créer" name="submit">
+                    <input type="submit" value="Créer" name="submit">
+                </form>
+                <h2>modification d'un compte :</h2>
+                <form action="back/modifCompte.php" method="post">
+                    <input type="email" name="email" placeholder="email du compte à modifier">
+                    <br>
+                    <select name="champ">
+                        <option value="">--choix du champ à modifier--</option>
+                        <option value="nom">nom</option>
+                        <option value="prenom">prenom</option>
+                        <option value="email">email</option>
+                        <option value="role">role</option>
+                        <option value="motdepasse">mot de passe</option>
+                    </select>
+                    <input type="text" name="valeur" placeholder="nouvelle valeur">
+
+                    <input type="submit" value="modifier" name="submit">
                 </form>
             </div>
         <?php
@@ -108,6 +124,7 @@ foreach($infoUtilisateur as $info){
         ?>
             <div id="main2">
                 <h1>Espace invité :</h1>
+                <p></p>
                 
             </div>
         <?php

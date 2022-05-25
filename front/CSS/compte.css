@@ -86,3 +86,7 @@ h1{
 #labelmdp{
     width: 10vw;
 }
+
+input{
+    margin: 5px;
+}

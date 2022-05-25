@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+// Connect to the database with mysqli
+$mysqli = new mysqli('localhost', 'root', '', 'testb');
+
 // Get all the data from the form
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
@@ -9,8 +13,7 @@ $description = $_POST['description'];
 $role = $_POST['role'];
 
 
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'testb');
+
 
 // Check for errors
 if ($mysqli->connect_error) {
