@@ -68,9 +68,6 @@ h1{
 }
 
 #lienHome:hover {
-<<<<<<< Updated upstream
-    color: yellow;
-=======
     color: #ea001c;
 }
 
@@ -84,5 +81,4 @@ h1{
 
 #labelmdp{
     width: 10vw;
->>>>>>> Stashed changes
 }
