@@ -15,7 +15,7 @@
 
 <body>
     <header>
-        <a id="lienHome" href="index.html">Home</a>
+        <a id="lienHome" href="index.php">Home</a>
         <a id="upload" class="pointerOnHover"> Upload un fichier</a>
         <img src="front/images/logoLONGUEURBlanc.png" />
         <a id="lienCompte2" href="compte.php">Mon compte</a>

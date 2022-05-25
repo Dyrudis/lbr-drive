@@ -53,11 +53,13 @@ h1{
 }
 
 #compte{
-    margin: 0;
+    text-decoration: none;
+    color: #ffffff;
     position: absolute;
     right: 25px;
     top: 50%;
     transform: translateY(-50%);
+
 }
 
 #lienHome{
@@ -69,7 +71,7 @@ h1{
     transform: translateY(-50%);
 }
 
-#lienHome:hover {
+#lienHome:hover,#compte:hover {
     color: #ea001c;
 }
 

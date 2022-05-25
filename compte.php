@@ -26,9 +26,9 @@ foreach($infoUtilisateur as $info){
 
     <body>
         <header>
-            <a id="lienHome" href="index.html">Home</a>
+            <a id="lienHome" href="index.php">Home</a>
             <img src="front/images/logoLONGUEURBlanc.png" />
-            <p id="compte">Mon compte</p>
+            <a id="compte" href="back/logOut.php">deconnection</a>
             
         </header>
 
@@ -54,7 +54,7 @@ foreach($infoUtilisateur as $info){
             <div id="main2">
                 <h1>Espace lecteur :</h1>
                 <p>Votre role vous permet d'accéder à tous les fichiers déposer sur notre drive.</p>
-                <button onclick="window.location.href = 'index.html'">Accéder à la galerie</button>
+                <button onclick="window.location.href = 'index.php'">Accéder à la galerie</button>
             </div>
         <?php
             }

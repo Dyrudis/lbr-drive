@@ -10,7 +10,7 @@
 
     <body>
         <header>
-            <a id="lienHome" href="index.html">Home</a>
+            <a id="lienHome" href="index.php">Home</a>
             <img src="front/images/logoLONGUEURBlanc.png" />
         </header>
         <div id="main">

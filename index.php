@@ -1,3 +1,7 @@
+<?php
+session_start();
+$id = $_SESSION['id'];
+?>
 <!DOCTYPE html>
 <head>
     <title>Espace de stockage</title>
@@ -11,7 +15,19 @@
         <p id="home" class="pointerOnHover">Home</p>
         <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
         <img src="front/images/logoLONGUEURBlanc.png" />
+        <?php
+        if($id!=''){
+        ?>
         <a id="lienCompte" href="compte.php">Mon compte</a>
+        <?php
+        }
+        else{
+            ?>
+        <a id="lienCompte" href="login.php">Connection</a>
+        <?php
+            }
+        ?>
+        
 
     </header>
 
