@@ -4,14 +4,14 @@
         <title>Connection</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="CSS/login.css" />
-        <link rel="stylesheet" href="CSS/style.css" />
+        <link rel="stylesheet" href="front/CSS/login.css" />
+        <link rel="stylesheet" href="front/CSS/style.css" />
     </head>
 
     <body>
         <header>
             <a id="lienHome" href="index.html">Home</a>
-            <img src="images/logoLONGUEURBlanc.png" />
+            <img src="front/images/logoLONGUEURBlanc.png" />
         </header>
         <div id="main">
             <form action="back/dataLogin.php" method="post">
