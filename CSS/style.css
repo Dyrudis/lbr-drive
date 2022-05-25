@@ -84,17 +84,30 @@ header > img {
     color: #ea001c;
 }
 
+<<<<<<< Updated upstream
 #lienUpload {
     text-decoration: none;
     color: #ffffff;
     position: absolute;
     right: 200px;
+=======
+#k{
+    text-decoration: none;
+    color: #ffffff;
+    position: absolute;
+    right: 75px;
+>>>>>>> Stashed changes
     top: 50%;
     transform: translateY(-50%);
 }
 
+<<<<<<< Updated upstream
 #lienUpload:hover {
     color: blue;
+=======
+#k:hover {
+    color: #ea001c;
+>>>>>>> Stashed changes
 }
 
 /* Sidebar */

@@ -1,6 +1,8 @@
 #main{
     padding-left: 30px;
     padding-top: 15px;
+    width: 40vw;
+
 }
 
 #description{
@@ -66,5 +68,21 @@ h1{
 }
 
 #lienHome:hover {
+<<<<<<< Updated upstream
     color: yellow;
+=======
+    color: #ea001c;
+}
+
+#main2{
+    position: absolute;
+    left: 50vw;
+    top: 10%;
+    width : 40vw;
+    height : 50vh;
+}
+
+#labelmdp{
+    width: 10vw;
+>>>>>>> Stashed changes
 }
