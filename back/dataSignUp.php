@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
         else{
             $_SESSION['mdpTemporaire'] = 0;            
         }
-        echo "<p>le compte a bien été créer</p>";
+        echo "<p>le compte a bien été créer<br><br>Rediection dans 2s</p>";
         header('refresh:2, url= ../compte.php');
     } else {
         echo "<p>Error: " . $req . "<br>" . $mysqli->error . "</p>";

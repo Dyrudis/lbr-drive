@@ -9,6 +9,6 @@ $champ = $_POST['champ'];
 $valeur = $_POST['valeur'];
 $sql = "UPDATE utilisateur SET $champ = '$valeur' WHERE Email = '$email'";
 $result = mysqli_query($mysqli,$sql);
-echo " <p> champ changer : " . $champ . " en : " . $valeur . " pour l'utilisateur : " . $email . "</p>";
+echo " <p> champ changer : " . $champ . " en : " . $valeur . " pour l'utilisateur : " . $email . "<br><br>Rediection dans 2s</p>";
 header("refresh:2; url=../compte.php");
 ?>

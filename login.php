@@ -21,7 +21,7 @@
             <input type="password" name="motdepasse" placeholder="motdepasse" required>
             <br>
 
-            <input id="bouton"type="submit" value="Connection" name="submit">
+            <input id="bouton"type="submit" value="Connexion" name="submit">
             </form>
         </div>
     </body>
