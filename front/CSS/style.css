@@ -44,6 +44,14 @@ body {
     margin-bottom: 1%;
 }
 
+header > *, #barre > * {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 /* Header */
 
 header {
