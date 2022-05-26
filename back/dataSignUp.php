@@ -2,7 +2,7 @@
 session_start();
 
 // Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'testb');
+$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 // Get all the data from the form
 $nom = $_POST['nom'];
@@ -22,21 +22,15 @@ if ($mysqli->connect_error) {
 }
 
 // Check if the username already exists
-$sql = "SELECT * FROM utilisateur WHERE idUtilisateur = '$idUtilisateur'";
+$sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($sql);
 
-
-while ($result->num_rows > 0){
-    $idUtilisateur++;
-    $sql = "SELECT * FROM utilisateur WHERE idUtilisateur = '$idUtilisateur'";
-    $result = $mysqli->query($sql);
-}
 if ($result->num_rows > 0) {
-    echo "<p>The username already exists</p>";
+    echo "<p>The email already exists</p>";
     
 } else {
     // Insert the data into the database
-    $req = "INSERT INTO utilisateur (nom,prenom, motdepasse, email, description ,idUtilisateur, role) VALUES ('$nom','$prenom' ,'$motdepasse', '$email', '$description','$idUtilisateur','$role')";
+    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$motdepasse', '$email', '$description','$role', '1')";
 
     if ($mysqli->query($req) === TRUE) {
         echo "<p>New record created successfully</p>";

@@ -1,6 +1,13 @@
 <?php
 session_start();
-$id = $_SESSION['id'];
+if($_SESSION['id']){
+    $id = $_SESSION['id'];
+    
+}
+else{
+    $_SESSION['id']='';
+    $id='';
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -23,7 +30,7 @@ $id = $_SESSION['id'];
         }
         else{
             ?>
-        <a id="lienCompte" href="login.php">Connection</a>
+        <a id="lienCompte" href="login.php">Connexion</a>
         <?php
             }
         ?>

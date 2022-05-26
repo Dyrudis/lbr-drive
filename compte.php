@@ -1,16 +1,16 @@
 <?php
 session_start();
-$mysqli = new mysqli('localhost', 'root', '', 'testb');
+$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 $id = $_SESSION['id'];
-$sql = "SELECT * FROM utilisateur WHERE idUtilisateur = '$id' ";
+$sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";
 $result = $mysqli->query($sql);
 $infoUtilisateur = $result->fetch_all(MYSQLI_ASSOC);
 foreach($infoUtilisateur as $info){
-    $prenom = $info["prenom"];
-    $nom = $info["nom"];
-    $description = $info["description"];
-    $email = $info["email"];
-    $role = $info["role"];
+    $prenom = $info["Prenom"];
+    $nom = $info["Nom"];
+    $description = $info["Description"];
+    $email = $info["Email"];
+    $role = $info["Role"];
 }
 ?>
 
@@ -68,7 +68,7 @@ foreach($infoUtilisateur as $info){
                     Votre role vous permet d'en plus d'accéder à la galerie (page home), de créer des tags/ catégorie de tag ou encore importer
                     des fichiers sur le drive. 
                 </p>
-                <button onclick="window.location.href = 'upload.js'">Dépot de fichier</button>
+                <button onclick="window.location.href = '/front/JS/upload.js'">Dépot de fichier</button>
             </div>
         <?php
             }
@@ -83,7 +83,7 @@ foreach($infoUtilisateur as $info){
                     <input type="text" name="prenom" placeholder="prenom" required>
                     <input type="text" name="nom" placeholder="nom" required >
                     <br>
-                    <input type="password" name="motdepasse" placeholder="motdepasse" required >
+                    <input type="password" name="motdepasse" placeholder="motdepasse" >
                     <input type="checkbox" name="mdpTemporaire" >
                     <label id="labelmdp"for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
                     <br>
@@ -105,11 +105,11 @@ foreach($infoUtilisateur as $info){
                     <br>
                     <select name="champ">
                         <option value="">--choix du champ à modifier--</option>
-                        <option value="nom">nom</option>
-                        <option value="prenom">prenom</option>
-                        <option value="email">email</option>
-                        <option value="role">role</option>
-                        <option value="motdepasse">mot de passe</option>
+                        <option value="Nom">Nom</option>
+                        <option value="Prenom">Prenom</option>
+                        <option value="Email">Email</option>
+                        <option value="Role">Role</option>
+                        <option value="MotDePasse">Mot de passe</option>
                     </select>
                     <input type="text" name="valeur" placeholder="nouvelle valeur">
 
