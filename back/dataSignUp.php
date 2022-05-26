@@ -33,14 +33,14 @@ if ($result->num_rows > 0) {
     $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$motdepasse', '$email', '$description','$role', '1')";
 
     if ($mysqli->query($req) === TRUE) {
-        echo "<p>New record created successfully</p>";
         if(isset($_POST['mdpTemporaire'])){
             $_SESSION['mdpTemporaire'] = 1;
         }
         else{
             $_SESSION['mdpTemporaire'] = 0;            
         }
-        //header('Location: ../compte.php');
+        echo "<p>le compte a bien été créer</p>";
+        header('refresh:2, url= ../compte.php');
     } else {
         echo "<p>Error: " . $req . "<br>" . $mysqli->error . "</p>";
     }

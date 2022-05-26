@@ -1,13 +1,15 @@
 <?php
 session_start();
+$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
+
 if($_SESSION['id']){
     $id = $_SESSION['id'];
-    
 }
 else{
     $_SESSION['id']='';
     $id='';
 }
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -20,7 +22,19 @@ else{
 <body>
     <header>
         <p id="home" class="pointerOnHover">Home</p>
-        <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
+        <?php
+
+        $sql ="SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
+        $result = $mysqli->query($sql);
+
+        if ($result->num_rows > 0) {
+            if($result->fetch_assoc()['Role']!='lecture'){
+            ?>
+                <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
+            <?php
+            }
+        }
+        ?>
         <img src="front/images/logoLONGUEURBlanc.png" />
         <?php
         if($id!=''){
