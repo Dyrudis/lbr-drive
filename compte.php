@@ -115,6 +115,15 @@ foreach($infoUtilisateur as $info){
 
                     <input type="submit" value="modifier" name="submit">
                 </form>
+                <h2>suppression d'un compte :</h2>
+                <form action="back/suppCompte.php" method="post">
+                    <input type="email" name="email" placeholder="email du compte à supprimer">
+                    <br>
+                    <label for="mdpCompte">Veuillez entrer votre mot de passe :</label>
+                    <input type="password" name="mdpCompte" placeholder="mot de passe">
+
+                    <input type="submit" value="supprimer" name="submit">
+                </form>
             </div>
         <?php
             }
