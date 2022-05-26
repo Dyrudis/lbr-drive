@@ -28,7 +28,7 @@ foreach($infoUtilisateur as $info){
         <header>
             <a id="lienHome" href="index.php">Home</a>
             <img src="front/images/logoLONGUEURBlanc.png" />
-            <a id="compte" href="back/logOut.php">deconnection</a>
+            <a id="compte" href="back/logOut.php">Deconnexion</a>
             
         </header>
 

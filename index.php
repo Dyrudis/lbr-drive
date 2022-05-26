@@ -22,6 +22,7 @@ else{
 <body>
     <header>
         <p id="home" class="pointerOnHover">Home</p>
+        <img src="front/images/logoLONGUEURBlanc.png" />
         <?php
 
         $sql ="SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
@@ -35,7 +36,6 @@ else{
             }
         }
         ?>
-        <img src="front/images/logoLONGUEURBlanc.png" />
         <?php
         if($id!=''){
         ?>
