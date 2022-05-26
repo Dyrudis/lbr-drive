@@ -28,6 +28,18 @@ foreach($infoUtilisateur as $info){
         <header>
             <a id="lienHome" href="index.php">Home</a>
             <img src="front/images/logoLONGUEURBlanc.png" />
+            <?php
+                $sql ="SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
+                $result = $mysqli->query($sql);
+
+                if ($result->num_rows > 0) {
+                    if($result->fetch_assoc()['Role']!='lecture'){
+                    ?>
+                        <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
+                    <?php
+                    }
+                }
+            ?>
             <a id="compte" href="back/logOut.php">Deconnexion</a>
             
         </header>
@@ -44,8 +56,8 @@ foreach($infoUtilisateur as $info){
                 echo"<p id='description'> <b> Description : </b><br> &emsp;  " . $description . " </p>";
                 echo"<p id='email'> <b> Adresse mail : </b>  " . $email . "</p>";
             ?>
-                <input class='bouton' type='button' value='Modifier le profil'>;
-                <p id='mesfichiers'> <b> Mes fichiers </b></p>;
+                <input class='bouton' type='button' value='Modifier le profil'>
+                <p id='mesfichiers'> <b> Mes fichiers </b></p>
 
         </div>
         <?php
@@ -89,8 +101,8 @@ foreach($infoUtilisateur as $info){
                     <br>
                     <input type="email" name="email" placeholder="email">
                     <input type="text" name="description" placeholder="description">
-                    <select name="role">
-                        <option value="">--choix d'un role--</option>
+                    <select name="role" required>
+                        <option value="" disabled selected >--choix d'un role--</option>
                         <option value="lecture">lecture</option>
                         <option value="ecriturre">ecriture</option>
                         <option value="admin">admin</option>

@@ -17,16 +17,25 @@ if ($mysqli->connect_error) {
 // Check l'existance de l'adresse email
 $sql = "SELECT * FROM utilisateur WHERE Email = '$email' AND MotDePasse ='$motdepasse'";
 $result = $mysqli->query($sql);
+$actif=2;
+foreach($result as $info){
+    $id = $info["IDUtilisateur"];
+    $actif = $info["Actif"];
+}
 
-if ($result->num_rows > 0) {
+if ($result->num_rows > 0 && $actif=='1') {
     //connection réussit
-    $_SESSION['id'] = $result->fetch_assoc()['IDUtilisateur'];
+    $_SESSION['id'] = $id;
     //echo" <p> id de session vaut ". $_SESSION['id'] ."</p>";
     header('Location: ../compte.php');
-} else {
-    // compte invalide
-    header("Location: ../login.php");
+} else if($actif=='0'){
+    echo" <p> votre compte a été banni </p>";
+    header("refresh:2, url=../login.php");
     
+}else{
+    echo" <p>email ou mot de passe incorrect</p>";
+    header("refresh:2, url=../login.php");
+
 }
 
 // Close the connection
