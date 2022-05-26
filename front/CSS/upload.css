@@ -1,6 +1,6 @@
 :root {
-    --primary: #AF001E;
-    --success: #41d071;
+    --primary: #af001e;
+    --success: #af001e;
     --grey-light: #99a3ba;
     --grey: #6c7486;
     --grey-dark: #3f4656;
@@ -9,25 +9,29 @@
     --shadow: rgba(18, 22, 33, 0.1);
 }
 
-body {
-    overflow-y: auto;
-}
-
 body::-webkit-scrollbar {
     width: 0;
 }
 
+#drop-area {
+    width: 100%;
+    padding-top: 50px;
+}
 .drop {
     --r: 0rad;
     width: 100%;
-    height: calc(100vh - 104px);
+    height: calc(100vh - 85px);
     background: #fffee6;
     border-radius: 6px;
     position: relative;
     overflow-y: auto;
     margin: 0 auto;
-    max-width: 750px;
     min-height: 250px;
+    max-width: 750px;
+    pointer-events: none;
+}
+.drop > * {
+    pointer-events: all;
 }
 .drop .center {
     --y: 52px;
@@ -156,6 +160,11 @@ body::-webkit-scrollbar {
     margin-right: 12px;
     box-shadow: 0 4px 12px var(--shadow);
 }
+.drop ul.list li .text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 .drop ul.list li .text input {
     display: block;
     font-size: 16px;
@@ -166,6 +175,7 @@ body::-webkit-scrollbar {
     border-radius: 2px;
     outline: none;
     padding: 3px;
+    margin: 0 auto 0 0; 
 }
 .drop ul.list li .text small {
     display: block;
@@ -178,34 +188,25 @@ body::-webkit-scrollbar {
     gap: 4px;
 }
 .drop ul.list li .text .tags .addTag {
-    background-color: var(--grey-dark);
-    color: white;
-    margin: 0;
-    padding: 2px 8px;
-    border-radius: 500px;
-    width: fit-content;
-    cursor: pointer;
     transition: background-color 0.2s ease;
-    user-select: none;
-    display: inline;
-    font-size: 18px;
 }
 .drop ul.list li .text .tags .addTag:hover {
     background-color: var(--grey);
 }
-.drop ul.list li .text .tags select,
+.drop ul.list li .text .tags .addTag,
+.drop ul.list li .text .tags .tagSelect,
 #width_tmp_select {
     background-color: var(--grey-dark);
     color: white;
     margin: 0;
-    padding: 2px 8px;
+    padding: 5px 12px;
     border-radius: 500px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     user-select: none;
     display: inline;
     outline: none;
-    font-size: 18px;
+    font-size: 16px;
     -webkit-appearance: none;
     -moz-appearance: none;
 }
@@ -311,12 +312,29 @@ body::-webkit-scrollbar {
     --y: 60px;
     opacity: 1;
 }
-.drop.dropped .center > div {
+.drop.dropped .hint {
+    --y: -120px;
+    opacity: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: translate(0, var(--y));
+    margin: auto;
+}
+.drop.dropped.dragged .hint {
+    --y: 60px;
+    opacity: 1;
+}
+.drop.show .intro {
+    --y: -120px;
+    opacity: 0;
+}
+.drop.show .center > div {
     background: none;
     -webkit-animation-play-state: paused;
     animation-play-state: paused;
 }
-.drop.dropped .center > div .circle svg {
+.drop.show .center > div .circle svg {
     -webkit-animation: scale 0.7s linear 0.4s;
     animation: scale 0.7s linear 0.4s;
 }

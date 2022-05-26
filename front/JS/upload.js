@@ -2,10 +2,10 @@
 allTags = [];
 tmp = $("#phpresult").text().split(",");
 tmp.pop();
-tmp.forEach(tag => {
+tmp.forEach((tag) => {
     tag = tag.split(":");
-    allTags.push({id: tag[0], name: tag[1]});
-})
+    allTags.push({ id: tag[0], name: tag[1] });
+});
 
 upload = [
     /*{
@@ -15,7 +15,8 @@ upload = [
     },*/
 ];
 
-let dropContainer = $(".drop"),
+let dropArea = $("#drop-area"),
+    dropContainer = $(".drop"),
     center = dropContainer.find(".center > div"),
     circle = center.children(".circle"),
     list = dropContainer.children(".list");
@@ -27,16 +28,16 @@ let started = false,
         y: 0,
     };
 
-dropContainer.on("dragenter dragstart dragend dragleave dragover drag drop", (e) => {
+dropArea.on("dragenter dragstart dragend dragleave dragover drag drop", (e) => {
     e.preventDefault();
 });
 
-dropContainer.on("dragover", (e) => {
+dropArea.on("dragover", (e) => {
     dropContainer.addClass("dragged showDrops").css({
-        "--r": calculateRotate(dropContainer, e.pageX, e.pageY) + "deg",
+        "--r": calculateRotate(circle, e.pageX, e.pageY) + "deg",
     });
     let bool = $(e.target).is(circle) || $.contains(circle[0], e.target),
-        distance = calculateDistance(circle, dropContainer, e.pageX, e.pageY) > 1 ? 1 : calculateDistance(circle, dropContainer, e.pageX, e.pageY);
+        distance = calculateDistance(circle, dropArea, e.pageX, e.pageY) > 1 ? 1 : calculateDistance(circle, dropArea, e.pageX, e.pageY);
     mouse = {
         x: e.pageX,
         y: e.pageY,
@@ -54,30 +55,34 @@ dropContainer.on("dragover", (e) => {
     }
 });
 
-dropContainer.on("dragend dragleave", (e) => {
+dropArea.on("dragend dragleave", (e) => {
     startAnimation(currentDistance, 12, 400);
 });
 
-dropContainer.on("dragleave", (e) => {
+dropArea.on("dragleave", (e) => {
     dropContainer.removeClass("dragged showDrops");
 });
 
-dropContainer.on("drop", (e) => {
+dropArea.on("drop", (e) => {
     setTimeout(() => {
         startAnimation(currentDistance, 18, 100, () => {
             dropContainer.removeClass("showDrops");
             setTimeout(() => {
-                if (!dropContainer.hasClass("dropped")) {
-                    dropContainer.addClass("dropped");
-                    $("#uploadButton").css({ display: "block", opacity: "0" });
-                }
                 startAnimation(18, 12, 300);
                 setTimeout(() => {
                     dropContainer.addClass("show");
+                    dropContainer.removeClass("dragged");
 
                     //Fake Upload durations
                     setTimeout(() => {
-                        $("#uploadButton").css({ opacity: "1" });
+                        if (!dropContainer.hasClass("dropped")) {
+                            dropContainer.addClass("dropped");
+                            $("#uploadButton").css({ display: "block", opacity: "0" });
+                        }
+                        setTimeout(() => {
+                            $("#uploadButton").css({ opacity: "1" });
+                        }, 1000);
+
                         list.find("li .progress").each(function () {
                             startPercent($(this), 0, 100, 1200);
                         });
@@ -136,7 +141,7 @@ dropContainer.on("drop", (e) => {
             li.appendTo(list);
 
             addTag.on("click", function (e) {
-                select = $("<select id='test'/>");
+                select = $("<select />").addClass("tagSelect");
                 options = allTags;
                 select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
                 select.append(
