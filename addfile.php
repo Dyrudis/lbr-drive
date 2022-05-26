@@ -28,20 +28,9 @@ else{
 <body>
     <header>
         <a id="lienHome" href="index.php">Home</a>
-        <a id="upload" class="pointerOnHover"> Upload un fichier</a>
         <img src="front/images/logoLONGUEURBlanc.png" />
-        <?php
-        if($id!=''){
-        ?>
+        <a id="upload" class="pointerOnHover"> Upload un fichier</a>
         <a id="lienCompte" href="compte.php">Mon compte</a>
-        <?php
-        }
-        else{
-            ?>
-        <a id="lienCompte" href="login.php">Connexion</a>
-        <?php
-            }
-        ?>
 
     </header>
     <div id="drop-area">
