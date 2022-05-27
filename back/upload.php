@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Get the informations
 $file = $_FILES['file'];
 $name = $_POST['name'];
@@ -51,7 +53,7 @@ if ($mysqli->connect_error) {
 
 // Insert the data into the database
 $sql = "INSERT INTO `fichier` (`IDFichier`, `Nom`, `IDUtilisateur`, `Date`, `Taille`, `Type`, `Extension`, `Duree`)
-VALUES (NULL, '" . $name . "', 0, '" . $date . "', " . $file["size"] . ", '" . $type . "', '" . $extension . "', " . $duration . ");";
+VALUES (NULL, '" . $name . "', " . $_SESSION['id'] . ", '" . $date . "', " . $file["size"] . ", '" . $type . "', '" . $extension . "', " . $duration . ");";
 $result = $mysqli->query($sql);
 
 // Check for errors

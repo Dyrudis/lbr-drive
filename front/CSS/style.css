@@ -169,7 +169,7 @@ header > img {
     background-color: #000000;
 }
 
-#gallery > div > .file-container > img {
+#gallery > div > .file-container > .file-preview {
     width: 100%;
     object-fit: cover;
 }
