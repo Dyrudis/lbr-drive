@@ -26,7 +26,7 @@ $sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<p>The email already exists</p>";
+    echo "<p>Adresse email déjà existante</p>";
     
 } else {
     // Insert the data into the database
@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
         else{
             $_SESSION['mdpTemporaire'] = 0;            
         }
-        echo "<p>le compte a bien été créer<br><br>Rediection dans 2s</p>";
+        echo "<p>Le compte a bien été créé<br><br>Redirection dans 2s</p>";
         header('refresh:2, url= ../compte.php');
     } else {
         echo "<p>Error: " . $req . "<br>" . $mysqli->error . "</p>";

@@ -29,11 +29,11 @@ if ($result->num_rows > 0 && $actif=='1') {
     //echo" <p> id de session vaut ". $_SESSION['id'] ."</p>";
     header('Location: ../compte.php');
 } else if($actif=='0'){
-    echo" <p> votre compte a été banni <br><br>Rediection dans 2s</p>";
+    echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
     header("refresh:2, url=../login.php");
     
 }else{
-    echo" <p>email ou mot de passe incorrect <br><br>Rediection dans 2s</p>";
+    echo" <p>Identifiants<br><br>Redirection dans 2s</p>";
     header("refresh:2, url=../login.php");
 
 }
