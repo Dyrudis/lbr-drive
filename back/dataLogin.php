@@ -29,7 +29,7 @@ if ($result->num_rows > 0 && $actif=='1' && password_verify($motdepasse,$mdpHash
     header("refresh:2, url=../login.php");
     
 }else{
-    echo" <p>Identifiants<br><br>Redirection dans 2s</p>";
+    echo" <p>Identifiants incorrects<br><br>Redirection dans 2s</p>";
     header("refresh:2, url=../login.php");
 
 }
