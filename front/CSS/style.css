@@ -42,7 +42,7 @@ body {
     margin-bottom: 1%;
 }
 
-header > *, #barre > * {
+.undraggable {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -127,6 +127,7 @@ header > img {
     display: flex;
     gap: 5px;
     padding: 5px;
+    margin-top: 50px;
 }
 
 #gallery::-webkit-scrollbar {
@@ -135,11 +136,16 @@ header > img {
 }
 
 #gallery-header {
-    display: inline-block;
-    height: 80px;
+    position: absolute;
+    display: inline-flex;
+    padding: 10px;
+    height: 60px;
+    gap: 5px;
+    align-items: center;
 }
 
 #gallery-container {
+    overflow: hidden;
     overflow-y: auto;
     flex: 1;
 }
@@ -222,15 +228,24 @@ header > img {
 }
 
 .tag {
-    background-color: rgb(61, 146, 215);
+    background-color: brown;
     border: 2px solid white;
     margin: 0;
     padding: 0;
     border-radius: 500px;
+    margin: 0;
+    padding: 3px 10px;
+    font-weight: bold;
+    height: fit-content;
 }
 
 .tag > p {
     margin: 0;
     padding: 3px 10px;
     font-weight: bold;
+    color: white;
+}
+
+#gallery-header > .tag {
+    border-color: #000000;
 }

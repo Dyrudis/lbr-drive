@@ -26,11 +26,11 @@ else{
 
 <body>
     <header>
-        <a id="lienHome" href="./index.php">Home</a>
-        <img src="front/images/logoLONGUEURBlanc.png" />
-        <a id="upload" class="pointerOnHover"> Upload un fichier</a>
-        <a id="lienCompte" href="./compte.php">Mon compte</a>
-
+        <a id="lienHome" class="undraggable" href="./index.php">Home</a>
+        <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
+        <a id="upload" class="pointerOnHover undraggable">Upload un fichier</a>
+        <a id="lienCompte" class="undraggable" href="./compte.php">Mon compte</a>
+ 
     </header>
     <div id="drop-area">
 

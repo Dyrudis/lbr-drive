@@ -24,8 +24,8 @@ if ($_SESSION['id']) {
 
 <body>
     <header>
-        <p id="home" class="pointerOnHover">Home</p>
-        <img src="front/images/logoLONGUEURBlanc.png" />
+        <p id="home" class="pointerOnHover undraggable">Home</p>
+        <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
         <?php
 
         $sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
@@ -34,16 +34,16 @@ if ($_SESSION['id']) {
         if ($result->num_rows > 0) {
             if ($result->fetch_assoc()['Role'] != 'lecture') {
         ?>
-                <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
+                <a id="lienUpload" class="undraggable" href="addfile.php"> Upload un fichier</a>
         <?php
             }
         }
         ?>
-        <a id="lienCompte" href="compte.php">Mon compte</a>    
+        <a id="lienCompte" class="undraggable" href="compte.php">Mon compte</a>    
     </header>
 
     <div id="content">
-        <div id="barre">
+        <div id="barre" class="undraggable">
             <div>
                 Filtrer par tag
                 <p id="lineunderfilter"> </p>

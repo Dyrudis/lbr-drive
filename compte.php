@@ -33,8 +33,8 @@ foreach($infoUtilisateur as $info){
 
     <body>
         <header>
-            <a id="lienHome" href="index.php">Home</a>
-            <img src="front/images/logoLONGUEURBlanc.png" />
+            <a id="lienHome" class="undraggable" href="index.php">Home</a>
+            <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
             <?php
                 $sql ="SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
                 $result = $mysqli->query($sql);
@@ -42,18 +42,18 @@ foreach($infoUtilisateur as $info){
                 if ($result->num_rows > 0) {
                     if($result->fetch_assoc()['Role']!='lecture'){
                     ?>
-                        <a id="lienUpload" href="addfile.php"> Upload un fichier</a>
+                        <a id="lienUpload" href="addfile.php" class="undraggable"> Upload un fichier</a>
                     <?php
                     }
                 }
             ?>
-            <a id="compte" href="back/logOut.php">Deconnexion</a>
+            <a id="compte" class="undraggable" href="back/logOut.php">Deconnexion</a>
             
         </header>
 
         <div id="main">
             <h1>Mon Espace</h1>
-            <div id="RoleCompte">
+            <div class="tag undraggable" id="RoleCompte">
                 <p> Rôle </p>
             </div>
             <img src="https://cdn.discordapp.com/attachments/653297075550814208/978235793090953236/unknown.png" id="pp">

@@ -10,8 +10,7 @@
 
 <body id="bodylogin">
         <header>
-            <a id="lienHome" href="index.php">Home</a>
-            <img src="front/images/logoLONGUEURBlanc.png" />
+            <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
         </header>
     <div class="background">
         <div class="shape"></div>

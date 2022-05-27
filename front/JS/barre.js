@@ -30,12 +30,21 @@
         }
 
         let listToAppend = document.getElementById(tag.NomCategorie).getElementsByClassName("taglist")[0];
-        let newTag = document.createElement("p");
+        let newTag = document.createElement("div");
         newTag.className = "tag";
-        newTag.innerHTML = tag.NomTag;
+        newTag.innerHTML = "<p>" + tag.NomTag + "</p>";
         newTag.style.backgroundColor = "#"+tag.Couleur;
         listToAppend.appendChild(newTag);
 
+        newTag.addEventListener("click", function() {
+            //copy newtag
+            let newTagCopy = newTag.cloneNode(true);
+            newTagCopy.classList.add("undraggable");
+            document.getElementById("gallery-header").appendChild(newTagCopy);
+            newTagCopy.addEventListener("click", function() {
+                document.getElementById("gallery-header").removeChild(newTagCopy);
+            });
+        });
 
     }
 })();
