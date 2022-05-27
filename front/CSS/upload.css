@@ -9,13 +9,13 @@
     --shadow: rgba(18, 22, 33, 0.1);
 }
 
-body::-webkit-scrollbar {
-    width: 0;
-}
-
 #drop-area {
     width: 100%;
     padding-top: 50px;
+    overflow-y: auto;
+}
+#drop-area::-webkit-scrollbar {
+    width: 0;
 }
 .drop {
     --r: 0rad;
@@ -24,7 +24,6 @@ body::-webkit-scrollbar {
     background: #fffee6;
     border-radius: 6px;
     position: relative;
-    overflow-y: auto;
     margin: 0 auto;
     min-height: 250px;
     max-width: 750px;
@@ -134,7 +133,7 @@ body::-webkit-scrollbar {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .drop ul.list li:not(:first-child) {
-    border-top: 1px solid var(--lighter);
+    border-top: 1px solid var(--grey-dark);
 }
 .drop ul.list li:nth-child(1) {
     transition-delay: 0.24s;
@@ -151,7 +150,8 @@ body::-webkit-scrollbar {
 .drop ul.list li:nth-child(5) {
     transition-delay: 0.56s;
 }
-.drop ul.list li img {
+.drop ul.list li img,
+.drop ul.list li video {
     border-radius: 5px;
     width: 200px;
     height: 125px;
@@ -175,7 +175,7 @@ body::-webkit-scrollbar {
     border-radius: 2px;
     outline: none;
     padding: 3px;
-    margin: 0 auto 0 0; 
+    margin: 0 auto 0 0;
 }
 .drop ul.list li .text small {
     display: block;
@@ -214,21 +214,23 @@ body::-webkit-scrollbar {
     width: 122px;
 }
 .drop ul.list li .progress {
-    margin-left: auto;
     border-radius: 50%;
-    background: var(--light);
-    position: relative;
+    background: #fffee6;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
 }
 .drop ul.list li .progress:before {
     --s: 1;
     content: "";
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     left: 50%;
     top: 50%;
     z-index: 1;
     position: absolute;
-    background: #fff;
+    background: #fffee6;
     border-radius: inherit;
     transform: translate(-50%, -50%) scale(var(--s));
     transition: transform 0.32s ease;
@@ -387,6 +389,46 @@ body::-webkit-scrollbar {
 
 #width_tmp_select {
     display: none;
+}
+
+#loader {
+    display: none;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    transition: opacity 0.5s ease;
+}
+.loader svg path,
+.loader svg rect {
+    fill: var(--primary);
+}
+.progress {
+    transition: opacity 0.5s ease;
+}
+.pending .progress {
+    opacity: 0;
+}
+.progress.complete {
+    opacity: 1;
+}
+.uploaded .loader {
+    opacity: 0;
+}
+.failed .error {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    text-align: right;
+    color: var(--primary);
+    width: 200px;
+}
+.failed .loader {
+    opacity: 0;
 }
 
 @-webkit-keyframes move {

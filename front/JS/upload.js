@@ -94,80 +94,79 @@ dropArea.on("drop", (e) => {
 
     for (let i = 0; i < e.originalEvent.dataTransfer.files.length; i++) {
         let file = e.originalEvent.dataTransfer.files[i];
+        let type = file.type.split("/")[0];
+        let name = file.name
+            .split(".")
+            .splice(0, file.name.split(".").length - 1)
+            .join(".");
+
+        /* Création de l'UI */
+        let li = $("<li />");
+        let preview;
+        if (type == "image") {
+            preview = $("<img />").attr("src", URL.createObjectURL(file));
+        } else {
+            preview = $("<video />");
+            let source = $("<source />").attr("src", URL.createObjectURL(file)).attr("type", file.type);
+            preview.append(source);
+
+            preview.hover(function toggleControls() {
+                if (this.hasAttribute("controls")) {
+                    this.removeAttribute("controls");
+                } else {
+                    this.setAttribute("controls", "controls");
+                }
+            });
+        }
+        let text = $("<div />").addClass("text");
+        let input = $("<input />")
+            .attr("value", name)
+            .attr("placeHolder", "Nom du fichier")
+            .on("change", function () {
+                updateName($(this).val(), file);
+            });
+        let small = $("<small />").text(bytesToSize(file.size));
+        let tags = $("<div />").addClass("tags");
+        let addTag = $("<p />").addClass("addTag").text("+tag");
+
+        preview.appendTo(li);
+        tags.append(addTag);
+        text.append(input).append(tags).append(small).appendTo(li);
+
+        li.appendTo(list);
+
+        addTag.on("click", function (e) {
+            select = $("<select />").addClass("tagSelect");
+            options = allTags;
+            select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
+            select.append(
+                $("<option />").attr("value", "Supprimer").text("Supprimer").css({
+                    color: "red",
+                    "font-weight": "bold",
+                })
+            );
+            for (let i = 0; i < options.length; i++) {
+                select.append($("<option />").attr("value", options[i].id).text(options[i].name));
+            }
+            select.change(function () {
+                updateTags(select.parent(), file);
+                if ($(this).val() == "Supprimer") {
+                    $(this).remove();
+                } else {
+                    $("#width_tmp_option").html($(this).find("option:selected").text());
+                    $(this).width($("#width_tmp_select").width());
+                }
+            });
+            select.insertBefore($(this));
+            select.trigger("click");
+        });
 
         upload.push({
             file: file,
-            name: file.name
-                .split(".")
-                .splice(0, file.name.split(".").length - 1)
-                .join("."),
+            name: name,
             tags: [],
+            dom: li,
         });
-
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function (e) {
-            let bin = this.result,
-                li = $("<li />"),
-                img = $("<img />"),
-                text = $("<div />").addClass("text");
-            // Création d'un input pour modifier le nom du fichier (pas d'extension)
-            (input = $("<input />")
-                .attr(
-                    "value",
-                    file.name
-                        .split(".")
-                        .splice(0, file.name.split(".").length - 1)
-                        .join(".")
-                )
-                .attr("placeHolder", "Nom du fichier")).on("change", function () {
-                updateName($(this).val(), file);
-            }),
-                (small = $("<small />").text(bytesToSize(file.size))),
-                (tags = $("<div />").addClass("tags")),
-                (addTag = $("<p />").addClass("addTag").text("+tag")),
-                (progress = $("<div />").addClass("progress").html('<svg class="pie" width="32" height="32"><circle r="8" cx="16" cy="16" /></svg><svg class="tick" viewBox="0 0 24 24"><polyline points="18,7 11,16 6,12" /></svg>'));
-
-            img[0].file = file;
-            img[0].src = bin;
-
-            img.appendTo(li);
-            tags.append(addTag);
-            text.append(input).append(tags).append(small).appendTo(li);
-            progress.appendTo(li);
-
-            progress.find(".pie").css("strokeDasharray", 0 + " " + 2 * Math.PI * 8);
-
-            li.appendTo(list);
-
-            addTag.on("click", function (e) {
-                select = $("<select />").addClass("tagSelect");
-                options = allTags;
-                select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
-                select.append(
-                    $("<option />").attr("value", "Supprimer").text("Supprimer").css({
-                        color: "red",
-                        "font-weight": "bold",
-                    })
-                );
-                for (let i = 0; i < options.length; i++) {
-                    select.append($("<option />").attr("value", options[i].id).text(options[i].name));
-                }
-                select.change(function () {
-                    updateTags(select.parent(), file);
-                    if ($(this).val() == "Supprimer") {
-                        $(this).remove();
-                    } else {
-                        $("#width_tmp_option").html($(this).find("option:selected").text());
-                        $(this).width($("#width_tmp_select").width());
-                    }
-                });
-                select.insertBefore($(this));
-                select.trigger("click");
-            });
-
-            reader.abort();
-        };
     }
 });
 
@@ -321,17 +320,32 @@ eva.replace({
 
 $("#uploadButton").on("click", () => {
     uploadEverything(upload);
+    // For each element in the list
+    $(".list")
+        .find("li")
+        .each(function () {
+            // Add the "pending" class
+            $(this).addClass("pending");
+        });
+    // Hide the button
+    $("#uploadButton").hide();
 });
 
 function uploadEverything(upload) {
     upload.forEach((e) => {
-        uploadFile(e.file, e.name, e.tags);
+        uploadFile(e.file, e.name, e.tags, e.dom);
+        let loader = $("#loader");
+
+        // Copy and paste the loader in e.dom and remove the id
+        loader.clone().appendTo(e.dom).removeAttr("id");
+        let progress = $("<div />").addClass("progress").html('<svg class="pie" width="32" height="32"><circle r="8" cx="16" cy="16" /></svg><svg class="tick" viewBox="0 0 24 24"><polyline points="18,7 11,16 6,12" /></svg>');
+        progress.appendTo(e.dom);
+        progress.find(".pie").css("strokeDasharray", 0 + " " + 2 * Math.PI * 8);
     });
 }
 
-function uploadFile(file, name, tags) {
+function uploadFile(file, name, tags, dom) {
     getDuration(file).then((duration) => {
-        console.log(duration);
         let formData = new FormData();
         formData.append("file", file);
         formData.append("name", name);
@@ -342,7 +356,18 @@ function uploadFile(file, name, tags) {
             body: formData,
         })
             .then((response) => response.text())
-            .then((res) => (document.getElementById("result").innerHTML = res))
+            .then((res) => {
+                if (res === "success") {
+                    dom.addClass("uploaded");
+                    dom.find(".progress").addClass("complete");
+                } else {
+                    dom.addClass("failed");
+                    setTimeout(() => {
+                        let error = $("<div>").addClass("error").text(res);
+                        dom.append(error);
+                    }, 500);
+                }
+            })
             .catch((error) => console.log(error));
     });
 }

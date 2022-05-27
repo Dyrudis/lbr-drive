@@ -27,13 +27,16 @@ else{
 
 <body>
     <header>
-        <a id="lienHome" href="index.php">Home</a>
+        <a id="lienHome" href="./index.php">Home</a>
         <img src="front/images/logoLONGUEURBlanc.png" />
         <a id="upload" class="pointerOnHover"> Upload un fichier</a>
-        <a id="lienCompte" href="compte.php">Mon compte</a>
+        <a id="lienCompte" href="./compte.php">Mon compte</a>
 
     </header>
     <div id="drop-area">
+
+
+        <p id="result"></p>
         <div class="drop">
 
             <div class="center">
@@ -65,12 +68,17 @@ else{
         </symbol>
     </svg>
 
-    <p id="result"></p>
-
-
     <select id="width_tmp_select">
         <option id="width_tmp_option"></option>
     </select>
+
+    <div class="loader loader--style3" id="loader">
+        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
 
     <?php
     // Connect to the database with mysqli

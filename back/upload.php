@@ -9,6 +9,10 @@ $type = "invalid"; // Invalid by default
 $tmp = explode('.', $file['name']);
 $extension = end($tmp);
 
+if ($name == "Test Error") {
+    die("Erreur : Ceci est un test");
+}
+
 // Check if the file is in a valid format
 $authImg = array('image/jpeg', 'image/jpg', 'image/png', 'image/gif');
 $authVid = array('video/mp4', 'video/avi', 'video/mpeg', 'video/mkv', 'video/mov', 'video/ogg', 'video/webm');
@@ -19,24 +23,22 @@ if (in_array($file['type'], $authImg)) {
     $type = 'video';
 }
 
-if ($type != "invalid") {
-    //Get the temp file path
-    $tmpFilePath = $file['tmp_name'];
-
-    //Make sure we have a file path
-    if ($tmpFilePath != "") {
-
-        //Setup our new file path
-        $newFilePath = "../upload/" . $file['name'];
-
-        //Upload the file into the temp dir
-        if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-
-            //Handle other code here
-
-        }
-    }
+if ($type == 'invalid') {
+    die('Format de fichier invalide.');
 }
+
+// Get the temp file path
+$tmpFilePath = $file['tmp_name'];
+
+if ($tmpFilePath == "") {
+    die('Aucun fichier envoyé.');
+}
+
+
+
+/*------------------------------------*\
+|   Add all the info to the database   |
+\*------------------------------------*/
 
 // Connect to the database with mysqli
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
@@ -54,21 +56,45 @@ $result = $mysqli->query($sql);
 
 // Check for errors
 if (!$result) {
-    die('Error: ' . $mysqli->error);
+    die('Erreur d\'insertion du fichier : ' . $mysqli->error);
 }
+
+
 
 // Get the IDFichier we just inserted
 $IDFichier = $mysqli->insert_id;
 
+// If the tags array is empty, add a default tag
+if (empty($tags)) {
+    $tags = array(0);
+}
 
-
-$sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES (";
-
-// for each tag
+// Insert the tags into the database
+$sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES ";
 foreach ($tags as $tag) {
     // Add an array to the query
-    $sql += "IDFichier`, `Nom`)";
+    $sql .= "(" . $IDFichier . ", " . $tag . "),";
+}
+$sql = substr($sql, 0, -1); // Pop last comma
+$result = $mysqli->query($sql);
+
+// Check for errors
+if (!$result) {
+    die('Erreur d\'insertion des tags : "' . $sql . '". ' . $mysqli->error);
 }
 
 // Close the connection
 $mysqli->close();
+
+
+
+/*------------------------------------*\
+|   Put the file in the upload folder  |
+\*------------------------------------*/
+
+$newFilePath = "../upload/" . $IDFichier . "." . $extension;
+if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+    echo "success";
+} else {
+    echo "Erreur lors de l'envoi du fichier.";
+}
