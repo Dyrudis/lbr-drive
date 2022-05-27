@@ -5,8 +5,7 @@ if($_SESSION['id']){
     
 }
 else{
-    $_SESSION['id']='';
-    $id='';
+    header("Location: login.php");
 }
 ?>
 
