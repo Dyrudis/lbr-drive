@@ -1,9 +1,13 @@
 <?php
 session_start();
+
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
+
 $id = $_SESSION['id'];
+
 $sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";
 $result = $mysqli->query($sql);
+
 $infoUtilisateur = $result->fetch_all(MYSQLI_ASSOC);
 foreach($infoUtilisateur as $info){
     $prenom = $info["Prenom"];
@@ -12,6 +16,7 @@ foreach($infoUtilisateur as $info){
     $email = $info["Email"];
     $role = $info["Role"];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +27,8 @@ foreach($infoUtilisateur as $info){
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="front/CSS/compte.css" />
         <link rel="stylesheet" href="front/CSS/style.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="front/JS/verifChamp.js" defer></script>
     </head>
 
     <body>
@@ -90,17 +97,23 @@ foreach($infoUtilisateur as $info){
         ?>
             <div id="main2">
                 <h1>Espace admin :</h1>
+<!---------------------------------------------------------------CREATION D'UN COMPTE-------------------------------------------------------------->
                 <h2>Création d'un compte :</h2>
                 <form action="back/dataSignUp.php" method="post">
-                    <input type="text" name="prenom" placeholder="prenom" required>
-                    <input type="text" name="nom" placeholder="nom" required >
+                    <input id="prenomCreationCompte" type="text" name="prenom" placeholder="prenom" required>
+                    <input id="nomCreationCompte" type="text" name="nom" placeholder="nom" required >
                     <br>
-                    <input type="password" name="motdepasse" placeholder="motdepasse" >
-                    <input type="checkbox" name="mdpTemporaire" >
-                    <label id="labelmdp"for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
+                    <input id="mdpCreationCompte" type="password" name="motdepasse" placeholder="mot de passe" onblur="checkMdp()">
+                    <label id="labelmdpInput" for="motdepasse">mot de passe invalide</label>
+                    <div class="preference">
+                        <input id="mdpTemporaire" type="checkbox" name="mdpTemporaire" onchange="checkMdpTemporaire()">
+                        <label id="labelmdpTemp" for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
+                    </div>
                     <br>
-                    <input type="email" name="email" placeholder="email">
-                    <input type="text" name="description" placeholder="description">
+                    <input id="emailCreationCompte" type="email" name="email" placeholder="email" onblur="checkEmail()" required>
+                    <label id="emailIncorrect" for="email">Email déjà utilisé</label>
+                    <br>
+                    <input id="descriptionCreationCompte" type="text" name="description" placeholder="description" required>
                     <select name="role" required>
                         <option value="" disabled selected >--choix d'un role--</option>
                         <option value="lecture">lecture</option>
@@ -109,8 +122,9 @@ foreach($infoUtilisateur as $info){
                         <option value="invite">invite</option>
                     </select>
 
-                    <input type="submit" value="Créer" name="submit">
+                    <input id="submitCreationCompte" type="submit" value="Créer" name="submit" disabled='true'>
                 </form>
+<!---------------------------------------------------------------MODIFICATION D'UN COMPTE-------------------------------------------------------------->
                 <h2>modification d'un compte :</h2>
                 <form action="back/modifCompte.php" method="post">
                     <input type="email" name="email" placeholder="email du compte à modifier">

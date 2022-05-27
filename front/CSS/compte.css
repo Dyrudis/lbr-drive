@@ -83,10 +83,14 @@ h1{
     height : 50vh;
 }
 
-#labelmdp{
-    width: 10vw;
-}
 
 input{
     margin: 5px;
 }
+
+#labelmdpInput, #emailIncorrect{
+    display: inline;
+    color: red;
+    visibility: hidden;
+}
+
