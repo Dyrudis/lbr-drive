@@ -1,29 +1,25 @@
 <?php
 session_start();
-// Get all the data from the form
 $email = $_POST['email'];
 $motdepasse = $_POST['motdepasse'];
 
-
-// Connect to the database with mysqli
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
-// Check for errors
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '
             . $mysqli->connect_error);
 }
 
-// Check l'existance de l'adresse email
-$sql = "SELECT * FROM utilisateur WHERE Email = '$email' AND MotDePasse ='$motdepasse'";
+$sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($sql);
 $actif=2;
 foreach($result as $info){
-    $id = $info["IDUtilisateur"];
-    $actif = $info["Actif"];
+    $id = $info['IDUtilisateur'];
+    $actif = $info['Actif'];
+    $mdpHash = $info['MotDePasse'];
 }
 
-if ($result->num_rows > 0 && $actif=='1') {
+if ($result->num_rows > 0 && $actif=='1' && password_verify($motdepasse,$mdpHash)) {
     //connection réussit
     $_SESSION['id'] = $id;
     //echo" <p> id de session vaut ". $_SESSION['id'] ."</p>";

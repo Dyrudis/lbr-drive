@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-// Connect to the database with mysqli
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
-// Get all the data from the form
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
 $motdepasse = $_POST['motdepasse'];
@@ -13,37 +11,35 @@ $description = $_POST['description'];
 $role = $_POST['role'];
 
 
-
-
-// Check for errors
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '
             . $mysqli->connect_error);
 }
 
-// Check if the username already exists
-$sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
-$result = $mysqli->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<p>Adresse email déjà existante</p>";
-    
-} else {
-    // Insert the data into the database
-    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$motdepasse', '$email', '$description','$role', '1')";
-
+if(isset($_POST['mdpTemporaire'])==='1'){
+    $mdpTemp = rand(100000,999999);
+    $hash = password_hash($mdpTemp,PASSWORD_DEFAULT);
+    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '1')";
     if ($mysqli->query($req) === TRUE) {
-        if(isset($_POST['mdpTemporaire'])){
-            $_SESSION['mdpTemporaire'] = 1;
-        }
-        else{
-            $_SESSION['mdpTemporaire'] = 0;            
-        }
-        echo "<p>Le compte a bien été créé<br><br>Redirection dans 2s</p>";
+        echo "<p>Création de compte réussi<br><br>Redirection dans 2s</p>";
         header('refresh:2, url= ../compte.php');
-    } else {
-        echo "<p>Error: " . $req . "<br>" . $mysqli->error . "</p>";
+    }
+    else{
+        echo "<p>echec de la création de compte<br><br>Redirection dans 2s</p>";
+        header('refresh:2, url= ../compte.php');
     }
 }
-// Close the connection
+else{
+    $hash = password_hash($motdepasse,PASSWORD_DEFAULT);
+    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '1')";
+    if ($mysqli->query($req) === TRUE) {
+        echo "<p>Création de compte réussi<br><br>Redirection dans 2s</p>";
+        header('refresh:2, url= ../compte.php');
+    }
+    else{
+       echo "<p>echec de la création de compte<br><br>Redirection dans 2s</p>";
+        header('refresh:2, url= ../compte.php');
+    }
+    
+}
 ?>
