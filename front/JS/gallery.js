@@ -64,9 +64,7 @@
         container.append(preview);
         container.append(hover);
 
-        // Radom number between 1 and 4
-        let random = Math.floor(Math.random() * 4) + 1;
-        $("#col-" + random).append(container);
+        $("#gallery").append(container);
     }
 
     function bytesToSize(bytes) {

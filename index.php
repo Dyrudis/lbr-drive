@@ -16,6 +16,7 @@ if ($_SESSION['id']) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/CSS/style.css" />
+    <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/JS/gallery.js" defer></script>
     <script src="./front/JS/barre.js" defer></script>
@@ -55,14 +56,7 @@ if ($_SESSION['id']) {
         <div id="gallery-container">
             <div id="gallery-header"></div>
             <div id="gallery">
-                <div id="col-1">
-                </div>
-                <div id="col-2">
-                </div>
-                <div id="col-3">
-                </div>
-                <div id="col-4">
-                </div>
+                
             </div>
         </div>
     </div>
