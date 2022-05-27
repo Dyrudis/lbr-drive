@@ -35,20 +35,7 @@ else{
             }
         }
         ?>
-        <?php
-        if($id!=''){
-        ?>
-        <a id="lienCompte" href="compte.php">Mon compte</a>
-        <?php
-        }
-        else{
-            ?>
-        <a id="lienCompte" href="login.php">Connexion</a>
-        <?php
-            }
-        ?>
-        
-
+        <a id="lienCompte" href="compte.php">Mon compte</a>    
     </header>
 
     <div id="content">
