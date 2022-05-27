@@ -8,20 +8,26 @@
         <link rel="stylesheet" href="front/CSS/style.css" />
     </head>
 
-    <body>
+<body id="bodylogin">
         <header>
+            <a id="lienHome" href="index.php">Home</a>
             <img src="front/images/logoLONGUEURBlanc.png" />
         </header>
-        <div id="main">
-            <form action="back/dataLogin.php" method="post">
-            <p>email :</p>
-            <input type="email" name="email" placeholder="email" required>
-            <p>Mot de passe :</p>
-            <input type="password" name="motdepasse" placeholder="motdepasse" required>
-            <br>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="back/dataLogin.php" method="post">
+        <h1>Se connecter</h3>
 
-            <input id="bouton"type="submit" value="Connexion" name="submit">
-            </form>
-        </div>
-    </body>
+        <label for="username">email :</label>
+        <input type="email" name="email" placeholder="xyz@hotmail.com" id="username">
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" name="motdepasse" id="password" placeholder="Mot de passe">
+
+        <input id="bouton" type="submit" value="Connexion" name="submit">
+
+    </form>
+</body>
 </html>
