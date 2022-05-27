@@ -54,9 +54,8 @@ foreach($infoUtilisateur as $info){
         <div id="main">
             <h1>Mon Espace</h1>
             <div class="tag undraggable" id="RoleCompte">
-                <p> Rôle </p>
+                <p>Rôle</p>
             </div>
-            <img src="https://cdn.discordapp.com/attachments/653297075550814208/978235793090953236/unknown.png" id="pp">
             <?php
                 echo"<p id='prenom'> <b> Prémon : </b> " . $prenom . "</p>";
                 echo"<p id='nom'> <b> Nom : </b>  " . $nom . "</p>";
@@ -97,6 +96,7 @@ foreach($infoUtilisateur as $info){
         ?>
             <div id="main2">
                 <h1>Espace admin :</h1>
+                <br>
 <!---------------------------------------------------------------CREATION D'UN COMPTE-------------------------------------------------------------->
                 <h2>Création d'un compte :</h2>
                 <form action="back/dataSignUp.php" method="post">
@@ -125,6 +125,8 @@ foreach($infoUtilisateur as $info){
                     <input id="submitCreationCompte" type="submit" value="Créer" name="submit" disabled='true'>
                 </form>
 <!---------------------------------------------------------------MODIFICATION D'UN COMPTE-------------------------------------------------------------->
+                <br>
+                <br>
                 <h2>modification d'un compte :</h2>
                 <form action="back/modifCompte.php" method="post">
                     <input type="email" name="email" placeholder="email du compte à modifier">
@@ -141,6 +143,8 @@ foreach($infoUtilisateur as $info){
 
                     <input type="submit" value="modifier" name="submit">
                 </form>
+                <br>
+                <br>
                 <h2>suppression d'un compte :</h2>
                 <form action="back/suppCompte.php" method="post">
                     <input type="email" name="email" placeholder="email du compte à supprimer">
