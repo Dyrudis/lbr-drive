@@ -57,7 +57,7 @@ foreach($infoUtilisateur as $info){
                 <p>Rôle</p>
             </div>
             <?php
-                echo"<p id='prenom'> <b> Prémon : </b> " . $prenom . "</p>";
+                echo"<p id='prenom'> <b> Prénom : </b> " . $prenom . "</p>";
                 echo"<p id='nom'> <b> Nom : </b>  " . $nom . "</p>";
                 echo"<p id='description'> <b> Description : </b><br> &emsp;  " . $description . " </p>";
                 echo"<p id='email'> <b> Adresse mail : </b>  " . $email . "</p>";
@@ -117,7 +117,7 @@ foreach($infoUtilisateur as $info){
                     <select name="role" required>
                         <option value="" disabled selected >--choix d'un role--</option>
                         <option value="lecture">lecture</option>
-                        <option value="ecriturre">ecriture</option>
+                        <option value="ecriture">ecriture</option>
                         <option value="admin">admin</option>
                         <option value="invite">invite</option>
                     </select>
