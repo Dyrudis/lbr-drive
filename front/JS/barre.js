@@ -33,6 +33,7 @@
         let newTag = document.createElement("p");
         newTag.className = "tag";
         newTag.innerHTML = tag.NomTag;
+        newTag.style.backgroundColor = "#"+tag.Couleur;
         listToAppend.appendChild(newTag);
 
 
