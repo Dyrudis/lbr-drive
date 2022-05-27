@@ -18,6 +18,7 @@ if ($_SESSION['id']) {
     <link rel="stylesheet" href="front/CSS/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/JS/gallery.js" defer></script>
+    <script src="./front/JS/barre.js" defer></script>
 </head>
 
 <body>
@@ -46,29 +47,8 @@ if ($_SESSION['id']) {
                 Filtrer par tag
                 <p id="lineunderfilter"> </p>
             </div>
-            <div class="list-tags">
-                <div class="category">
-                    <p id="title-tag">Année</p>
-                    <div id="taglist"></div>
-                </div>
-                <div class="category">
-                    <p id="title-tag">Type de fichier</p>
-                    <div id="taglist"></div>
-                </div>
-                <div class="category">
-                    <p id="title-tag">Autres</p>
-                    <div id="taglist"></div>
-                </div>
-
-                <div class="category">
-                    <p id="title-tag">Ce que tu veux</p>
-                    <div id="taglist"></div>
-                </div>
-
-                <div class="category">
-                    <p id="title-tag">Créer une catégorie</p>
-                    <div id="taglist"></div>
-                </div>
+            <div id="liste-categories">
+                <!-- Ici s'appenderont les categories -->
             </div>
         </div>
 

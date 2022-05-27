@@ -29,8 +29,6 @@ body {
 
 #taglist {
     display: inline-block;
-    width: 49.5%;
-    height: 100%;
     margin: 0%;
     width: 90%;
     height: 200px;
@@ -40,7 +38,7 @@ body {
     text-align: center;
     border: solid #f0f0e6;
 }
-#title-tag {
+.category > p {
     margin-bottom: 1%;
 }
 
