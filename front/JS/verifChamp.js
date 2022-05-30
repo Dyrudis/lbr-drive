@@ -38,8 +38,8 @@ function checkMdp() {
 }
 
 function checkNewMdp() {
-    const val = psw.value;
-    if(val.match(/[0-9]/g) && val.match( /[A-Z]/g) && val.match(/[a-z]/g) && val.match( /[^a-zA-Z\d]/g)){
+    const mdp = psw.value;
+    if(mdp.match(/[0-9]/g) && mdp.match( /[A-Z]/g) && mdp.match(/[a-z]/g) && mdp.match( /[^a-zA-Z\d]/g)){
         document.getElementById("labelNewMdp").innerText = "Nouveau mot de passe :"
 
     }
@@ -54,7 +54,11 @@ function checkSameMdp(){
     const mdp2 = psw2.value;
     if(mdp===mdp2){
         document.getElementById("labelVerifMdp").innerText = " Confirmez le :\n ";
-        document.getElementById("submitNewMdp").disabled = false;
+        if(mdp2.match(/[0-9]/g) && mdp2.match( /[A-Z]/g) && mdp2.match(/[a-z]/g) && mdp2.match( /[^a-zA-Z\d]/g)){
+            document.getElementById("submitNewMdp").disabled = false;
+    
+        }
+        
     }
     else{
         document.getElementById("labelVerifMdp").innerText = " Confirmez le :\n les 2 mot de passes sont différents";
