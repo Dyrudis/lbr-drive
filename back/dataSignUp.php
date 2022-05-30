@@ -9,7 +9,7 @@ $motdepasse = isset($_POST['motdepasse']);
 $email = $_POST['email'];
 $description = $_POST['description'];
 $role = $_POST['role'];
-$checkBoxMdpTemporaire = $_POST['mdpTemporaire'];
+$checkBoxMdpTemporaire = isset($_POST['mdpTemporaire']);
 
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '
@@ -20,7 +20,8 @@ $req = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($req);
 
 if ($result->num_rows > 0) {
-    echo false;
+    echo "<p>email incorrect<br><br>Redirection dans 2s</p>";
+    header('refresh:2, url= ../compte.php');
 }
 else if($checkBoxMdpTemporaire==='on'){
     $mdpTemp = rand(100000,999999);
