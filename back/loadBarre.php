@@ -8,7 +8,7 @@
     }
 
     // SELECT all tags from bdd
-    $sql = "SELECT NomTag, NomCategorie, Couleur FROM tag, categorie WHERE tag.IDCategorie = categorie.IDCategorie";
+    $sql = "SELECT NomTag, NomCategorie, IDTag, Couleur FROM tag, categorie WHERE tag.IDCategorie = categorie.IDCategorie";
     $result = $mysqli->query($sql);
 
     // Verif error

@@ -1,4 +1,12 @@
 <?php
+
+$tab = [];
+
+//Get incoming tab from post
+if (isset($_POST['tags'])){
+    $tab = json_decode($_POST['tags']);
+}
+
 // Connect to the database with mysqli
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
@@ -9,8 +17,12 @@ if ($mysqli->connect_error) {
 }
 
 // Get the data from the database
-$sql = "SELECT `fichier`.`IDFichier`, `fichier`.`Nom` as `NomFichier`, `fichier`.`Date`, `fichier`.`Taille`, `fichier`.`Type`, `fichier`.`Extension`, `fichier`.`Duree`, `utilisateur`.`Nom`, `utilisateur`.`Prenom` FROM `fichier`, `utilisateur` WHERE `fichier`.`IDUtilisateur` = `utilisateur`.`IDUtilisateur`";
+$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(IDTag) as 'IDTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, fichier.IDFichier from classifier, fichier, utilisateur
+WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur
+GROUP BY fichier.IDFichier";
+
 $result = $mysqli->query($sql);
+
 
 // Check for errors
 if (!$result) {
@@ -22,4 +34,17 @@ $rows = array();
 while ($row = $result->fetch_assoc()) {
     $rows[] = $row;
 }
-echo json_encode($rows);
+
+//Filters and returns only rows containing AT LEAST the researched tags
+$tmp = [];
+foreach($rows as $row){
+    $tags = explode(',', $row['IDTags']);
+    $tags = array_map('intval', $tags);
+    if(!array_diff($tab, $tags)){
+        
+        $tmp[] = $row;
+    }
+}
+
+
+echo json_encode($tmp);

@@ -1,5 +1,7 @@
 (function (){
 
+    let tagTab = [];
+
     var request = new XMLHttpRequest();
     request.open("get", "back/loadBarre.php", true);
     request.send();
@@ -40,11 +42,35 @@
             //copy newtag
             let newTagCopy = newTag.cloneNode(true);
             newTagCopy.classList.add("undraggable");
+
+            //add tag to tagTab
+            tagTab.push(tag.IDTag);
+
+            //append newTag
             document.getElementById("gallery-header").appendChild(newTagCopy);
+
+            //adds a listener to cancel the tag selection
             newTagCopy.addEventListener("click", function() {
                 document.getElementById("gallery-header").removeChild(newTagCopy);
+                tagTab.splice(tagTab.indexOf(tag.IDTag), 1);
+
+                loadGalleryWithTags();
             });
+
+            loadGalleryWithTags();
         });
 
     }
+
+    function loadGalleryWithTags() {
+        let formData = new FormData();
+        tagTab.sort();
+        if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
+
+        let request = new XMLHttpRequest();
+        request.open("post", "back/loadGallery.php", true);
+        request.send(formData);
+        request.onload = displayGallery;
+    }
+
 })();

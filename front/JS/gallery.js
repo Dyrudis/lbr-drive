@@ -2,10 +2,9 @@ var request = new XMLHttpRequest();
 request.open("get", "back/loadGallery.php", true);
 request.send();
 request.onload = displayGallery;
-
 function displayGallery() {
+    $("#gallery").empty();
     allFiles = JSON.parse(this.responseText);
-    console.log(allFiles);
     allFiles.forEach((file) => {
         displayFile(file);
     });
