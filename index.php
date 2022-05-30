@@ -15,7 +15,7 @@ if ($_SESSION['id']) {
     <title>Espace de stockage</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="front/CSS/style.css" />
+    <link rel="stylesheet" href="front/CSS/style.css"/>
     <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/JS/gallery.js" defer></script>
@@ -50,6 +50,30 @@ if ($_SESSION['id']) {
             </div>
             <div id="liste-categories">
                 <!-- Ici s'appenderont les categories -->
+    <!--
+                <div id="categorie1" class="category">
+                    <p>categorie1</p>
+                    <div class="taglist">
+                        <p class="tag">
+                        tag2</p>
+                        <p class="tag">
+                        tag22222</p>
+                        <p class="tag">
+                        TAG222222222222</p>
+                        <p class="tag">
+                        tag22222</p>          
+
+
+                    </div>
+                    
+                </div>
+        Tests que je faisais pour voir si les category/tags s'affichent bien
+    -->
+                
+                
+
+                
+                
             </div>
         </div>
 
