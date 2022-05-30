@@ -67,7 +67,7 @@ if ($_SESSION['id']) {
                     </div>
                     
                 </div>
-        Tests que je faisais pour voir si les category/tags s'affichent bien
+        Tests que je fais pour voir si les category/tags s'affichent bien
     -->
                 
                 
