@@ -247,18 +247,17 @@ header > img {
     padding: 0;
     border-radius: 500px;
     margin: 0;
-    padding: 3px 10px;
+    padding: 6px 15px;
     font-weight: bold;
     height: fit-content;
     width: fit-content;
     color: white;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .tag > p {
     margin: 0;
-    padding: 3px 10px;
-    font-weight: bold;
 }
 
 #fullscreen-container {
