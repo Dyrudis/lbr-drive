@@ -62,13 +62,48 @@ foreach($infoUtilisateur as $info){
                 echo"<p id='description'> <b> Description : </b><br> &emsp;  " . $description . " </p>";
                 echo"<p id='email'> <b> Adresse mail : </b>  " . $email . "</p>";
             ?>
-                <input class='bouton' type='button' value='Modifier le profil'>
-                <p id='mesfichiers'> <b> Mes fichiers </b></p>
+            <div class="open-btn">
+                <button class="open-button" onclick="openForm()"><strong>Modifier son mot de passe</strong></button>
+            </div>
+            <div class="login-popup">
+                <div class="form-popup" id="popupForm">
+                    <form action="back/modifMdp.php" method="post" class="form-container">
+                        <label for="ancienMdp">
+                            <strong> Votre ancien mot de passe :</strong>
+                        </label>
+                        <input type="password" id="IdAncienMdp" placeholder="Ancien mot de passe" name="ancienMdp" required />
+                        <label for="newMdp" id="labelNewMdp">
+                            Nouveau mot de passe :
+                        </label>
+                        <input type="password" id="psw" placeholder="Votre Mot de passe" name="NewMdp" onchange="checkNewMdp()" required />
+                        <label id="labelVerifMdp" for="verifMdp">
+                            Confirmez le :
+                        </label>
+                        <input type="password" id="psw2" placeholder="Votre Mot de passe" name="verifMdp" onchange="checkSameMdp()" required />
+                        <button id="submitNewMdp" type="submit" class="btn" disabled='true' >Modifier</button>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+                    </form>
+                </div>
+            </div>
+            <script>
+            function openForm() {
+                document.getElementById("popupForm").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("popupForm").style.display = "none";
+            }
+            </script>
+            <p id='mesFichiers'> <b> Mes fichiers : </b></p>
 
         </div>
         <?php
             if($role=="lecture"){
         ?>
+
+<!---------------------------------------------------------------Espace Role-------------------------------------------------------------->
+    <!---------------------------------------------------------------Espace lecteur-------------------------------------------------------------->
+
             <div id="main2">
                 <h1>Espace lecteur :</h1>
                 <p>Votre role vous permet d'accéder à tous les fichiers déposer sur notre drive.</p>
@@ -77,6 +112,7 @@ foreach($infoUtilisateur as $info){
         <?php
             }
         ?>
+    <!---------------------------------------------------------------Espace auteur-------------------------------------------------------------->
         <?php
             if($role=="ecriture"){
         ?>
@@ -86,18 +122,19 @@ foreach($infoUtilisateur as $info){
                     Votre role vous permet d'en plus d'accéder à la galerie (page home), de créer des tags/ catégorie de tag ou encore importer
                     des fichiers sur le drive. 
                 </p>
-                <button onclick="window.location.href = '/front/JS/upload.js'">Dépot de fichier</button>
+                <button onclick="window.location.href = 'addfile.php'">Dépot de fichier</button>
             </div>
         <?php
             }
         ?>
+    <!---------------------------------------------------------------Espace admin-------------------------------------------------------------->
         <?php
             if($role=="admin"){
         ?>
             <div id="main2">
                 <h1>Espace admin :</h1>
                 <br>
-<!---------------------------------------------------------------CREATION D'UN COMPTE-------------------------------------------------------------->
+        <!---------------------------------------------------------------CREATION D'UN COMPTE-------------------------------------------------------------->
                 <h2>Création d'un compte :</h2>
                 <form action="back/dataSignUp.php" method="post">
                     <input id="prenomCreationCompte" type="text" name="prenom" placeholder="prenom" required>
@@ -124,7 +161,7 @@ foreach($infoUtilisateur as $info){
 
                     <input id="submitCreationCompte" type="submit" value="Créer" name="submit" disabled='true'>
                 </form>
-<!---------------------------------------------------------------MODIFICATION D'UN COMPTE-------------------------------------------------------------->
+        <!---------------------------------------------------------------MODIFICATION D'UN COMPTE-------------------------------------------------------------->
                 <br>
                 <br>
                 <h2>modification d'un compte :</h2>
@@ -143,6 +180,7 @@ foreach($infoUtilisateur as $info){
 
                     <input type="submit" value="modifier" name="submit">
                 </form>
+        <!---------------------------------------------------------------SUPPRESSION D'UN COMPTE-------------------------------------------------------------->
                 <br>
                 <br>
                 <h2>suppression d'un compte :</h2>
@@ -158,6 +196,7 @@ foreach($infoUtilisateur as $info){
         <?php
             }
         ?>
+    <!---------------------------------------------------------------Espace invite-------------------------------------------------------------->
         <?php
             if($role=="invite"){
         ?>

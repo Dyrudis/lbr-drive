@@ -1,5 +1,5 @@
 var correctMdp =0;
-var correctEmail =0;
+var correctEmail =1;
 var inputMdp = document.getElementById("mdpCreationCompte");
 function checkMdpTemporaire() {
     const checkBox = document.getElementById('mdpTemporaire').checked;
@@ -35,6 +35,32 @@ function checkMdp() {
 
 }
 
+function checkNewMdp() {
+    const val = psw.value;
+    if(val.match(/[0-9]/g) && val.match( /[A-Z]/g) && val.match(/[a-z]/g) && val.match( /[^a-zA-Z\d]/g)){
+        document.getElementById("labelNewMdp").innerText = "Nouveau mot de passe :"
+
+    }
+    else{
+        document.getElementById("labelNewMdp").innerText = " Nouveau mot de passe :\n le mot de passe doit contenir:\n 1 maj, 1 min, 1 caractère et un chiffre";
+    }
+
+}
+
+function checkSameMdp(){
+    const mdp = psw.value;
+    const mdp2 = psw2.value;
+    if(mdp===mdp2){
+        document.getElementById("labelVerifMdp").innerText = " Confirmez le :\n ";
+        document.getElementById("submitNewMdp").disabled = false;
+    }
+    else{
+        document.getElementById("labelVerifMdp").innerText = " Confirmez le :\n les 2 mot de passes sont différents";
+        document.getElementById("submitNewMdp").disabled = true;
+    }
+}
+
+/*
 function checkEmail(){
     console.log(document.getElementById('emailCreationCompte').value);
     $.ajax({
@@ -60,7 +86,7 @@ function checkEmail(){
         
         }
     });
-}
+}*/
 
 function checkSubmit(){
     if(correctMdp==1 && correctEmail==1){

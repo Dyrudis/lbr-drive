@@ -16,7 +16,13 @@ if ($mysqli->connect_error) {
             . $mysqli->connect_error);
 }
 
-if(isset($_POST['mdpTemporaire'])==='1'){
+$req = "SELECT * FROM utilisateur WHERE Email = '$email'";
+$result = $mysqli->query($req);
+
+if ($result->num_rows > 0) {
+    echo false;
+}
+else if(isset($_POST['mdpTemporaire'])==='1'){
     $mdpTemp = rand(100000,999999);
     $hash = password_hash($mdpTemp,PASSWORD_DEFAULT);
     $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '1')";
