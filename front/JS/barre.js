@@ -39,6 +39,12 @@
         listToAppend.appendChild(newTag);
 
         newTag.addEventListener("click", function() {
+
+            //Check if tag is already selected
+            if (tagTab.includes(tag.IDTag)) {
+                return;
+            }
+
             //copy newtag
             let newTagCopy = newTag.cloneNode(true);
             newTagCopy.classList.add("undraggable");

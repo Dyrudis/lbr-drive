@@ -27,13 +27,6 @@ function displayFile(file) {
             .attr("type", file.Type + "/" + file.Extension);
         preview.append(source);
 
-        /* preview.hover(function toggleControls() {
-                if (this.hasAttribute("controls")) {
-                    this.removeAttribute("controls");
-                } else {
-                    this.setAttribute("controls", "controls");
-                }
-            }); */
     }
     preview.addClass("file-preview");
     container.dblclick(displayInFullscreen);
@@ -110,5 +103,4 @@ function displayInFullscreen(event) {
         if (e.target !== this) return;
         container.remove();
     });
-    console.log(preview);
 }
