@@ -54,7 +54,9 @@ foreach($infoUtilisateur as $info){
         <div id="main">
             <h1>Mon Espace</h1>
             <div class="tag undraggable" id="RoleCompte">
-                <p>Rôle</p>
+                <?php
+                    echo "<p>" . $role . "</p>";
+                ?>
             </div>
             <?php
                 echo"<p id='prenom'> <b> Prénom : </b> " . $prenom . "</p>";
@@ -136,18 +138,18 @@ foreach($infoUtilisateur as $info){
                 <br>
         <!---------------------------------------------------------------CREATION D'UN COMPTE-------------------------------------------------------------->
                 <h2>Création d'un compte :</h2>
-                <form action="back/dataSignUp.php" method="post">
+                <form id="formCreationCompte" action="back/dataSignUp.php" method="post">
                     <input id="prenomCreationCompte" type="text" name="prenom" placeholder="prenom" required>
                     <input id="nomCreationCompte" type="text" name="nom" placeholder="nom" required >
                     <br>
                     <input id="mdpCreationCompte" type="password" name="motdepasse" placeholder="mot de passe" onblur="checkMdp()">
-                    <label id="labelmdpInput" for="motdepasse">mot de passe invalide</label>
+                    <label id="labelmdpInput" for="motdepasse">Le mot de passe doit contenir au moins: 1 maj, 1 min, 1 caratère et 1 chiffre</label>
                     <div class="preference">
                         <input id="mdpTemporaire" type="checkbox" name="mdpTemporaire" onchange="checkMdpTemporaire()">
                         <label id="labelmdpTemp" for="mdpTemporaire">Utiliser un mot de passe temporaire</label>
                     </div>
                     <br>
-                    <input id="emailCreationCompte" type="email" name="email" placeholder="email" onblur="checkEmail()" required>
+                    <input id="emailCreationCompte" type="email" name="email" placeholder="email" required>
                     <label id="emailIncorrect" for="email">Email déjà utilisé</label>
                     <br>
                     <input id="descriptionCreationCompte" type="text" name="description" placeholder="description" required>

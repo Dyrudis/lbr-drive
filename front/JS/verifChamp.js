@@ -7,7 +7,9 @@ function checkMdpTemporaire() {
         inputMdp.disabled = true;
         inputMdp.placeholder = 'mot de passe temporaire utilisé';
         inputMdp.value = '';
+        inputMdp.style.borderColor='';
         correctMdp =1;
+        document.getElementById('labelmdpInput').style.visibility='hidden';
     } 
     else {
         inputMdp.disabled = false;
@@ -89,12 +91,11 @@ function checkEmail(){
 }*/
 
 function checkSubmit(){
-    if(correctMdp==1 && correctEmail==1){
-        console.log('SA MARCHE');
+    if(correctMdp==1){
         document.getElementById("submitCreationCompte").disabled = false;
+
     }
     else{
-        console.log('RATER');
         document.getElementById("submitCreationCompte").disabled = true;
         
     }
