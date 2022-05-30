@@ -3,7 +3,7 @@
 $tab = [];
 
 //Get incoming tab from post
-if (isset($_POST['tags'])){
+if (isset($_POST['tags'])) {
     $tab = json_decode($_POST['tags']);
 }
 
@@ -17,8 +17,9 @@ if ($mysqli->connect_error) {
 }
 
 // Get the data from the database
-$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(IDTag) as 'IDTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, fichier.IDFichier from classifier, fichier, utilisateur
-WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur
+$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, fichier.IDFichier
+FROM classifier, fichier, utilisateur, tag, categorie
+WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie
 GROUP BY fichier.IDFichier";
 
 $result = $mysqli->query($sql);
@@ -37,11 +38,11 @@ while ($row = $result->fetch_assoc()) {
 
 //Filters and returns only rows containing AT LEAST the researched tags
 $tmp = [];
-foreach($rows as $row){
+foreach ($rows as $row) {
     $tags = explode(',', $row['IDTags']);
     $tags = array_map('intval', $tags);
-    if(!array_diff($tab, $tags)){
-        
+    if (!array_diff($tab, $tags)) {
+
         $tmp[] = $row;
     }
 }

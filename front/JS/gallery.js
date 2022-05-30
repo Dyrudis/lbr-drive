@@ -11,8 +11,8 @@ function displayGallery() {
 }
 
 function displayFile(file) {
-    // TMP
-    file.Tags = ["tag1", "tag2"];
+    file.Tags = file.NomTags.split(",");
+    file.CouleurTags = file.CouleurTags.split(",");
 
     let path = "./upload/" + file.IDFichier + "." + file.Extension;
 
@@ -35,7 +35,8 @@ function displayFile(file) {
     file.Tags.forEach((tag) => {
         let tagElem = $("<div>")
             .addClass("tag")
-            .html("<p>" + tag + "</p>");
+            .html("<p>" + tag + "</p>")
+            .css("background-color", "#" + file.CouleurTags[file.Tags.indexOf(tag)]);
         hoverTags.append(tagElem);
     });
     let title = $("<div>").addClass("file-hover-title").text(file.NomFichier);
