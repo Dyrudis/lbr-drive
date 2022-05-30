@@ -126,13 +126,6 @@ header > img {
 
 /* Gallerie */
 
-#gallery {
-    display: flex;
-    gap: 5px;
-    padding: 5px;
-    margin-top: 50px;
-}
-
 #gallery-header > .tag {
     border-color: #000000;
 }
@@ -162,49 +155,41 @@ header > img {
 }
 
 #gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    column-width: 300px;
+    column-count: 5;
+    padding: 50px 10px 10px 10px;
 }
 
-/* #gallery > div {
-    width: 25%;
-    height: fit-content;
-} */
-
 #gallery > .file-container {
+    margin-bottom: 15px;
     width: 100%;
-    display: flex;
     position: relative;
-    margin: 5px 0px;
     cursor: pointer;
     overflow: hidden;
-    border-radius: 7px;
-    min-height: 150px;
-    aspect-ratio: 16/9;
     background-color: #000000;
 }
 
 #gallery > .file-container > .file-preview {
     width: 100%;
-    object-fit: cover;
+    vertical-align: top;
 }
 
 #gallery > .file-container > .file-hover {
-    height: 0;
-    max-height: 0;
-    transition: all 0.5s ease;
-    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    color: rgb(255, 255, 255);
     width: 100%;
-    border-radius: 0 0 15px 15px;
-    color: white;
+    transition: all 0.25s ease;
+    background-color: rgba(0, 0, 0, 0.6);
     position: absolute;
     bottom: 0;
+    height: fit-content;
+    transform: translateY(100%);
+    overflow: hidden;
+    backdrop-filter: blur(4px);
 }
 
 #gallery > .file-container:hover > .file-hover {
-    height: 120px;
-    max-height: 150px;
-    padding: 10px;
+    transform: translateY(0%);
 }
 
 #gallery > .file-container > .file-hover > .file-hover-tags {
@@ -215,17 +200,18 @@ header > img {
 
 #gallery > .file-container > .file-hover > .file-hover-title {
     font-size: 1.5rem;
+    font-weight: bold;
     margin: 0;
 }
 
 #gallery > .file-container > .file-hover > .file-hover-author {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     margin: 0;
     display: inline;
 }
 
 #gallery > .file-container > .file-hover > .file-hover-info {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     margin: 0;
     display: inline;
     text-align: right;
@@ -252,6 +238,8 @@ header > img {
 .tag > p {
     margin: 0;
 }
+
+/* Mode fullscreen */
 
 #fullscreen-container {
     position: fixed;
