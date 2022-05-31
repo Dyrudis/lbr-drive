@@ -17,11 +17,13 @@ foreach($result as $info){
     $id = $info['IDUtilisateur'];
     $actif = $info['Actif'];
     $mdpHash = $info['MotDePasse'];
+    $role = $info['Role'];
 }
 
 if ($result->num_rows > 0 && $actif=='1' && password_verify($motdepasse,$mdpHash)) {
     //connection réussit
     $_SESSION['id'] = $id;
+    $_SESSION['role'] = $role;
     //echo" <p> id de session vaut ". $_SESSION['id'] ."</p>";
     header('Location: ../compte.php');
 } else if($actif=='0'){
