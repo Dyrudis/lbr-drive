@@ -45,6 +45,7 @@ function checkNewMdp() {
     }
     else{
         document.getElementById("labelNewMdp").innerText = " Nouveau mot de passe :\n le mot de passe doit contenir:\n 1 maj, 1 min, 1 caractère et un chiffre";
+        
     }
 
 }

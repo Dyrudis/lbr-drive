@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
 else if($checkBoxMdpTemporaire==='on'){
     $mdpTemp = rand(100000,999999);
     $hash = password_hash($mdpTemp,PASSWORD_DEFAULT);
-    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '-1')";
+    $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '2')";
     if ($mysqli->query($req) === TRUE) {
 
         $subject = 'Inscription lbr drive';

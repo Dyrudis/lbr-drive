@@ -12,7 +12,6 @@ if ($mysqli->connect_error) {
 
 $sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($sql);
-$actif=2;
 foreach($result as $info){
     $id = $info['IDUtilisateur'];
     $actif = $info['Actif'];
@@ -20,17 +19,21 @@ foreach($result as $info){
     $role = $info['Role'];
 }
 
-if ($result->num_rows > 0 && $actif=='1' && password_verify($motdepasse,$mdpHash)) {
-    //connection réussit
-    $_SESSION['id'] = $id;
-    $_SESSION['role'] = $role;
-    //echo" <p> id de session vaut ". $_SESSION['id'] ."</p>";
-    header('Location: ../compte.php');
-} else if($actif=='0'){
-    echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
-    header("refresh:2, url=../login.php");
-    
-}else{
+if ($result->num_rows > 0 && password_verify($motdepasse,$mdpHash)) {
+    if($actif=='2'){
+        $_SESSION['id'] = $id;
+        header('Location: ../nouveauMdp.php');
+    }
+    else if($actif=='1'){
+        $_SESSION['id'] = $id;
+        $_SESSION['role'] = $role;
+        header('Location: ../compte.php'); 
+    }
+    else if($actif=='0'){
+        echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
+        header("refresh:2, url=../login.php");
+    }
+}else {
     echo" <p>Identifiants incorrects<br><br>Redirection dans 2s</p>";
     header("refresh:2, url=../login.php");
 
