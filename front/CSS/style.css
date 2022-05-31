@@ -126,6 +126,16 @@ header > img {
 
 /* Gallerie */
 
+#gallery-container {
+    overflow-y: auto;
+    flex: 1;
+}
+
+#gallery-container::-webkit-scrollbar {
+    visibility: hidden;
+    width: 0;
+}
+
 #gallery-header > .tag {
     border-color: #000000;
 }
@@ -144,20 +154,10 @@ header > img {
     align-items: center;
 }
 
-#gallery-container {
-    overflow-y: auto;
-    flex: 1;
-}
-
-#gallery-container::-webkit-scrollbar {
-    visibility: hidden;
-    width: 0;
-}
-
 #gallery {
     column-width: 300px;
     column-count: 5;
-    padding: 50px 10px 10px 10px;
+    padding: 60px 10px 10px 10px;
 }
 
 #gallery > .file-container {
@@ -227,12 +227,12 @@ header > img {
     border-radius: 500px;
     margin: 0;
     padding: 6px 15px;
-    font-weight: bold;
     height: fit-content;
     width: fit-content;
     color: white;
     cursor: pointer;
     font-size: 16px;
+    font-weight: normal;
 }
 
 .tag > p {
@@ -255,14 +255,8 @@ header > img {
     align-items: center;
 }
 
-#fullscreen-container > img {
-    width: 90%;
-    height: 90%;
-    object-fit: contain;
-}
-
+#fullscreen-container > img,
 #fullscreen-container > video {
-    width: 90%;
-    height: 90%;
-    object-fit: contain;
+    max-width: 80vw;
+    max-height: 90vh;
 }
