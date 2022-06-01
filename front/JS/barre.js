@@ -48,6 +48,7 @@
             //copy newtag
             let newTagCopy = newTag.cloneNode(true);
             newTagCopy.classList.add("undraggable");
+            newTagCopy.innerHTML += "<img src='front/images/close.svg'/>";
 
             //add tag to tagTab
             tagTab.push(tag.IDTag);

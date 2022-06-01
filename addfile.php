@@ -1,10 +1,8 @@
 <?php
 session_start();
-if($_SESSION['id']){
+if ($_SESSION['id']) {
     $id = $_SESSION['id'];
-    
-}
-else{
+} else {
     header("Location: login.php");
 }
 ?>
@@ -25,13 +23,9 @@ else{
 </head>
 
 <body>
-    <header>
-        <a id="lienHome" class="undraggable" href="./index.php">Home</a>
-        <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
-        <a id="upload" class="pointerOnHover undraggable">Upload un fichier</a>
-        <a id="lienCompte" class="undraggable" href="./compte.php">Mon compte</a>
- 
-    </header>
+    <?php
+    include('header.php');
+    ?>
     <div id="drop-area">
 
 

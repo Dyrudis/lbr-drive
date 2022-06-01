@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <title>Nouveau mot de passe</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="front/CSS/login.css" />
-        <link rel="stylesheet" href="front/CSS/style.css" />
-    </head>
+
+<head>
+    <title>Nouveau mot de passe</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="front/CSS/login.css" />
+    <link rel="stylesheet" href="front/CSS/style.css" />
+</head>
 
 <body id="bodylogin">
-        <header>
-            <img src="front/images/logoLONGUEURBlanc.png" class="undraggable" />
-        </header>
+    <?php
+    include('header.php');
+    ?>
+
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
@@ -26,4 +28,5 @@
 
     </form>
 </body>
+
 </html>
