@@ -138,6 +138,7 @@ dropArea.on("drop", (e) => {
         addTag.on("click", function (e) {
             select = $("<select />").addClass("tagSelect");
             options = allTags;
+            options = options.filter((e) => e.id != "0");
             select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
             select.append(
                 $("<option />").attr("value", "Supprimer").text("Supprimer").css({

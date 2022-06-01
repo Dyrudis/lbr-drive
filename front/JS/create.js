@@ -1,3 +1,7 @@
+$("#create-header").click(function () {
+    $("#create").toggleClass("shown");
+});
+
 // Create a new category
 $("#create-category-button").click(function () {
     let name = $("#category-input").val();

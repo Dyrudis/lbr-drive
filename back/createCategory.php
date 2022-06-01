@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
 }
 
 // Insert the data into the database
-$sql = "INSERT INTO `categorie` (`IDCategorie`, `NomCategorie`, `CouleurCategorie`) VALUES (NULL, '" . $name . "', '" . $color . "');";
+$sql = "INSERT INTO `categorie` (`IDCategorie`, `NomCategorie`, `Couleur`) VALUES (NULL, '" . $name . "', '" . $color . "');";
 $result = $mysqli->query($sql);
 
 // Check for errors
