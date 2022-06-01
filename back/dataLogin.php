@@ -27,7 +27,7 @@ if ($result->num_rows > 0 && password_verify($motdepasse,$mdpHash)) {
     else if($actif=='1'){
         $_SESSION['id'] = $id;
         $_SESSION['role'] = $role;
-        header('Location: ../compte.php'); 
+        header('Location: ../index.php'); 
     }
     else if($actif=='0'){
         echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
