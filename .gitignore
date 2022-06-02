@@ -1,2 +1,5 @@
 # Ignore everything in the "upload" folder
 /upload/*
+
+# Ignore the environment variables file
+/env.php

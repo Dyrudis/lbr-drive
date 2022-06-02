@@ -34,7 +34,7 @@ if ($mysqli->connect_error) {
 }
 
 // Get the data from the database
-$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, fichier.IDFichier
+$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
 FROM classifier, fichier, utilisateur, tag, categorie
 WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . 
 "GROUP BY fichier.IDFichier";
@@ -82,5 +82,15 @@ else {
         }
     }
 }
+
+// Add a boolean property named 'isEditable' to each file
+foreach ($tmp as $index => $value) {
+    if ($value['IDUtilisateur'] === $_SESSION['id'] || $_SESSION['role'] == 'admin' || $_SESSION['role'] == 'ecriture') {
+        $tmp[$index]['isEditable'] = true;
+    } else {
+        $tmp[$index]['isEditable'] = false;
+    }
+}
+
 
 echo json_encode($tmp);
