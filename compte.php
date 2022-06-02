@@ -3,7 +3,11 @@ session_start();
 
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
-$id = $_SESSION['id'];
+if ($_SESSION['id']) {
+    $id = $_SESSION['id'];
+} else {
+    header("Location: login.php");
+}
 
 $sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";
 $result = $mysqli->query($sql);
