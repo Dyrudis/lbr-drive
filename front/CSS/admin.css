@@ -181,7 +181,7 @@ body {
   
   .creation {
       position: absolute;
-      padding: 11% 13%;
+      padding: 8% 13%;
       width: 74%;
       left:0px;
       transition: all 0.7s;
@@ -322,4 +322,12 @@ body {
 
   #labelmdpInput {
       visibility: hidden;
+  }
+
+  #mdpOublie{
+    position: relative;
+    top: 58px;
+    cursor: pointer;
+    text-decoration: underline;
+    
   }

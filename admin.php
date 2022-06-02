@@ -76,6 +76,7 @@
                           </div>
                         
                         <input class="submit" value="Créer" type="submit">
+                        <a id="mdpOublie" href="reinitialiserMdp.php">Renvoie de mail</a>
                     </form>
                     
                     <hr>
