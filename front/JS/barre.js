@@ -1,6 +1,7 @@
 (function (){
 
     let tagTab = [];
+    let userToggle = false;
 
     var request = new XMLHttpRequest();
     request.open("get", "back/loadBarre.php", true);
@@ -73,11 +74,48 @@
         let formData = new FormData();
         tagTab.sort();
         if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
+        if (userToggle) formData.append("user", "true");
 
         let request = new XMLHttpRequest();
         request.open("post", "back/loadGallery.php", true);
         request.send(formData);
         request.onload = displayGallery;
     }
+
+    myFilesToggler = document.getElementById("toggle-mes-fichiers")
+    myFilesToggler.addEventListener("click", function() {
+
+        //Si recherche par fichiers possédés non-actif -> activer
+        if (!myFilesToggler.classList.contains("active")) {
+            userToggle = true;
+            myFilesToggler.classList.add("active");
+            
+            let formData = new FormData();
+            formData.append("user", "true");
+
+            if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
+
+            let request = new XMLHttpRequest();
+            request.open("post", "back/loadGallery.php", true);
+            request.send(formData);
+            request.onload = displayGallery;
+        }
+        //Si recherche par fichiers possédés actif -> désactiver
+        else {
+            userToggle = false;
+            myFilesToggler.classList.remove("active");
+
+            let formData = new FormData();
+
+            if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
+
+            let request = new XMLHttpRequest();
+            request.open("post", "back/loadGallery.php", true);
+            request.send(formData);
+            request.onload = displayGallery;
+        }
+
+    });
+
 
 })();

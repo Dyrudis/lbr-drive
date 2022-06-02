@@ -1,10 +1,20 @@
 <?php
+session_start();
 
+//tab contenant les tags pour requete
 $tab = [];
+//string pour requete seulement fichiers à soi
+$user = "";
 
 //Get incoming tab from post
 if (isset($_POST['tags'])) {
     $tab = json_decode($_POST['tags']);
+}
+
+//Get incoming string from post
+if (isset($_POST['user'])) {
+    $user = $_SESSION['id'];
+    $user = "AND fichier.IDUtilisateur = '$user' ";
 }
 
 // Connect to the database with mysqli
@@ -19,15 +29,15 @@ if ($mysqli->connect_error) {
 // Get the data from the database
 $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, fichier.IDFichier
 FROM classifier, fichier, utilisateur, tag, categorie
-WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie
-GROUP BY fichier.IDFichier";
+WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . 
+"GROUP BY fichier.IDFichier";
 
 $result = $mysqli->query($sql);
 
 
 // Check for errors
 if (!$result) {
-    die('Erreur d\'insertion du fichier : ' . $mysqli->error);
+    die('Erreur de recuperation des fichiers : ' . $mysqli->error);
 }
 
 // Parse the result into an array and return it in js

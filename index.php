@@ -48,6 +48,22 @@ while ($row = $result->fetch_assoc()) {
 
     <div id="content">
         <div id="barre" class="undraggable">
+
+            <div id="tri-primaire">
+                <div class="pre-tri" id="toggle-mes-fichiers">
+                    <p>Mes fichiers</p>
+                </div>
+                <div id="type-tag-tri-holder">
+                    <div class="pre-tri" id="toggle-intersection">
+                        <p>.. ET ..</p>
+                    </div>
+
+                    <div class="pre-tri" id="toggle-union">
+                        <p>.. OU ..</p>
+                    </div>
+                </div>
+            </div>
+
             <div id="liste-categories">
                 <!-- Ici s'appenderont les categories -->
             </div>

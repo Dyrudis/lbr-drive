@@ -4,6 +4,7 @@ request.send();
 request.onload = displayGallery;
 function displayGallery() {
     $("#gallery").empty();
+    console.log(this.responseText);
     allFiles = JSON.parse(this.responseText);
     allFiles.forEach((file) => {
         displayFile(file);
