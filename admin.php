@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+<html>
+
 <head>
     <link rel="stylesheet" href="front/CSS/admin.css" />
     <meta charset="utf-8" />
@@ -9,27 +11,16 @@
     <script src="front/JS/verifChamp.js" defer></script>
 </head>
 
-<body>
+<body id="bodyadmin">
 
-
-<h1>Espace administrateur</h1>
-    <div class="info">
-        <a class="undraggable" href="index.php">
-        <p id="tocompte" style="    position: relative;
-    top: 30px;
-    left: 40%;
-    border: solid darkgray;
-    color: white;
-    background: gray;
-    width: 19%;"> Retour au menu principal </p> <!-- forçage de css en raw car conflict avec info -->
-    </a>
-</div>
-
-    
+<?php
+    include('header.php');
+?>
     <div class="content">
         <div class="container">
-            <img class="bg-img" src="https://mariongrandvincent.github.io/HTML-Personal-website/img-codePen/bg.jpg" alt="">
+            <img class="bg-img" src="front\images\backadmin.png" alt="">
                 <div class="menu">
+                    <h1> Espace Admin</h1>
                     <a href="#creation" class="btn-creation"><h2>Création d'un compte</h2></a>
                     <a href="#modif" class="btn-modif active"><h2>Modification de compte</h2></a>
                     <a href="#delete" class="btn-delete active"><h2>Supression de compte</h2></a>
@@ -50,7 +41,7 @@
                         
                         <div class="check">
                             <label>				
-                                <input id="mdpTemporaire" type="checkbox" name="mdpTemporaire" onchange="checkMdpTemporaire()">
+                                <input id="mdpTemporaire" id="check" class="checkbox" type="checkbox" name="mdpTemporaire" onchange="checkMdpTemporaire()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="23px" id="checkboite">
                                         <path class="path-back"  d="M1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6"/>
                                         <path class="path-moving" d="M24.192,3.813L11.818,16.188L1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6"/>
@@ -76,10 +67,9 @@
                           </div>
                         
                         <input class="submit" value="Créer" type="submit">
-                        <a id="mdpOublie" href="reinitialiserMdp.php">Renvoie de mail</a>
+                        <input class="submit" id="mdpOublie" value="Renvoie de mail" href="reinitialiserMdp.php"></input>
                     </form>
                     
-                    <hr>
                 </div>
                 
                 <div class="modif active-section">
@@ -113,7 +103,7 @@
                         <label for="mdpCompte">Veuillez entrer votre mot de passe</label>
                         <input type="password" name="mdpCompte">
                                   
-                        <input class="submit" type="submit" value="Supprimer" name="submit">	
+                        <input class="submit" id="btn-suppr" type="submit" value="Supprimer" name="submit">	
                             
                     </div>
                 </div>
@@ -124,3 +114,4 @@
     
     
     </body> 
+    </html>

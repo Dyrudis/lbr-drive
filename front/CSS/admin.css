@@ -1,7 +1,8 @@
-body {
+#bodyadmin {
     font-family: 'Open Sans',sans-serif;
     font-weight: 500;
-    color:#fff
+    color:#fff;
+    background: #161920;
   }
   .info p {
     text-align:center;
@@ -15,13 +16,14 @@ body {
   h1 {
     text-align:center; 
     color: white;
-    text-shadow: 1px 1px 0px #FFF;
-    margin:50px 0px 0px 0px
+    margin:38px 26px 0px 0px;
+    font-size:30px;
   }
   
   h2 {
     font-size: 17px;
     font-weight: 600;
+    width: 101px;
   }
   
   h3 {
@@ -119,7 +121,7 @@ body {
   
   .content {
     position: absolute;
-    top: 0;
+    top: -65px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -132,7 +134,8 @@ body {
   .contact-form {
     position: relative;
     top: -70px;
-    width: 100%;
+    right: 9px;
+    width: 163%;
     height: 100%;
     z-index: 1;
   }
@@ -144,19 +147,27 @@ body {
     height: 679px;
     margin: auto;
     margin-top: 180px; 
-    box-shadow: 1px 5px 10px 1px #333;
-    overflow:hidden;
+    box-shadow: 0px 0px 10px 4px rgb(142, 139, 139);
+    overflow-x:hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
   
+  .container::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
   img.bg-img {
     display: block;
     position: absolute;
     margin: auto;
+    width: 530px;
+    height: 911px;
   }
   
   .menu {
     position: relative;
-    padding: 0 13% 0 13%;
+    padding: 0 5% 0 11%;
   }
   
   .menu h2 {
@@ -176,7 +187,6 @@ body {
 
   .emailfix {
     position: relative;
-    right: 17%;
   }
   
   .creation {
@@ -230,6 +240,10 @@ body {
       color: #fff;
       opacity: 1;
   }
+
+  #btn-suppr {
+    top: 19px;
+  }
   
   input.submit {
       width: 100%;
@@ -241,7 +255,7 @@ body {
       background-color: #1161EE;
       cursor: pointer;
       position: relative;
-      top: 58px;
+      top: 113px;
   }
 
   #positionModif {
@@ -249,6 +263,11 @@ body {
     top: 65px;
   }
   
+  .check {
+    position: relative;
+    bottom: 20px;
+  }
+
   .check label {
       float: left;
       width: 10%;
@@ -256,7 +275,7 @@ body {
   }
   
   .check h3 {
-      padding: 0px;
+      padding: 10px;
   }
   
   .checkbox {
@@ -265,7 +284,7 @@ body {
 
   #checkboite {
     position: relative;
-    bottom: 30px;
+    bottom: 9px;
   }
   
   .checkbox:checked + svg .path-moving {
@@ -296,6 +315,7 @@ body {
       padding: 15% 13%;
       width: 74%;
       right:0px;
+      margin-right: 142px;
       transition: all 0.7s;
   }
 
@@ -309,7 +329,7 @@ body {
 
   .active-section {
       position: absolute;
-       right:500px; 
+       right: 750px; 
   }
   .remove-section {
       position: absolute;
@@ -326,8 +346,8 @@ body {
 
   #mdpOublie{
     position: relative;
-    top: 58px;
+    top: 136px;
     cursor: pointer;
-    text-decoration: underline;
-    
+    text-decoration: none;
+    text-align: center;
   }
