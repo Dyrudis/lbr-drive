@@ -26,10 +26,8 @@ function displayFile(file) {
             .attr("src", path)
             .attr("type", file.Type + "/" + file.Extension);
         preview.append(source);
-
     }
     preview.addClass("file-preview");
-    container.dblclick(displayInFullscreen);
     let hover = $("<div>").addClass("file-hover");
     let hoverTags = $("<div>").addClass("file-hover-tags");
     file.Tags.forEach((tag) => {
@@ -46,15 +44,40 @@ function displayFile(file) {
     let info = $("<div>")
         .addClass("file-hover-info")
         .text(bytesToSize(file.Taille) + (file.Duree != "0" ? " - " + formatSeconds(file.Duree) : ""));
+    let actions = $("<div>").addClass("file-hover-actions");
+
+    let downloadFile = $("<img>").attr("src", "front/images/download.png"); // FOR EVERYONE
+    actions.append(downloadFile);
+    let deleteFile = $("<img>").attr("src", "front/images/delete.svg"); // ONLY FOR AUTHOR OR ADMIN
+    actions.append(deleteFile);
+    let addTag = $("<p>").text("+ Tag"); // ONLY FOR AUTHOR OR ADMIN
+    actions.append(addTag);
+
     hover.append(hoverTags);
     hover.append(title);
     hover.append(author);
     hover.append(info);
+    hover.append(actions);
 
     container.append(preview);
     container.append(hover);
 
     $("#gallery").append(container);
+
+    // On Right Click : Display actions
+    container.contextmenu((e) => {
+        e.preventDefault(); // Prevent the browser from opening the context menu
+
+        // If the container has the class selected
+        if (container.hasClass("selected")) {
+            hideActions(container);
+        } else {
+            displayActions(container);
+        }
+    });
+    
+    // On Left Click : Display preview
+    preview.click(displayInFullscreen);
 }
 
 function bytesToSize(bytes) {
@@ -87,7 +110,7 @@ function formatSeconds(s) {
 }
 
 function displayInFullscreen(event) {
-    let preview = event.currentTarget.children[0].cloneNode(true);
+    let preview = event.currentTarget.cloneNode(true); //.children[0].cloneNode(true);
     // Select "#fullscreen-container" or create it if it doesn't exist
     let container = $("#fullscreen-container");
     if (container.length == 0) {
@@ -100,8 +123,29 @@ function displayInFullscreen(event) {
         preview.style.backgroundColor = "black";
     }
     container.append(preview);
-    container.click(function(e) {
+    container.click(function (e) {
         if (e.target !== this) return;
         container.remove();
     });
+}
+
+function displayActions(container) {
+    // Remove the class from all other containers
+    $(".file-container.selected").each(function() {
+        hideActions($(this));
+    });
+    container.addClass("selected");
+
+    let deleteTag = $("<img>").attr("src", "front/images/close.svg");
+    let tags = container.find(".tag")
+    tags.append(deleteTag);
+    tags.css("cursor", "pointer");
+}
+
+function hideActions(container) {
+    container.removeClass("selected");
+
+    tags = container.find(".tag");
+    tags.find("img").remove();
+    tags.css("cursor", "default");
 }
