@@ -53,14 +53,8 @@ while ($row = $result->fetch_assoc()) {
                 <div class="pre-tri" id="toggle-mes-fichiers">
                     <p>Mes fichiers</p>
                 </div>
-                <div id="type-tag-tri-holder">
-                    <div class="pre-tri" id="toggle-intersection">
-                        <p>.. ET ..</p>
-                    </div>
-
-                    <div class="pre-tri" id="toggle-union">
-                        <p>.. OU ..</p>
-                    </div>
+                <div class="pre-tri Intersection" id="toggle-type-tri-tag">
+                    <p>Intersection</p>
                 </div>
             </div>
 

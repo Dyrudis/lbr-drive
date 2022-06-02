@@ -5,6 +5,8 @@ session_start();
 $tab = [];
 //string pour requete seulement fichiers à soi
 $user = "";
+//bool qui retient quel type de tri de tag effectuer (true = intersection)
+$tri = true;
 
 //Get incoming tab from post
 if (isset($_POST['tags'])) {
@@ -17,6 +19,11 @@ if (isset($_POST['user'])) {
     $user = "AND fichier.IDUtilisateur = '$user' ";
 }
 
+//Get incoming string from post
+if (isset($_POST['typeTriTag'])) {
+    $tri = false;
+
+}
 // Connect to the database with mysqli
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
@@ -46,16 +53,34 @@ while ($row = $result->fetch_assoc()) {
     $rows[] = $row;
 }
 
-//Filters and returns only rows containing AT LEAST the researched tags
 $tmp = [];
-foreach ($rows as $row) {
-    $tags = explode(',', $row['IDTags']);
-    $tags = array_map('intval', $tags);
-    if (!array_diff($tab, $tags)) {
 
-        $tmp[] = $row;
+//Recherche de type INTERSECTION
+if ($tri) {
+    //Filters and returns only rows containing AT LEAST the researched tags
+
+    foreach ($rows as $row) {
+        $tags = explode(',', $row['IDTags']);
+        $tags = array_map('intval', $tags);
+
+        if (!array_diff($tab, $tags)) {
+
+            $tmp[] = $row;
+        }
     }
 }
 
+//Recherche de type UNION
+else {
+
+    foreach ($rows as $row) {
+        $tags = explode(',', $row['IDTags']);
+        $tags = array_map('intval', $tags);
+        
+        if (array_intersect($tags, $tab)) {
+            $tmp[] = $row;
+        }
+    }
+}
 
 echo json_encode($tmp);

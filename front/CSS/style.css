@@ -88,6 +88,14 @@ body {
     background-color: rgb(17, 150, 208);
 }
 
+.Intersection{
+    background-color: #FF890A;
+}
+
+.Union{
+    background-color: #3671B3;
+}
+
 #liste-categories {
     overflow: auto;
     flex-grow: 1;

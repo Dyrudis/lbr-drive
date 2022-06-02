@@ -2,12 +2,13 @@
 
     let tagTab = [];
     let userToggle = false;
+    let typeTriTag = "Intersection";
 
     var request = new XMLHttpRequest();
     request.open("get", "back/loadBarre.php", true);
     request.send();
     request.onload = displayBarre;
-
+    
 
 
     function displayBarre() {
@@ -71,18 +72,11 @@
     }
 
     function loadGalleryWithTags() {
-        let formData = new FormData();
         tagTab.sort();
-        if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
-        if (userToggle) formData.append("user", "true");
-
-        let request = new XMLHttpRequest();
-        request.open("post", "back/loadGallery.php", true);
-        request.send(formData);
-        request.onload = displayGallery;
+        sendFormData();
     }
 
-    myFilesToggler = document.getElementById("toggle-mes-fichiers")
+    myFilesToggler = document.getElementById("toggle-mes-fichiers");
     myFilesToggler.addEventListener("click", function() {
 
         //Si recherche par fichiers possédés non-actif -> activer
@@ -90,32 +84,58 @@
             userToggle = true;
             myFilesToggler.classList.add("active");
             
-            let formData = new FormData();
-            formData.append("user", "true");
-
-            if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
-
-            let request = new XMLHttpRequest();
-            request.open("post", "back/loadGallery.php", true);
-            request.send(formData);
-            request.onload = displayGallery;
+            sendFormData();
         }
         //Si recherche par fichiers possédés actif -> désactiver
         else {
             userToggle = false;
             myFilesToggler.classList.remove("active");
 
-            let formData = new FormData();
-
-            if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
-
-            let request = new XMLHttpRequest();
-            request.open("post", "back/loadGallery.php", true);
-            request.send(formData);
-            request.onload = displayGallery;
+            sendFormData();
         }
 
     });
+
+    triTagToggler = document.getElementById("toggle-type-tri-tag");
+    triTagToggler.addEventListener("click", function() {
+
+        //Si recherche par intersection actif -> switch union
+        if (triTagToggler.classList.contains("Intersection")) {
+            
+            triTagToggler.classList.remove("Intersection");
+            triTagToggler.classList.add("Union");
+            triTagToggler.innerText = "Union";
+            typeTriTag = "Union";
+        }
+        //Si recherche par union actif -> switch intersection
+        else {
+            triTagToggler.classList.remove("Union");
+            triTagToggler.classList.add("Intersection");
+            triTagToggler.innerText = "Intersection";
+            typeTriTag = "Intersection";
+        }
+        sendFormData();
+    });
+
+    //Fonction qui selon les variables globales fait la requete souhaitée
+    function sendFormData() {
+    
+        let formData = new FormData();
+
+        //Ajout des tags dans le formulaire
+        if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
+
+        //Defini si la recherche concerne seulement les fichiers possédés
+        if (userToggle) formData.append("user", "true");
+
+        //Defini le type de recherche de tags
+        if (typeTriTag == "Union") formData.append("typeTriTag", "Union");
+    
+        let request = new XMLHttpRequest();
+        request.open("post", "back/loadGallery.php", true);
+        request.send(formData);
+        request.onload = displayGallery;
+    }
 
 
 })();
