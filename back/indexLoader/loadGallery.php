@@ -7,6 +7,8 @@ $tab = [];
 $user = "";
 //bool qui retient quel type de tri de tag effectuer (true = intersection)
 $tri = true;
+//string qui retient quel type de fichier à afficher (image, video, les deux)
+$type = "";
 
 //Get incoming tab from post
 if (isset($_POST['tags'])) {
@@ -33,10 +35,25 @@ if ($mysqli->connect_error) {
         . $mysqli->connect_error);
 }
 
+if (isset($_POST['fileType'])) {
+    $type = $_POST['fileType'];
+    //Set $type de fichié recherché selon argument entrant
+    if ($type == "image") {
+        $type = "AND fichier.Type = 'image' ";
+    } 
+    else if ($type == "video") {
+        $type = "AND fichier.Type = 'video' ";
+    }
+    else {
+        $type = " ";
+    }
+}
+
+
 // Get the data from the database
 $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
 FROM classifier, fichier, utilisateur, tag, categorie
-WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . 
+WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type .
 "GROUP BY fichier.IDFichier";
 
 $result = $mysqli->query($sql);

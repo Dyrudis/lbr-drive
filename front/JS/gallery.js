@@ -1,10 +1,10 @@
 var request = new XMLHttpRequest();
-request.open("get", "back/loadGallery.php", true);
+request.open("get", "back/indexLoader/loadGallery.php", true);
 request.send();
 request.onload = displayGallery;
 function displayGallery() {
     $("#gallery").empty();
-    //console.log(this.responseText);
+    console.log(this.responseText);
     allFiles = JSON.parse(this.responseText);
     allFiles.forEach((file) => {
         displayFile(file);

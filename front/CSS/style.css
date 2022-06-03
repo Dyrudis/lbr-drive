@@ -71,29 +71,29 @@ body {
     margin: 0;
 }
 
-#tri-primaire{
+#tri-primaire {
     padding: 15px 6px 5px 6px;
 }
 
-#type-tag-tri-holder{
+#type-tag-tri-holder {
     display: flex;
     justify-content: space-evenly;
 }
 
-#toggle-mes-fichiers{
+#toggle-mes-fichiers, #toggle-type-fichier {
     margin-bottom: 10px;
 }
 
-.active{
+.active {
     background-color: rgb(17, 150, 208);
 }
 
-.Intersection{
-    background-color: #FF890A;
+.Intersection {
+    background-color: #ff890a;
 }
 
-.Union{
-    background-color: #3671B3;
+.Union {
+    background-color: #3671b3;
 }
 
 #liste-categories {
@@ -172,6 +172,8 @@ body {
 #espace-admin-links a {
     padding: 12px;
     border-radius: 5px;
+    text-decoration: none;
+    color: white;
 }
 
 #espace-admin-links a:hover {
@@ -190,7 +192,6 @@ body {
     transform: translateY(calc(100% - 55px));
     transition: all 0.25s ease;
 }
-
 
 /* Gallerie */
 

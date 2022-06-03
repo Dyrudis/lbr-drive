@@ -53,6 +53,9 @@ while ($row = $result->fetch_assoc()) {
                 <div class="pre-tri" id="toggle-mes-fichiers">
                     <p>Mes fichiers</p>
                 </div>
+                <div class="pre-tri tout-type" id="toggle-type-fichier">
+                    <p>Image / Vidéo</p>
+                </div>
                 <div class="pre-tri Intersection" id="toggle-type-tri-tag">
                     <p>Intersection</p>
                 </div>
@@ -70,8 +73,8 @@ while ($row = $result->fetch_assoc()) {
                                 else echo $_SESSION['role'] ?></h3>
                 </div>
                 <div id="espace-admin-links">
-                    <a class="pointerOnHover" href="admin.php" style="text-decoration: none; color:white;">Gestion des comptes</a>
-                    <a class="pointerOnHover">Gestion des tags/catégories</a>
+                    <a class="pointerOnHover" href="admin.php">Gestion des comptes</a>
+                    <a class="pointerOnHover" href="gestionTags.php">Gestion des tags/catégories</a>
                     <a class="pointerOnHover">Accéder à la corbeille</a>
                 </div>
             </div>

@@ -3,9 +3,10 @@
     let tagTab = [];
     let userToggle = false;
     let typeTriTag = "Intersection";
+    let fileTypeSearching = "tout-type";
 
     var request = new XMLHttpRequest();
-    request.open("get", "back/loadBarre.php", true);
+    request.open("get", "back/indexLoader/loadBarre.php", true);
     request.send();
     request.onload = displayBarre;
     
@@ -117,6 +118,33 @@
         sendFormData();
     });
 
+    fileTypeToggler = document.getElementById("toggle-type-fichier");
+    fileTypeToggler.addEventListener("click", function() {
+
+        //Si recherche par tout type de fichiers -> recherche seulement video
+        if (fileTypeToggler.classList.contains("tout-type")) {
+            fileTypeToggler.classList.remove("tout-type");
+            fileTypeToggler.classList.add("video");
+            fileTypeSearching = "video";
+            fileTypeToggler.innerText = "Vidéo";
+        }
+        //Si recherche par video -> recherche seulement image
+        else if (fileTypeToggler.classList.contains("video")) {
+            fileTypeToggler.classList.remove("video");
+            fileTypeToggler.classList.add("image");
+            fileTypeSearching = "image";
+            fileTypeToggler.innerText = "Image";
+        }
+        //Si recherche par image -> recherche par tout type de fichiers
+        else {
+            fileTypeToggler.classList.remove("image");
+            fileTypeToggler.classList.add("tout-type");
+            fileTypeSearching = "tout-type";
+            fileTypeToggler.innerText = "Image/Vidéo";
+        }
+        sendFormData();
+    });
+
     //Fonction qui selon les variables globales fait la requete souhaitée
     function sendFormData() {
     
@@ -130,9 +158,14 @@
 
         //Defini le type de recherche de tags
         if (typeTriTag == "Union") formData.append("typeTriTag", "Union");
+
+        //Defini le type de fichier recherché
+        if (fileTypeSearching == "tout-type") formData.append("fileType", "tout-type");
+        else if (fileTypeSearching == "video") formData.append("fileType", "video");
+        else formData.append("fileType", "image");
     
         let request = new XMLHttpRequest();
-        request.open("post", "back/loadGallery.php", true);
+        request.open("post", "back/indexLoader/loadGallery.php", true);
         request.send(formData);
         request.onload = displayGallery;
     }
