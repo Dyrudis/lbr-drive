@@ -13,6 +13,7 @@
         categories = JSON.parse(this.responseText);
         categories.forEach(function (category) {
             displayCategory(category);
+            $("#categorySelected").append("<option value='" + category.IDCategorie + "'>" + category.NomCategorie + "</option>");
         });
 
         // Récupération des tags
@@ -44,13 +45,22 @@
         newCategory.append(preview);
 
         let form = $("<form>");
-        let input = $("<input>").attr("type", "text").attr("value", category.NomCategorie).addClass("textInput");
+        let input = $("<input>")
+            .attr("type", "text")
+            .attr("value", category.NomCategorie)
+            .addClass("textInput");
         let color = $("<input>")
             .attr("type", "color")
             .attr("value", "#" + category.Couleur)
             .addClass("colorInput");
-        let confirm = $("<input>").attr("type", "button").attr("value", "Confirmer").addClass("confirmInput");
-        let remove = $("<input>").attr("type", "button").attr("value", "Supprimer").addClass("removeInput");
+        let confirm = $("<input>")
+            .attr("type", "button")
+            .attr("value", "Confirmer")
+            .addClass("confirmInput");
+        let remove = $("<input>")
+            .attr("type", "button")
+            .attr("value", "Supprimer")
+            .addClass("removeInput");
         form.append(input);
         form.append(color);
         form.append(confirm);
@@ -78,12 +88,19 @@
                 },
                 success: function (data) {
                     console.log(data);
+                    location.reload();
                 },
             });
         });
 
         remove.on("click", function () {
-            if (window.confirm('Êtes-vous sûr de vouloir supprimer la catégorie "' + category.NomCategorie + '" ?')) {
+            if (
+                window.confirm(
+                    'Êtes-vous sûr de vouloir supprimer la catégorie "' +
+                        category.NomCategorie +
+                        '" ?'
+                )
+            ) {
                 $.ajax({
                     url: "back/tags/deleteCategory.php",
                     type: "POST",
@@ -92,6 +109,7 @@
                     },
                     success: function (data) {
                         console.log(data);
+                        location.reload();
                     },
                 });
             }
@@ -112,17 +130,28 @@
         newTag.append(preview);
 
         let form = $("<form>");
-        let input = $("<input>").attr("type", "text").attr("value", tag.NomTag).addClass("textInput");
+        let input = $("<input>")
+            .attr("type", "text")
+            .attr("value", tag.NomTag)
+            .addClass("textInput");
         let catInput = $("<select>").addClass("selectInput");
         categories.forEach(function (category) {
-            let option = $("<option>").attr("value", category.IDCategorie).text(category.NomCategorie);
+            let option = $("<option>")
+                .attr("value", category.IDCategorie)
+                .text(category.NomCategorie);
             if (category.IDCategorie == tag.IDCategorie) {
                 option.attr("selected", "selected");
             }
             catInput.append(option);
         });
-        let confirm = $("<input>").attr("type", "button").attr("value", "Confirmer").addClass("confirmInput");
-        let remove = $("<input>").attr("type", "button").attr("value", "Supprimer").addClass("removeInput");
+        let confirm = $("<input>")
+            .attr("type", "button")
+            .attr("value", "Confirmer")
+            .addClass("confirmInput");
+        let remove = $("<input>")
+            .attr("type", "button")
+            .attr("value", "Supprimer")
+            .addClass("removeInput");
         form.append(input);
         form.append(catInput);
         form.append(confirm);
@@ -136,7 +165,12 @@
         });
 
         catInput.on("change", function () {
-            tagPreview.css("background-color", "#" + categories.find((e) => e.IDCategorie == catInput.val()).Couleur);
+            tagPreview.css(
+                "background-color",
+                "#" +
+                    categories.find((e) => e.IDCategorie == catInput.val())
+                        .Couleur
+            );
         });
 
         confirm.on("click", function () {
@@ -150,12 +184,19 @@
                 },
                 success: function (data) {
                     console.log(data);
+                    location.reload();
                 },
             });
         });
 
         remove.on("click", function () {
-            if (window.confirm('Êtes-vous sûr de vouloir supprimer le tag "' + tag.NomTag + '" ?')) {
+            if (
+                window.confirm(
+                    'Êtes-vous sûr de vouloir supprimer le tag "' +
+                        tag.NomTag +
+                        '" ?'
+                )
+            ) {
                 $.ajax({
                     url: "back/tags/deleteTag.php",
                     type: "POST",
@@ -164,9 +205,75 @@
                     },
                     success: function (data) {
                         console.log(data);
+                        location.reload();
                     },
                 });
             }
         });
     }
+
+    // Create a new category
+    $("#createCategory").click(function () {
+        console.log("createCategory");
+        let name = $("#categoryInput").val();
+        console.log(name);
+        let color = $("#categoryColor").val();
+        console.log(color);
+
+        // Check if the fields are empty
+        if (name == "" || color == "") {
+            return;
+        }
+
+        // Check if the color is valid
+        if (!color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+            return;
+        }
+
+        // Delete the '#' from the color
+        color = color.substring(1);
+
+        // Ajax request to create the category
+        $.ajax({
+            url: "/back/tags/createCategory.php",
+            type: "POST",
+            data: {
+                name: name,
+                color: color,
+            },
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            },
+        });
+    });
+
+    // Create a new tag
+    $("#createTag").click(function () {
+        console.log("createTag");
+        let name = $("#tagInput").val();
+        console.log(name);
+        let IDCategorie = $("#categorySelected").val();
+        console.log(IDCategorie);
+
+        // Check if the fields are empty
+        if (name == "" || IDCategorie == "") {
+            return;
+        }
+
+        // Ajax request to create the tag
+        $.ajax({
+            url: "/back/tags/createTag.php",
+            type: "POST",
+            data: {
+                name: name,
+                IDCategorie: IDCategorie,
+            },
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            },
+        });
+    });
+
 })();

@@ -8,7 +8,7 @@ if ($mysqli->connect_error) {
         . $mysqli->connect_error);
 }
 
-$sql = "SELECT * FROM `categorie`";
+$sql = "SELECT * FROM `categorie` ORDER BY `categorie`.`IDCategorie` DESC";
 $result = $mysqli->query($sql);
 
 // Check for errors

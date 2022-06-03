@@ -40,6 +40,40 @@ h2 {
     text-overflow: ellipsis;
 }
 
+#createTags, #createCategories{
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: auto;
+}
+
+.formModif {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formModif > input {
+    width: 150px !important;
+}
+
+h3 {
+     margin-right: 15px;
+}
+
+#categorySelected {
+    width: 150px ;
+}
+
+#categoryColor {
+    width: 75px;
+}
+
+#createTag, #createCategory, #categoryColor, #categorySelected {
+    cursor: pointer;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -48,10 +82,6 @@ h2 {
     background-color: rgba(0, 0, 0, 0.1);
     padding: 10px;
     border-radius: 5px;
-}
-
-#categoryContent {
-    padding: 5px 15px;
 }
 
 .preview {
@@ -63,7 +93,7 @@ h2 {
     overflow: hidden;
 }
 
-form {
+.container > form {
     width: 175px;
 }
 
@@ -76,7 +106,9 @@ form {
 .confirmInput,
 .removeInput {
     width: 50%;
+    cursor: pointer;
 }
+
 
 .tag {
     background-color: rgb(118, 118, 118);
@@ -94,7 +126,6 @@ form {
     align-items: center;
     gap: 10px;
     user-select: none;
-    /* One line */
     white-space: nowrap;
 }
 
@@ -111,14 +142,18 @@ form {
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
-
+    padding: 5px 15px;
+    margin-top: 20px;
 }
 
 #tagContent {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(415px, 1fr));
     justify-items: center;
+    margin-top: 20px;
 }
+
+
 
 /* Media querie */
 @media screen and (max-width: 950px) {
