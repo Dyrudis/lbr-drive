@@ -5,11 +5,20 @@ $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
-$motdepasse = isset($_POST['motdepasse']);
 $email = $_POST['email'];
 $description = $_POST['description'];
 $role = $_POST['role'];
-$checkBoxMdpTemporaire = $_POST['mdpTemporaire'];
+
+if(isset($_POST['tags'])){
+    $tagAutorise = json_decode($_POST['tags']);
+}
+
+if(isset($_POST['motDePasse'])){
+    $motdepasse = $_POST['motDePasse'];
+}
+if(isset($_POST['mdpTemporaire'])){
+    $checkBoxMdpTemporaire = $_POST['mdpTemporaire'];
+}
 
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '
@@ -26,8 +35,29 @@ else if($checkBoxMdpTemporaire==='on'){
     $mdpTemp = rand(100000,999999);
     include('module/mailerInscription.php');
     $hash = password_hash($mdpTemp,PASSWORD_DEFAULT);
+
     $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '2')";
-    if ($mysqli->query($req) === TRUE) {
+    $result = $mysqli->query($req);
+
+    $idNouveauCompte = $mysqli->insert_id;
+    if($role=='invite'){
+        $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
+        foreach($tagAutorise as $tag){
+            $reqTagAutorise.= "(" . $idNouveauCompte . "," . $tag . "),";
+        }
+        $reqTagAutorise = substr($reqTagAutorise, 0, -1); 
+        $resultTagAutorise = $mysqli->query($reqTagAutorise);
+        if ($result === TRUE) {
+            echo "initialisation des tags de invité";
+        }
+        else{
+            echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
+            header('refresh:3, url= ../compte.php');
+        }
+
+    }
+
+    if ($result === TRUE) {
 
         $subject = 'Inscription lbr drive';
         $headers[] = 'MIME-Version: 1.0';
@@ -49,7 +79,27 @@ else if($checkBoxMdpTemporaire==='on'){
 else{
     $hash = password_hash($motdepasse,PASSWORD_DEFAULT);
     $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '1')";
-    if ($mysqli->query($req) === TRUE) {
+    $result = $mysqli->query($req);
+
+    $idNouveauCompte = $mysqli->insert_id;
+    if($role=='invite'){
+        $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
+        foreach($tagAutorise as $tag){
+            $reqTagAutorise.= "(" . $idNouveauCompte . "," . $tag . "),";
+        }
+        $reqTagAutorise = substr($reqTagAutorise, 0, -1); 
+        $resultTagAutorise = $mysqli->query($reqTagAutorise);
+        if ($result === TRUE) {
+            echo "initialisation des tags de invité";
+        }
+        else{
+            echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
+            header('refresh:3, url= ../compte.php');
+        }
+
+    }
+    
+    if ($result === TRUE) {
         echo "<p>Création de compte réussi<br><br>Redirection dans 2s</p>";
         header('refresh:2, url= ../compte.php');
     }

@@ -351,3 +351,6 @@
     text-decoration: none;
     text-align: center;
   }
+  #tagInvite{
+    visibility: hidden;
+  }

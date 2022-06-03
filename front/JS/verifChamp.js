@@ -1,5 +1,4 @@
-var correctMdp =0;
-var correctEmail =1;
+var mdpCorrect=0;
 var inputMdp = document.getElementById("mdpCreationCompte");
 function checkMdpTemporaire() {
     const checkBox = document.getElementById('mdpTemporaire').checked;
@@ -8,15 +7,18 @@ function checkMdpTemporaire() {
         inputMdp.placeholder = 'mot de passe temporaire utilisé';
         inputMdp.value = '';
         inputMdp.style.borderColor='';
-        correctMdp =1;
+        inputMdp.required = false;
         document.getElementById('labelmdpInput').style.visibility='hidden';
+        mdpCorrect=1;
+        
     } 
     else {
         inputMdp.disabled = false;
+        inputMdp.required = true;
         inputMdp.placeholder = 'mot de passe';
-        correctMdp =0;
+        mdpCorrect=0;
     }
-    checkSubmit();
+    console.log(mdpCorrect);
     
 }
 
@@ -25,15 +27,14 @@ function checkMdp() {
     if(val.match(/[0-9]/g) && val.match( /[A-Z]/g) && val.match(/[a-z]/g) && val.match( /[^a-zA-Z\d]/g)){
         document.getElementById("labelmdpInput").style.visibility = "hidden";
         inputMdp.style.borderColor = "";
-        correctMdp=1;
+        mdpCorrect=1;
 
     }
     else{
         document.getElementById("labelmdpInput").style.visibility = "visible";
         inputMdp.style.borderColor = "red";
-        correctMdp=0;
+        mdpCorrect=0;
     }
-    checkSubmit();
 
 }
 
@@ -67,43 +68,75 @@ function checkSameMdp(){
     }
 }
 
-/*
-function checkEmail(){
-    console.log(document.getElementById('emailCreationCompte').value);
-    $.ajax({
-        type: "POST",
-        url: "back/checkEmail.php",
-        data : {'email' : document.getElementById('emailCreationCompte').value},
-        success: (data) => {
-            console.log(data);
-            if(data==='1'){
-                document.getElementById("emailIncorrect").style.visibility = "hidden";
-                document.getElementById('emailCreationCompte').style.borderColor = "";
-                console.log("mail correct");
-                correctEmail=1;
-            }
-            else{
-                document.getElementById("emailIncorrect").style.visibility = "visible";
-                document.getElementById('emailCreationCompte').style.borderColor = "red";
-                console.log("mail mauvais");
-                correctEmail=0;
-                
-            }
-            checkSubmit();
+function tagVisible(){
+    if(document.getElementById('selectRole').value=='invite'){
+        document.getElementById('tagInvite').style.visibility = 'visible';
         
-        }
-    });
-}*/
-
-function checkSubmit(){
-    if(correctMdp==1){
-        document.getElementById("submitCreationCompte").disabled = false;
-
     }
     else{
-        document.getElementById("submitCreationCompte").disabled = true;
-        
+        document.getElementById('tagInvite').style.visibility = 'hidden';
     }
-        
+}
 
+function addTag(){
+    
+    select = $("<select />").addClass("tagSelect");
+    select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
+    select.append(
+        $("<option />").attr("value", "Supprimer").text("Supprimer").css({
+            color: "red",
+            "font-weight": "bold",
+        })
+    );
+    var request = new XMLHttpRequest();
+    request.open("get", "back/tags/getTags.php", true);
+    request.send();
+    request.onload = function () {
+        console.log(JSON.parse(this.responseText));
+
+        let tags = JSON.parse(this.responseText);
+        tags.forEach(function (tag) {
+            select.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+        });
+    };
+    select.change(function (){
+        if($(this).val() == "Supprimer"){
+            $(this).remove();
+        }
+    });
+    select.insertBefore(document.getElementById('boutonAddTag'));
+    select.trigger("click");
+}
+
+function submitInfoCompte(){
+    let classSelect = document.getElementsByClassName("tagSelect")
+    let allTag= [];
+    if(document.getElementById('selectRole').value == 'invite'){
+        
+        if(classSelect.length >0){
+            for(let i=0 ; i<classSelect.length ; i++){
+                allTag.push(classSelect[i].value);
+            }
+
+        }
+    }
+    if(document.getElementById('emailCreationCompte').value && document.getElementById('prenomCreationCompte').value && document.getElementById('nomCreationCompte').value
+        && mdpCorrect=='1' && document.getElementById('descriptionCreationCompte').value && document.getElementById('selectRole').value){
+        console.log(mdpCorrect);
+        $.ajax({
+            type: "POST",
+            url: "back/dataSignUp.php",
+            data : {'email' : document.getElementById('emailCreationCompte').value, 'prenom' : document.getElementById('prenomCreationCompte').value, 'nom' : document.getElementById('nomCreationCompte').value,
+                'motDePasse' : document.getElementById('mdpCreationCompte').value, 'mdpTemporaire' : document.getElementById('mdpTemporaire').value, 'description' : document.getElementById('descriptionCreationCompte').value,
+                'role' : document.getElementById('selectRole').value, 'tags' : JSON.stringify(allTag)},
+            success: (data) => {
+                console.log(data);
+            
+            }
+        });
+    }
+    else{
+        window.alert("L'un des champs n'est pas valide");
+    }
+    
 }
