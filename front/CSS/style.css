@@ -180,19 +180,6 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-#create {
-    display: none;
-    overflow: hidden;
-    font-size: 1rem;
-    margin: 0 15px;
-    margin-top: 15px;
-    position: absolute;
-    bottom: 0;
-    height: fit-content;
-    transform: translateY(calc(100% - 55px));
-    transition: all 0.25s ease;
-}
-
 /* Gallerie */
 
 #gallery-container {
