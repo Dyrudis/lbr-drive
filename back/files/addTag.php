@@ -1,7 +1,6 @@
 <?php
+$IDFichier = $_POST['IDFichier'];
 $IDTag = $_POST['IDTag'];
-$name = $_POST['name'];
-$IDCategorie = $_POST['IDCategorie'];
 
 // Connexion à la bdd
 $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
@@ -12,10 +11,13 @@ if ($mysqli->connect_error) {
         . $mysqli->connect_error);
 }
 
-$sql = "UPDATE `tag` SET `NomTag` = '$name', `IDCategorie` = '$IDCategorie' WHERE `tag`.`IDTag` = '$IDTag'";
+// Ajout du tag dans la table classifier
+$sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES ('$IDFichier', '$IDTag')";
 $result = $mysqli->query($sql);
 
 // Vérification des erreurs
 if (!$result) {
-    die('Erreur de modification du tag : ' . $mysqli->error);
+    die('Erreur d\'ajout du tag dans la table classifier : ' . $mysqli->error);
 }
+
+echo "OK";

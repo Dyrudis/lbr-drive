@@ -38,7 +38,6 @@ while ($row = $result->fetch_assoc()) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/JS/gallery.js" defer></script>
     <script src="front/JS/barre.js" defer></script>
-    <script src="front/JS/create.js" defer></script>
 </head>
 
 <body>

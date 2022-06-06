@@ -1,10 +1,27 @@
+// Get all the tags
+var allTags = [];
 var request = new XMLHttpRequest();
-request.open("get", "back/indexLoader/loadGallery.php", true);
+request.open("get", "back/tags/getTags.php", true);
 request.send();
-request.onload = displayGallery;
+request.onload = function () {
+    allTags = JSON.parse(this.responseText);
+
+    // Get all the files
+    var request = new XMLHttpRequest();
+    request.open("get", "back/indexLoader/loadGallery.php", true);
+    request.send();
+    request.onload = displayGallery;
+};
+
 function displayGallery() {
     $("#gallery").empty();
-    console.log(this.responseText);
+
+    // If the response is a php error, print it
+    if (this.responseText.startsWith("<")) {
+        $("#gallery").text(this.responseText);
+        return;
+    }
+
     allFiles = JSON.parse(this.responseText);
     allFiles.forEach((file) => {
         displayFile(file);
@@ -12,8 +29,23 @@ function displayGallery() {
 }
 
 function displayFile(file) {
-    file.Tags = file.NomTags.split(",");
-    file.CouleurTags = file.CouleurTags.split(",");
+    let IDTags = file.IDTags.split(",");
+    let NomTags = file.NomTags.split(",");
+    let CouleurTags = file.CouleurTags.split(",");
+
+    // Create an array of objects with the tags
+    file.Tags = [];
+    for (let i = 0; i < IDTags.length; i++) {
+        file.Tags.push({
+            ID: IDTags[i],
+            Nom: NomTags[i],
+            Couleur: CouleurTags[i],
+        });
+    }
+
+    delete file.IDTags;
+    delete file.NomTags;
+    delete file.CouleurTags;
 
     let path = "./upload/" + file.IDFichier + "." + file.Extension;
 
@@ -34,11 +66,14 @@ function displayFile(file) {
     file.Tags.forEach((tag) => {
         let tagElem = $("<div>")
             .addClass("tag")
-            .html("<p>" + tag + "</p>")
-            .css("background-color", "#" + file.CouleurTags[file.Tags.indexOf(tag)]);
+            .html("<p>" + tag.Nom + "</p>")
+            .css("background-color", "#" + tag.Couleur)
+            .attr("data-id", tag.ID);
         hoverTags.append(tagElem);
     });
-    let title = $("<div>").addClass("file-hover-title").text(file.NomFichier);
+    let title = $("<div>")
+        .addClass("file-hover-title")
+        .html("<p>" + file.NomFichier + "</p>");
     let author = $("<div>")
         .addClass("file-hover-author")
         .text("de " + file.Prenom + " " + file.Nom + ", " + file.Date);
@@ -51,7 +86,16 @@ function displayFile(file) {
 
     let downloadFile = $("<img>").attr("src", "front/images/download.png");
     let deleteFile = $("<img>").attr("src", "front/images/delete.svg");
-    let addTag = $("<p>").text("+ Tag");
+    let addTag = $("<select>");
+    addTag.append($("<option>").attr("value", "0").attr("selected", "selected").attr("disabled", "disabled").text("+ Tag"));
+    allTags.forEach((tag) => {
+        addTag.append(
+            $("<option>")
+                .attr("value", tag.IDTag)
+                .text(tag.NomTag)
+                .css("background-color", "#" + tag.Couleur)
+        );
+    });
 
     actions.append(downloadFile); // FOR EVERYONE
     if (file.isEditable) {
@@ -70,7 +114,9 @@ function displayFile(file) {
 
     $("#gallery").append(container);
 
-    /* Implementation of all the actions */
+    /*-------------------------------------*\
+    |   Implementation of all the actions   |
+    \*-------------------------------------*/
 
     // On Right Click : Display actions
     container.contextmenu((e) => {
@@ -99,10 +145,6 @@ function displayFile(file) {
     // Delete button
     deleteFile.click(function () {
         if (confirm("Voulez-vous vraiment supprimer ce fichier ?")) {
-            /* let request = new XMLHttpRequest();
-            request.open("get", "back/deleteFile.php?id=" + file.IDFichier, true);
-            request.send();
-            request.onload = displayGallery; */
             let formData = new FormData();
             formData.append("IDFichier", JSON.stringify(file.IDFichier));
 
@@ -110,12 +152,41 @@ function displayFile(file) {
             request.open("post", "back/deleteFile.php", true);
             request.send(formData);
             request.onload = function () {
-                //console.log(this.responseText);
                 if (this.responseText == "Fichier supprimé") {
                     container.remove();
+                } else {
+                    console.log(this.responseText);
                 }
             };
         }
+    });
+
+    // Add tag button
+    addTag.change(function () {
+        let tagID = addTag.val();
+        tag = allTags.find((tag) => tag.IDTag == tagID);
+        if (tagID != 0) {
+            addTagToFile(file.IDFichier, tagID);
+
+            let newTag = $("<div>")
+                .addClass("tag")
+                .attr("data-id", tag.IDTag)
+                .css("background-color", "#" + tag.Couleur);
+            newTag.html("<p>" + tag.NomTag + "</p>");
+
+            let deleteTag = $("<img>").attr("src", "front/images/close.svg");
+            newTag.append(deleteTag);
+            newTag.css("cursor", "pointer");
+            newTag.click(() => {
+                deleteTagFromFile(file.IDFichier, tag.IDTag);
+                newTag.remove();
+                console.log(newTag);
+            });
+            container.find(".file-hover-tags").append(newTag);
+        }
+
+        // Reset the select
+        addTag.val(0);
     });
 }
 
@@ -175,12 +246,39 @@ function displayActions(container, file) {
     });
     container.addClass("selected");
 
-    // Only allow to delete tag if the file is editable
+    // Only allow to delete tag/edit title if the file is editable
     if (file.isEditable) {
         let deleteTag = $("<img>").attr("src", "front/images/close.svg");
         let tags = container.find(".tag");
         tags.append(deleteTag);
         tags.css("cursor", "pointer");
+        tags.click(function () {
+            deleteTagFromFile(file.IDFichier, $(this).attr("data-id"));
+            $(this).remove();
+        });
+
+        let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title");
+        container.find(".file-hover-title").append(editTitle);
+        container.find(".file-hover-title").css("cursor", "text");
+        container.find(".file-hover-title").click(function () {
+            container.find(".file-hover-title > img").remove();
+            let title = container.find(".file-hover-title > p");
+            let input = $("<input>").attr("type", "text").attr("value", title.text()).addClass("edit-title-input");
+            title.replaceWith(input);
+            input.focus();
+            input.select();
+            input.change(function () {
+                console.log("test");
+                let newTitle = input.val();
+                if (newTitle.length > 0) {
+                    editFileTitle(file.IDFichier, newTitle);
+                    title.text(newTitle);
+                    input.replaceWith(title);
+                } else {
+                    input.replaceWith(title);
+                }
+            });
+        });
     }
 }
 
@@ -190,4 +288,54 @@ function hideActions(container, file) {
     tags = container.find(".tag");
     tags.find("img").remove();
     tags.css("cursor", "default");
+    tags.off("click");
+
+    container.find(".edit-title").remove();
+    container.find(".file-hover-title").off("click");
+    container.find(".file-hover-title").css("cursor", "default");
+}
+
+function deleteTagFromFile(IDFichier, IDTag) {
+    let formData = new FormData();
+    formData.append("IDFichier", IDFichier);
+    formData.append("IDTag", IDTag);
+
+    let request = new XMLHttpRequest();
+    request.open("post", "back/files/deleteTag.php", true);
+    request.send(formData);
+    request.onload = function () {
+        if (this.responseText != "OK") {
+            console.log(this.responseText);
+        }
+    };
+}
+
+function addTagToFile(IDFichier, IDTag) {
+    let formData = new FormData();
+    formData.append("IDFichier", IDFichier);
+    formData.append("IDTag", IDTag);
+
+    let request = new XMLHttpRequest();
+    request.open("post", "back/files/addTag.php", true);
+    request.send(formData);
+    request.onload = function () {
+        if (this.responseText != "OK") {
+            console.log(this.responseText);
+        }
+    };
+}
+
+function editFileTitle(IDFichier, newTitle) {
+    let formData = new FormData();
+    formData.append("IDFichier", IDFichier);
+    formData.append("NomFichier", newTitle);
+
+    let request = new XMLHttpRequest();
+    request.open("post", "back/files/updateTitle.php", true);
+    request.send(formData);
+    request.onload = function () {
+        if (this.responseText != "OK") {
+            console.log(this.responseText);
+        }
+    };
 }
