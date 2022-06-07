@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    echo"session role : " . $_SESSION['role'];
+    if($_SESSION['role']!='admin'){
+        header('Location: index.php'); 
+    }
+?>
 <!DOCTYPE html>
 
 <html>

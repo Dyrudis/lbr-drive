@@ -13,7 +13,8 @@ if ($result->num_rows > 0) {
     $sql = "UPDATE utilisateur SET MotDePasse = '$hash', Actif= '1' WHERE IDUtilisateur = '$id'";
     $result = mysqli_query($mysqli,$sql);
     echo "Nouveau mot de passe enregistrer...<br>Redirection dans 2s";
-    header('refresh:2, url= ../compte.php');
+    $_SESSION['id']='';
+    header('refresh:2, url= ../login.php');
 }
 else{
     echo "Échec du nouveau mot de passe...<br>Redirection dans 2s";
