@@ -8,6 +8,7 @@ $prenom = $_POST['prenom'];
 $email = $_POST['email'];
 $description = $_POST['description'];
 $role = $_POST['role'];
+$checkBoxMdpTemporaire = json_decode($_POST['mdpTemporaire']);
 
 if(isset($_POST['tags'])){
     $tagAutorise = json_decode($_POST['tags']);
@@ -15,9 +16,6 @@ if(isset($_POST['tags'])){
 
 if(isset($_POST['motDePasse'])){
     $motdepasse = $_POST['motDePasse'];
-}
-if(isset($_POST['mdpTemporaire'])){
-    $checkBoxMdpTemporaire = $_POST['mdpTemporaire'];
 }
 
 if ($mysqli->connect_error) {
@@ -29,9 +27,8 @@ $req = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($req);
 if ($result->num_rows > 0) {
     echo "<p>email incorrect<br><br>Redirection dans 2s</p>";
-    header('refresh:2, url= ../compte.php');
 }
-else if($checkBoxMdpTemporaire==='on'){
+else if($checkBoxMdpTemporaire){
     $mdpTemp = rand(100000,999999);
     include('module/mailerInscription.php');
     $hash = password_hash($mdpTemp,PASSWORD_DEFAULT);
@@ -52,7 +49,6 @@ else if($checkBoxMdpTemporaire==='on'){
         }
         else{
             echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
-            header('refresh:3, url= ../compte.php');
         }
 
     }
@@ -65,15 +61,12 @@ else if($checkBoxMdpTemporaire==='on'){
         $headers[] = 'From: noreply.lbr.drive@gmail.com';
         if(mail($email, $subject, $mailerInscription, implode("\r\n", $headers))){
             echo "Email envoyé avec succès <br>Redirection dans 2s";
-            header('refresh:2, url= ../compte.php');
         }else{
             echo "Échec de l'envoi de l'email...<br>Redirection dans 3s";
-            header('refresh:3, url= ../compte.php');
         }
     }
     else{
         echo "<p>echec de la création de compte<br><br>Redirection dans 3s</p>";
-        header('refresh:3, url= ../compte.php');
     }
 }
 else{
@@ -94,18 +87,15 @@ else{
         }
         else{
             echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
-            header('refresh:3, url= ../compte.php');
         }
 
     }
     
     if ($result === TRUE) {
         echo "<p>Création de compte réussi<br><br>Redirection dans 2s</p>";
-        header('refresh:2, url= ../compte.php');
     }
     else{
         echo "<p>echec de la création de compte<br><br>Redirection dans 3s</p>";
-        header('refresh:3, url= ../compte.php');
     }
     
 }

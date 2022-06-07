@@ -1,5 +1,41 @@
 var mdpCorrect=0;
 var inputMdp = document.getElementById("mdpCreationCompte");
+var selectTag = $('#boutonAddTag')
+var allTag= [];
+var request = new XMLHttpRequest();
+    request.open("get", "back/tags/getTags.php", true);
+    request.send();
+    request.onload = function () {
+        console.log(JSON.parse(this.responseText));
+
+        let tags = JSON.parse(this.responseText);
+        tags.forEach(function (tag) {
+            selectTag.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+        });
+        selectTag.change(function(){
+            let tagID = selectTag.val();
+            tag = tags.find((tag) => tag.IDTag == tagID);
+            if(tagID!="" && !allTag.includes(tagID)){
+                let newTag = $("<div>")
+                .addClass("tag")
+                .attr("data-id", tag.IDTag)
+                .css("background-color", "#" + tag.Couleur);
+            newTag.html("<p>" + tag.NomTag + "</p>");
+
+            let deleteTag = $("<img>").attr("src", "front/images/close.svg");
+            newTag.append(deleteTag);
+            newTag.css("cursor", "pointer");
+            newTag.click(() => {
+                newTag.remove();
+                allTag = allTag.filter(findTag => findTag != tagID);
+            });
+                allTag.push(tagID);
+                $("#tagInvite").append(newTag);
+            }
+            console.log(allTag);
+            selectTag.val("");
+        });
+    };
 function checkMdpTemporaire() {
     const checkBox = document.getElementById('mdpTemporaire').checked;
     if (checkBox === true) {
@@ -78,65 +114,26 @@ function tagVisible(){
     }
 }
 
-function addTag(){
-    
-    select = $("<select />").addClass("tagSelect");
-    select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
-    select.append(
-        $("<option />").attr("value", "Supprimer").text("Supprimer").css({
-            color: "red",
-            "font-weight": "bold",
-        })
-    );
-    var request = new XMLHttpRequest();
-    request.open("get", "back/tags/getTags.php", true);
-    request.send();
-    request.onload = function () {
-        console.log(JSON.parse(this.responseText));
-
-        let tags = JSON.parse(this.responseText);
-        tags.forEach(function (tag) {
-            select.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
-        });
-    };
-    select.change(function (){
-        if($(this).val() == "Supprimer"){
-            $(this).remove();
-        }
-    });
-    select.insertBefore(document.getElementById('boutonAddTag'));
-    select.trigger("click");
-}
-
 function submitInfoCompte(){
-    let classSelect = document.getElementsByClassName("tagSelect")
-    let allTag= [];
-    if(document.getElementById('selectRole').value == 'invite'){
-        
-        if(classSelect.length >0){
-            for(let i=0 ; i<classSelect.length ; i++){
-                allTag.push(classSelect[i].value);
-            }
-
-        }
-    }
+    
     if(document.getElementById('emailCreationCompte').value && document.getElementById('prenomCreationCompte').value && document.getElementById('nomCreationCompte').value
         && mdpCorrect=='1' && document.getElementById('descriptionCreationCompte').value && document.getElementById('selectRole').value){
-        console.log(mdpCorrect);
+        
         $.ajax({
             type: "POST",
             url: "back/dataSignUp.php",
             data : {'email' : document.getElementById('emailCreationCompte').value, 'prenom' : document.getElementById('prenomCreationCompte').value, 'nom' : document.getElementById('nomCreationCompte').value,
-                'motDePasse' : document.getElementById('mdpCreationCompte').value, 'mdpTemporaire' : document.getElementById('mdpTemporaire').value, 'description' : document.getElementById('descriptionCreationCompte').value,
+                'motDePasse' : document.getElementById('mdpCreationCompte').value, 'mdpTemporaire' : JSON.stringify(document.getElementById('mdpTemporaire').checked), 'description' : document.getElementById('descriptionCreationCompte').value,
                 'role' : document.getElementById('selectRole').value, 'tags' : JSON.stringify(allTag)},
             success: (data) => {
                 console.log(data);
-            
+                
             }
         });
+        location.reload();
     }
     else{
-        window.alert("L'un des champs n'est pas valide");
-    }
-    
+
+        //window.alert("L'un des champs n'est pas valide");
+}
 }

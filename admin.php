@@ -67,10 +67,12 @@
                         </div>
 
                         <div id='tagInvite'>
-                            <p id='boutonAddTag' onclick="addTag()">+tag</p>
+                            <select id='boutonAddTag'>
+                            <option value=""> +tag </option>
+                        </select>
                         </div>
                         
-                        <input class="submit" id="submitCreationCompte" type="submit" value="Créer" onclick="submitInfoCompte()">
+                        <input type="button" class="submit" id="submitCreationCompte" value="Créer" onclick="submitInfoCompte()">
                         <input class="submit" id="mdpOublie" value="Renvoie de mail" href="reinitialiserMdp.php">
                     </form>
                     
