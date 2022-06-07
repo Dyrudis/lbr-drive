@@ -1,6 +1,5 @@
 <?php
     session_start();
-    echo"session role : " . $_SESSION['role'];
     if($_SESSION['role']!='admin'){
         header('Location: index.php'); 
     }
@@ -75,8 +74,8 @@
 
                         <div id='tagInvite'>
                             <select id='boutonAddTag'>
-                            <option value=""> +tag </option>
-                        </select>
+                                <option value=""> +tag </option>
+                            </select>
                         </div>
                         
                         <input type="button" class="submit" id="submitCreationCompte" value="Créer" onclick="submitInfoCompte()">

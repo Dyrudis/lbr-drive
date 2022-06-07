@@ -327,4 +327,35 @@
   }
   #tagInvite{
     visibility: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 5px;
   }
+  .tag {
+    background-color: rgb(118, 118, 118);
+    border-radius: 500px;
+    margin: 0;
+    padding: 6px 12px;
+    height: fit-content;
+    width: fit-content;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.tag > p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.tag img {
+    width: 15px;
+    height: 15px;
+}
