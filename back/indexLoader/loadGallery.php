@@ -73,7 +73,7 @@ while ($row = $result->fetch_assoc()) {
 $tmp = [];
 
 //Recherche de type INTERSECTION
-if ($tri) {
+if ($tri || !$tab) {
     //Filters and returns only rows containing AT LEAST the researched tags
 
     foreach ($rows as $row) {
