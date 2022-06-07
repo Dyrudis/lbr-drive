@@ -58,9 +58,16 @@
     opacity: 0.15;
   }
 
-  .box {
+  #box1 {
     position: absolute;
     top: 99%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #box2 {
+    position: absolute;
+    top: 125%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -81,7 +88,7 @@
     appearance: button;
     outline: none;
     position: relative;
-    bottom: 6px;
+    bottom: 57px;
   }
   
   .box:hover::before {
@@ -125,6 +132,7 @@
     overflow-x:hidden;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    background-color: rgb(16, 0, 16);
   }
   
   .container::-webkit-scrollbar {
@@ -229,8 +237,10 @@
       background-color: #1161EE;
       cursor: pointer;
       position: relative;
-      top: 113px;
+      top: 57px;
   }
+
+
 
   #positionModif {
     position: relative;
@@ -320,7 +330,7 @@
 
   #mdpOublie{
     position: relative;
-    top: 136px;
+    top: 80px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
