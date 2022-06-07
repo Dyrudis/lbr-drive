@@ -93,7 +93,7 @@ function displayFile(file) {
             $("<option>")
                 .attr("value", tag.IDTag)
                 .text(tag.NomTag)
-                .css("background-color", "#" + tag.Couleur)
+                .css({ "background-color": "#" + tag.Couleur, color: "white" })
         );
     });
 
