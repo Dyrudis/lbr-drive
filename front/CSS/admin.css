@@ -60,7 +60,7 @@
 
   #box1 {
     position: absolute;
-    top: 99%;
+    top: 101%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
