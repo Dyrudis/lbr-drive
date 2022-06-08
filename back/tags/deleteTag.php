@@ -1,14 +1,7 @@
 <?php
+include("../database.php");
+
 $IDTag = $_POST['IDTag'];
-
-// Connexion à la bdd
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Vérification des erreurs
-if ($mysqli->connect_error) {
-    die('Erreur lors de la connexion à la base de donnée (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 // Suppression du tag
 $sql = "DELETE FROM `tag` WHERE `tag`.`IDTag` = '$IDTag'";

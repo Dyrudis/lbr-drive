@@ -1,13 +1,6 @@
 <?php
+include("../database.php");
 session_start();
-// Connexion à la bdd
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Vérification des erreurs
-if ($mysqli->connect_error) {
-    die('Erreur lors de la connexion à la base de donnée (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 //récupération du role et de l'id du compte actuellement connecté
 $role = $_SESSION['role'];

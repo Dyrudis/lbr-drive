@@ -1,15 +1,8 @@
 <?php
+include("../database.php");
+
 $name = $_POST['name'];
 $IDCategorie = $_POST['IDCategorie'];
-
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Check for errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 // Check if the tag already exists
 $sql = "SELECT * FROM `tag` WHERE NomTag = '" . $name . "'";

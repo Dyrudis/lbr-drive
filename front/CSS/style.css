@@ -214,6 +214,8 @@ body {
 #gallery {
     column-width: 300px;
     column-count: 5;
+    column-fill: balance;
+    break-inside: avoid;
     padding: 60px 10px 10px 10px;
 }
 
@@ -351,7 +353,6 @@ body {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-
 }
 
 .tag {

@@ -1,9 +1,10 @@
 <?php
+include("../database.php");
 session_start();
+
 $id = $_SESSION['id'];
 $motdepasse = $_POST['newMdp'];
 
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 $req = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
 $result = $mysqli->query($req);

@@ -1,8 +1,6 @@
 <?php
+include("../database.php");
 session_start();
-
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 $email = $_POST['email'];
 $champ = $_POST['champ'];

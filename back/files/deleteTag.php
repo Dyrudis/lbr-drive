@@ -1,15 +1,8 @@
 <?php
+include("../database.php");
+
 $IDFichier = $_POST['IDFichier'];
 $IDTag = $_POST['IDTag'];
-
-// Connexion à la bdd
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Vérification des erreurs
-if ($mysqli->connect_error) {
-    die('Erreur lors de la connexion à la base de donnée (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 // Suppression du lien entre le fichier et le tag
 $sql = "DELETE FROM `classifier` WHERE `classifier`.`IDFichier` = '$IDFichier' AND `classifier`.`IDTag` = '$IDTag'";

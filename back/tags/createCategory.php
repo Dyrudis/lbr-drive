@@ -1,16 +1,8 @@
 <?php
+include("../database.php");
 
 $name = $_POST['name'];
 $color = $_POST['color'];
-
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Check for errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 // Check if the category already exists
 $sql = "SELECT * FROM `categorie` WHERE NomCategorie = '" . $name . "'";

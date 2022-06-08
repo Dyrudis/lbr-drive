@@ -1,8 +1,6 @@
 <?php
+include("../database.php");
 session_start();
-
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 $id = $_SESSION['id'];
 $mdpCompte = $_POST['mdpCompte'];

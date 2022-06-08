@@ -1,7 +1,6 @@
 <?php
+include("../database.php");
 session_start();
-
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];

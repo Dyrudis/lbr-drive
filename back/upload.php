@@ -42,18 +42,11 @@ if ($tmpFilePath == "") {
 |   Add all the info to the database   |
 \*------------------------------------*/
 
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Check for errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
+include("../database.php");
 
 // Insert the data into the database
-$sql = "INSERT INTO `fichier` (`IDFichier`, `Nom`, `IDUtilisateur`, `Date`, `Taille`, `Type`, `Extension`, `Duree`)
-VALUES (NULL, '" . $name . "', " . $_SESSION['id'] . ", '" . $date . "', " . $file["size"] . ", '" . $type . "', '" . $extension . "', " . $duration . ");";
+$sql = "INSERT INTO `fichier` (`IDFichier`, `Nom`, `IDUtilisateur`, `Date`, `Taille`, `Type`, `Extension`, `Duree`, `Corbeille`)
+VALUES (NULL, '$name', " . $_SESSION['id'] . ", '$date', " . $file['size'] . ", '$type', '$extension', '$duration', NULL);";
 $result = $mysqli->query($sql);
 
 // Check for errors

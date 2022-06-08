@@ -1,11 +1,12 @@
 <?php
+include("../database.php");
 session_start();
+
 $email = $_POST['email'];
 $mdpTemp = rand(100000,999999);
 include('module/mailer.php');
 include('module/mailerInscription.php');
 
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') '

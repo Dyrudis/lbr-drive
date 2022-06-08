@@ -1,14 +1,10 @@
 <?php
+include("../database.php");
 session_start();
+
 $email = $_POST['email'];
 $motdepasse = $_POST['motdepasse'];
 
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-            . $mysqli->connect_error);
-}
 
 $sql = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($sql);

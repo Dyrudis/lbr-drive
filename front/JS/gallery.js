@@ -149,10 +149,10 @@ function displayFile(file) {
             formData.append("IDFichier", JSON.stringify(file.IDFichier));
 
             let request = new XMLHttpRequest();
-            request.open("post", "back/deleteFile.php", true);
+            request.open("post", "back/files/suspendFile.php", true);
             request.send(formData);
             request.onload = function () {
-                if (this.responseText == "Fichier supprimé") {
+                if (this.responseText == "OK") {
                     container.remove();
                 } else {
                     console.log(this.responseText);

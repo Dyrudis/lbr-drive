@@ -1,8 +1,9 @@
 <?php
+include("../database.php");
 session_start();
 
 if (!isset($_POST['IDFichier'])) {
-    die("Aucun fichier à supprimer envoyé");
+    die("Aucun fichier à suspendre envoyé");
 }
 
 $IDFichier = json_decode($_POST['IDFichier']);
@@ -11,14 +12,6 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
     die("Vous n'êtes pas connecté");
 }
 
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-// Check for errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 // Get the id of the user who posted the file
 $sql = "SELECT IDUtilisateur FROM fichier WHERE IDFichier = '$IDFichier' AND IDUtilisateur = '$_SESSION[id]'";
@@ -31,17 +24,17 @@ if (!$result) {
 
 // Check for the autorization
 if ($result->num_rows == 0 && $_SESSION['role'] != 'admin' && $_SESSION['role'] != 'ecriture') {
-    die("Vous n'avez pas les droits pour supprimer ce fichier : ". $sql);
+    die("Vous n'avez pas les droits pour suspendre ce fichier : ". $sql);
 }
 
-// Delete the file
-$sql = "DELETE FROM fichier WHERE IDFichier = '$IDFichier'";
+// Add current date to the file
+$sql = "UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = '$IDFichier'";
 
 $result = $mysqli->query($sql);
 
 // Check for errors
 if (!$result) {
-    die("Erreur lors de la suppression du fichier : " . $mysqli->error);
+    die("Erreur lors de la suspension du fichier : " . $mysqli->error);
 }
 
-echo "Fichier supprimé";
+echo "OK";

@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <title>Connection</title>
+    <title>Connexion</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/CSS/login.css" />
@@ -22,7 +22,7 @@
         <h1>Se connecter</h1>
 
         <label for="username">email :</label>
-        <input type="email" name="email" placeholder="xyz@hotmail.com" id="username">
+        <input type="email" name="email" placeholder="xyz@hotmail.com" id="username" autocomplete="off">
 
         <label for="password">Mot de passe :</label>
         <input type="password" name="motdepasse" id="password" placeholder="Mot de passe">

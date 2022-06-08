@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../database.php");
 
 //tab contenant les tags pour requete
 $tab = [];
@@ -29,14 +30,7 @@ if (isset($_POST['typeTriTag'])) {
     $tri = false;
 
 }
-// Connect to the database with mysqli
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
 
-// Check for errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
 
 if (isset($_POST['fileType'])) {
     $type = $_POST['fileType'];
