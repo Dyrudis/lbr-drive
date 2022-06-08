@@ -42,7 +42,7 @@ if ($tmpFilePath == "") {
 |   Add all the info to the database   |
 \*------------------------------------*/
 
-include("../database.php");
+include("./database.php");
 
 // Insert the data into the database
 $sql = "INSERT INTO `fichier` (`IDFichier`, `Nom`, `IDUtilisateur`, `Date`, `Taille`, `Type`, `Extension`, `Duree`, `Corbeille`)
