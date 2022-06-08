@@ -11,8 +11,8 @@ $type = "invalid"; // Invalid by default
 $tmp = explode('.', $file['name']);
 $extension = end($tmp);
 
-if ($name == "Test Error") {
-    die("Erreur : Ceci est un test");
+if ($name == "") {
+    die("Erreur : Fichier sans nom");
 }
 
 // Check if the file is in a valid format
