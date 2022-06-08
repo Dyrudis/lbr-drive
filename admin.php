@@ -85,25 +85,32 @@
                 </div>
                 
                 <div class="modif active-section">
-                    <form class="contact-form" action="back/suppCompte.php" method="post">
+                    <form class="contact-form" >
                         <label>Email du compte à modifier</label>
-                        <input type="email" name="email">
+                        <input class="inputModifCompte" id="emailModifCompte" type="email" name="email">
+
+                        <div id='tagInvite2'>
+                            <select id='boutonAddTagInvite'>
+                                <option value=""> Choix d'un tag </option>
+                            </select>
+                        </div>
                         
                         <div class="box" id="box2">
-                            <select name="champ">
-                              <option value=""> choix du champ à modifier </option>
+                            <select class="inputModifCompte" id="selectChamp" name="champ" onchange="modifTagInvite()">
+                              <option value="" disabled selected> choix du champ à modifier </option>
                               <option value="Nom">Nom</option>
                               <option value="Prenom">Prenom</option>
                               <option value="Email">Email</option>
                               <option value="Role">Role</option>
                               <option value="MotDePasse">Mot de passe</option>
+                              <option value="tag">Tag visible</option>
                             </select>
                         </div>
                         
-                        <label>Nouvelle valeur</label>
-                        <input type="text" name="valeur">
+                        <label id='labelNouvelleValeur'>Nouvelle valeur</label>
+                        <input class="inputModifCompte" id='nouvelleValeur' type="text" name="valeur">
                                   
-                        <input id= "positionModif" class="submit" type="submit" value="Modifier" name="submit">	
+                        <input id= "positionModif" class="submit" type="button" value="Modifier" onclick="submitModifCompte()">	
                     </form>
                 </div>
 

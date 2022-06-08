@@ -114,8 +114,74 @@ function tagVisible(){
     }
 }
 
-function submitInfoCompte(){
-    
+function modifTagInvite(){
+    if(document.getElementById('selectChamp').value=='tag'){
+        document.getElementById('nouvelleValeur').style.visibility = 'hidden';
+        document.getElementById('labelNouvelleValeur').style.visibility = 'hidden';
+        document.getElementById('tagInvite2').style.visibility = 'visible';
+        selectTag = $('#boutonAddTagInvite')
+        var request = new XMLHttpRequest();
+        request.open("get", "back/tags/getTags.php", true);
+        request.send();
+        request.onload = function () {
+            console.log(JSON.parse(this.responseText));
+
+            let tags = JSON.parse(this.responseText);
+            tags.forEach(function (tag) {
+                selectTag.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+            });
+            selectTag.change(function(){
+                let tagID = selectTag.val();
+                tag = tags.find((tag) => tag.IDTag == tagID);
+                if(tagID!="" && !allTag.includes(tagID)){
+                    let newTag = $("<div>")
+                    .addClass("tag")
+                    .attr("data-id", tag.IDTag)
+                    .css("background-color", "#" + tag.Couleur);
+                newTag.html("<p>" + tag.NomTag + "</p>");
+
+                let deleteTag = $("<img>").attr("src", "front/images/close.svg");
+                newTag.append(deleteTag);
+                newTag.css("cursor", "pointer");
+                newTag.click(() => {
+                    newTag.remove();
+                    allTag = allTag.filter(findTag => findTag != tagID);
+                });
+                    allTag.push(tagID);
+                    $("#tagInvite2").append(newTag);
+                }
+                console.log(allTag);
+                selectTag.val("");
+            });
+        };
+    }
+    else{
+        document.getElementById('nouvelleValeur').style.visibility = 'visible';
+        document.getElementById('labelNouvelleValeur').style.visibility = 'visible';
+        document.getElementById('tagInvite2').style.visibility = 'hidden';
+    }
+}
+
+function submitModifCompte(){
+    $.ajax({
+        type: "POST",
+        url: "back/modifCompte.php",
+        data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTag)},
+        success: (data) => {
+            console.log(data);
+            window.alert(data);
+            $(".inputModifCompte").val("");
+
+        }
+        
+    });
+    allTag= [];
+    document.getElementById('nouvelleValeur').style.visibility = 'visible';
+    document.getElementById('labelNouvelleValeur').style.visibility = 'visible';
+    document.getElementById('tagInvite2').style.visibility = 'hidden';
+}
+
+function submitInfoCompte(){ 
     if(document.getElementById('emailCreationCompte').value && document.getElementById('prenomCreationCompte').value && document.getElementById('nomCreationCompte').value
         && mdpCorrect=='1' && document.getElementById('descriptionCreationCompte').value && document.getElementById('selectRole').value){
         
@@ -129,11 +195,13 @@ function submitInfoCompte(){
                 console.log(data);
                 window.alert(data);
                 $(".inputCreationCompte").val("");
+                
             }
         });
     }
     else{
 
         window.alert("L'un des champs n'est pas valide");
-}
+    }
+    allTag= [];
 }

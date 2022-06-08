@@ -245,7 +245,7 @@
 
   #positionModif {
     position: relative;
-    top: 65px;
+    top: 100px;
   }
   
   .check {
@@ -337,7 +337,7 @@
     text-align: center;
   }
 
-  #tagInvite{
+  #tagInvite , #tagInvite2{
     visibility: hidden;
     display: flex;
     flex-wrap: wrap;
@@ -373,10 +373,13 @@
     height: 15px;
 }
 
-#boutonAddTag {
-  background-color: #0563af;
+#boutonAddTag, #boutonAddTagInvite {
   box-shadow: 0px 0px 10px white;
   background-color: white;
+  width: 300px;
+  margin-top: 5px;
+  margin-left: 50px;
+  padding: 5px;
 }
 
 .wrapperscroll {
