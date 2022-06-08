@@ -64,19 +64,24 @@ while ($row = $result->fetch_assoc()) {
                 <!-- Ici s'appenderont les categories -->
             </div>
 
-            <div id="espace-admin" class="undraggable">
-                <div id="espace-admin-title" class="pointerOnHover" onclick="$('#espace-admin').toggleClass('shown');">
-                    <img src="front/images/arrow.png" class="undraggable">
-                    <h3>Espace <?php if ($_SESSION['role'] == "invite") echo "invité";
-                                else if ($_SESSION['role'] == "lecture") echo "lecteur";
-                                else echo $_SESSION['role'] ?></h3>
+            <?php if ($_SESSION['role'] != "lecture") { ?>
+                <div id="espace-admin" class="undraggable">
+                    <div id="espace-admin-title" class="pointerOnHover" onclick="$('#espace-admin').toggleClass('shown');">
+                        <img src="front/images/arrow.png" class="undraggable">
+                        <h3>Espace <?php if ($_SESSION['role'] == "invite") echo "invité";
+                                    else echo $_SESSION['role'] ?></h3>
+                    </div>
+                    <div id="espace-admin-links">
+                        <?php if ($_SESSION['role'] == "admin") { ?>
+                            <a class="pointerOnHover" href="admin.php">Gestion des comptes</a>
+                        <?php } ?>
+                        <a class="pointerOnHover" href="gestionTags.php">Gestion des tags/catégories</a>
+                        <?php if ($_SESSION['role'] == "admin") { ?>
+                            <a class="pointerOnHover">Accéder à la corbeille</a>
+                        <?php } ?>
+                    </div>
                 </div>
-                <div id="espace-admin-links">
-                    <a class="pointerOnHover" href="admin.php">Gestion des comptes</a>
-                    <a class="pointerOnHover" href="gestionTags.php">Gestion des tags/catégories</a>
-                    <a class="pointerOnHover">Accéder à la corbeille</a>
-                </div>
-            </div>
+            <?php } ?>
 
         </div>
 
