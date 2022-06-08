@@ -128,9 +128,9 @@
     height: 840px;
     margin: auto;
     margin-top: 180px; 
-    box-shadow: 0px 0px 10px 4px rgb(142, 139, 139);
+    box-shadow: 0px 0px 10px 6px rgb(142, 139, 139);
     overflow-x:hidden;
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none;  /* IE / Edge */
     scrollbar-width: none;  /* Firefox */
     background-color: rgb(16, 0, 16);
   }
@@ -215,7 +215,8 @@
       border: 0;
       border-radius: 20px;
       font-family: "Roboto",sans-serif;
-      opacity: 0.15;
+      opacity: 0.65;
+
   }
   
   input p {
@@ -237,7 +238,7 @@
       background-color: #1161EE;
       cursor: pointer;
       position: relative;
-      top: 57px;
+      top: 64px;
   }
 
 
@@ -335,13 +336,15 @@
     text-decoration: none;
     text-align: center;
   }
+
   #tagInvite{
     visibility: hidden;
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
-    gap: 5px;
+    gap: 12px;    
   }
+
   .tag {
     background-color: rgb(118, 118, 118);
     border-radius: 500px;
@@ -368,4 +371,14 @@
 .tag img {
     width: 15px;
     height: 15px;
+}
+
+#boutonAddTag {
+  background-color: #0563af;
+  box-shadow: 0px 0px 10px white;
+  background-color: white;
+}
+
+.wrapperscroll {
+  height: 200%;
 }

@@ -31,6 +31,7 @@
                     <a href="#delete" class="btn-delete active"><h2>Supression de compte</h2></a>
                 </div>
                 
+                <div class="wrapperscroll"> 
                 <div class="creation">
                     <form class="contact-form" id="formCreationCompte">
 
@@ -73,7 +74,7 @@
 
                         <div id='tagInvite'>
                             <select id='boutonAddTag'>
-                                <option value=""> +tag </option>
+                                <option value=""> tag </option>
                             </select>
                         </div>
                         
@@ -118,9 +119,8 @@
                             
                     </form>
                 </div>
-                
+                </div> 
         </div>
-    
     </div>
 </body> 
 </html>

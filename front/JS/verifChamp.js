@@ -51,7 +51,7 @@ function checkMdpTemporaire() {
     else {
         inputMdp.disabled = false;
         inputMdp.required = true;
-        inputMdp.placeholder = 'mot de passe';
+        inputMdp.placeholder = '';
         mdpCorrect=0;
     }
     console.log(mdpCorrect);
