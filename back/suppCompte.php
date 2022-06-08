@@ -19,7 +19,7 @@ if(password_verify($mdpCompte,$result->fetch_assoc()['MotDePasse'])){
 
     // INSERT LOG
     include './logRegister.php';
-    registerNewLog($id, "Suspension du compte : " . $email);
+    registerNewLog($id, "Suspension du compte : " . $emailSuppr);
 }
 else{
     echo"<p>Mot de passe incorrect<br><br>Redirection dans 2s</p>";

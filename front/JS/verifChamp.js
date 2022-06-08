@@ -128,7 +128,7 @@ function submitInfoCompte(){
             success: (data) => {
                 console.log(data);
                 window.alert(data);
-                
+                $(".inputCreationCompte").val("");
             }
         });
     }

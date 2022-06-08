@@ -51,16 +51,6 @@ if (isset($_POST['fileType'])) {
         $type = " ";
     }
 }
-
-if ($role == 'invite') {
-    $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
-    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
-    FROM classifier, fichier, utilisateur, tag, categorie , restreindre
-    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag=classifier.IDTag 
-    AND restreindre.IDUtilisateur = '$id' " . $user . " " . $type . $corbeille . " GROUP BY fichier.IDFichier;";
-
-    $result = $mysqli->query($sql);
-} else {
     // Get the data from the database
     $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
     as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
@@ -69,8 +59,6 @@ if ($role == 'invite') {
         "GROUP BY fichier.IDFichier";
 
     $result = $mysqli->query($sql);
-}
-
 
 
 // Check for errors
@@ -84,13 +72,34 @@ while ($row = $result->fetch_assoc()) {
     $rows[] = $row;
 }
 
+$result = $rows;
+
+if($role=='invite'){
+    $result = [];
+    $tagRestreint = "SELECT IDTag FROM restreindre WHERE IDUtilisateur = $id";
+    $resultTagRestreint = $mysqli->query($tagRestreint);
+    $allTagRestreint= [];
+    foreach($resultTagRestreint as $row){
+        $allTagRestreint[] = intval($row['IDTag']);
+    }
+    foreach ($rows as $row) {
+        $tags = explode(',', $row['IDTags']);
+        $tags = array_map('intval', $tags);
+        
+        if (array_intersect($tags, $allTagRestreint)) {
+            $result[] = $row;
+        }
+
+    }
+}
+
 $tmp = [];
 
 //Recherche de type INTERSECTION
-if ($tri || !$tab) {
+if ($tri || !$tab ) {
     //Filters and returns only rows containing AT LEAST the researched tags
 
-    foreach ($rows as $row) {
+    foreach ($result as $row) {
         $tags = explode(',', $row['IDTags']);
         $tags = array_map('intval', $tags);
 
@@ -104,7 +113,7 @@ if ($tri || !$tab) {
 //Recherche de type UNION
 else {
 
-    foreach ($rows as $row) {
+    foreach ($result as $row) {
         $tags = explode(',', $row['IDTags']);
         $tags = array_map('intval', $tags);
 

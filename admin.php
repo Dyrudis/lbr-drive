@@ -36,13 +36,13 @@
                     <form class="contact-form" id="formCreationCompte">
 
                         <label>Prénom</label>
-                        <input id="prenomCreationCompte" type="text" name="prenom" required>
+                        <input class="inputCreationCompte" id="prenomCreationCompte" type="text" name="prenom" required>
                         
                         <label>Nom</label>
-                        <input id="nomCreationCompte" type="text" name="nom" required>
+                        <input class="inputCreationCompte" id="nomCreationCompte" type="text" name="nom" required>
 
                         <label>Mot de passe</label>
-                        <input id="mdpCreationCompte" type="password" name="motdepasse" onblur="checkMdp()" required>
+                        <input class="inputCreationCompte" id="mdpCreationCompte" type="password" name="motdepasse" onblur="checkMdp()" required>
                         <label id="labelmdpInput" for="motdepasse">Mot de passe invalide</label>
                         
                         <div class="check">
@@ -57,10 +57,10 @@
                         </div>
 
                         <label class="emailfix">Email</label>
-                        <input id="emailCreationCompte" type="email" name="email" required>
+                        <input class="inputCreationCompte" id="emailCreationCompte" type="email" name="email" required>
                         
                         <label>Description</label>
-                        <input id="descriptionCreationCompte" type="text" name="description" required>
+                        <input class="inputCreationCompte" id="descriptionCreationCompte" type="text" name="description" required>
 
                         <div class="box" id="box1">
                             <select id='selectRole' name="role" onchange="tagVisible()" required>

@@ -44,7 +44,7 @@ while ($row = $result->fetch_assoc()) {
     <?php
     include('header.php');
     ?>
-
+    
     <div id="content">
         <div id="barre" class="undraggable">
 
