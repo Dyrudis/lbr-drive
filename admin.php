@@ -107,16 +107,16 @@
                 </div>
 
                 <div class="delete delete-section">
-                    <div class="contact-form" action="back/suppCompte.php" method="post">
+                    <form class="contact-form" action="back/suppCompte.php" method="post">
                         <label>Email du compte à supprimer</label>
-                        <input  type="email" name="email">
+                        <input  type="email" name="emailSuppr">
                         
                         <label for="mdpCompte">Veuillez entrer votre mot de passe</label>
                         <input type="password" name="mdpCompte">
                                   
                         <input class="submit" id="btn-suppr" type="submit" value="Supprimer" name="submit">	
                             
-                    </div>
+                    </form>
                 </div>
                 
         </div>
