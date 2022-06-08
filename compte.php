@@ -34,6 +34,7 @@ foreach ($infoUtilisateur as $info) {
     <link rel="stylesheet" href="front/CSS/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="front/JS/verifChamp.js" defer></script>
+    <script src="front/JS/compte.js" defer></script>
 </head>
 
 <body>
@@ -44,7 +45,15 @@ foreach ($infoUtilisateur as $info) {
     <div id="main">
         <div id="title">
             <div id="avatar-container">
-                <img class='undraggable' src="front/images/avatar.jpg" alt="avatar" id="avatar" />
+                <img class='undraggable' <?php
+                                            // Check if file exist
+                                            if (file_exists("avatars/$id")) {
+                                                echo "src='avatars/$id'";
+                                            } else {
+                                                echo "src='avatars/default.jpg'";
+                                            }
+                                            ?> alt="avatar" id="avatar" />
+                                            <p>Modifier</p>
             </div>
             <div id="title-content">
                 <div id="title-content-up">
