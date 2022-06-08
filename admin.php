@@ -24,7 +24,6 @@
 ?>
     <div class="content">
         <div class="container">
-            <img class="bg-img" src="front\images\backadmin.png" alt="">
                 <div class="menu">
                     <h1> Espace Admin</h1>
                     <a href="#creation" class="btn-creation"><h2>Création d'un compte</h2></a>
@@ -62,7 +61,7 @@
                         <label>Description</label>
                         <input id="descriptionCreationCompte" type="text" name="description" required>
 
-                        <div class="box">
+                        <div class="box" id="box1">
                             <select id='selectRole' name="role" onchange="tagVisible()" required>
                                 <option value="" disabled selected > Choix d'un role</option>
                                 <option value="lecture">Lecture</option>
