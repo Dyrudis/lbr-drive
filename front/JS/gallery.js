@@ -86,6 +86,7 @@ function displayFile(file) {
 
     let downloadFile = $("<img>").attr("src", "front/images/download.png");
     let deleteFile = $("<img>").attr("src", "front/images/delete.svg");
+    let restoreFile = $("<img>").attr("src", "front/images/restore.png");
     let addTag = $("<select>");
     addTag.append($("<option>").attr("value", "0").attr("selected", "selected").attr("disabled", "disabled").text("+ Tag"));
     allTags.forEach((tag) => {
@@ -99,7 +100,7 @@ function displayFile(file) {
 
     actions.append(downloadFile); // FOR EVERYONE
     if (file.isEditable) {
-        actions.append(deleteFile); // ONLY FOR AUTHOR OR ADMIN
+        actions.append(file.Corbeille ? restoreFile : deleteFile); // ONLY FOR AUTHOR OR ADMIN
         actions.append(addTag); // ONLY FOR AUTHOR OR ADMIN
     }
 
@@ -161,6 +162,25 @@ function displayFile(file) {
         }
     });
 
+    // Restore button
+    restoreFile.click(function () {
+        if (confirm("Voulez-vous vraiment restaurer ce fichier ?")) {
+            let formData = new FormData();
+            formData.append("IDFichier", JSON.stringify(file.IDFichier));
+
+            let request = new XMLHttpRequest();
+            request.open("post", "back/files/restoreFile.php", true);
+            request.send(formData);
+            request.onload = function () {
+                if (this.responseText == "OK") {
+                    container.remove();
+                } else {
+                    console.log(this.responseText);
+                }
+            };
+        }
+    });
+
     // Add tag button
     addTag.change(function () {
         let tagID = addTag.val();
@@ -180,7 +200,6 @@ function displayFile(file) {
             newTag.click(() => {
                 deleteTagFromFile(file.IDFichier, tag.IDTag);
                 newTag.remove();
-                console.log(newTag);
             });
             container.find(".file-hover-tags").append(newTag);
         }
@@ -268,7 +287,6 @@ function displayActions(container, file) {
             input.focus();
             input.select();
             input.change(function () {
-                console.log("test");
                 let newTitle = input.val();
                 if (newTitle.length > 0) {
                     editFileTitle(file.IDFichier, newTitle);

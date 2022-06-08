@@ -1,27 +1,23 @@
-(function (){
-
+(function () {
     let tagTab = [];
     let userToggle = false;
     let typeTriTag = "Intersection";
     let fileTypeSearching = "tout-type";
+    let corbeilleToggle = false;
 
     var request = new XMLHttpRequest();
     request.open("get", "back/tags/getTags.php", true);
     request.send();
     request.onload = displayBarre;
-    
-
 
     function displayBarre() {
-
         allTags = JSON.parse(this.responseText);
-        allTags.forEach(element => {
+        allTags.forEach((element) => {
             displayTag(element);
-        }); 
+        });
     }
 
     function displayTag(tag) {
-
         let listCategories = document.getElementById("liste-categories");
         //Check if listCategories has child with id = tag
         let child = document.getElementById(tag.NomCategorie);
@@ -38,11 +34,10 @@
         let newTag = document.createElement("div");
         newTag.className = "tag";
         newTag.innerHTML = "<p>" + tag.NomTag + "</p>";
-        newTag.style.backgroundColor = "#"+tag.Couleur;
+        newTag.style.backgroundColor = "#" + tag.Couleur;
         listToAppend.appendChild(newTag);
 
-        newTag.addEventListener("click", function() {
-
+        newTag.addEventListener("click", function () {
             //Check if tag is already selected
             if (tagTab.includes(tag.IDTag)) {
                 return;
@@ -60,7 +55,7 @@
             document.getElementById("gallery-header").appendChild(newTagCopy);
 
             //adds a listener to cancel the tag selection
-            newTagCopy.addEventListener("click", function() {
+            newTagCopy.addEventListener("click", function () {
                 document.getElementById("gallery-header").removeChild(newTagCopy);
                 tagTab.splice(tagTab.indexOf(tag.IDTag), 1);
 
@@ -69,7 +64,6 @@
 
             loadGalleryWithTags();
         });
-
     }
 
     function loadGalleryWithTags() {
@@ -77,32 +71,25 @@
         sendFormData();
     }
 
-    myFilesToggler = document.getElementById("toggle-mes-fichiers");
-    myFilesToggler.addEventListener("click", function() {
-
+    let myFilesToggler = document.getElementById("toggle-mes-fichiers");
+    myFilesToggler.addEventListener("click", function () {
         //Si recherche par fichiers possédés non-actif -> activer
         if (!myFilesToggler.classList.contains("active")) {
-            userToggle = true;
             myFilesToggler.classList.add("active");
-            
-            sendFormData();
+            userToggle = true;
         }
         //Si recherche par fichiers possédés actif -> désactiver
         else {
-            userToggle = false;
             myFilesToggler.classList.remove("active");
-
-            sendFormData();
+            userToggle = false;
         }
-
+        sendFormData();
     });
 
-    triTagToggler = document.getElementById("toggle-type-tri-tag");
-    triTagToggler.addEventListener("click", function() {
-
+    let triTagToggler = document.getElementById("toggle-type-tri-tag");
+    triTagToggler.addEventListener("click", function () {
         //Si recherche par intersection actif -> switch union
         if (triTagToggler.classList.contains("Intersection")) {
-            
             triTagToggler.classList.remove("Intersection");
             triTagToggler.classList.add("Union");
             triTagToggler.innerText = "Union";
@@ -118,9 +105,8 @@
         sendFormData();
     });
 
-    fileTypeToggler = document.getElementById("toggle-type-fichier");
-    fileTypeToggler.addEventListener("click", function() {
-
+    let fileTypeToggler = document.getElementById("toggle-type-fichier");
+    fileTypeToggler.addEventListener("click", function () {
         //Si recherche par tout type de fichiers -> recherche seulement video
         if (fileTypeToggler.classList.contains("tout-type")) {
             fileTypeToggler.classList.remove("tout-type");
@@ -145,9 +131,23 @@
         sendFormData();
     });
 
+    let corbeilleToggler = document.getElementById("toggle-corbeille");
+    corbeilleToggler.addEventListener("click", function () {
+        //Si recherche par fichiers corbeille non-actif -> activer
+        if (!corbeilleToggler.classList.contains("active")) {
+            corbeilleToggler.classList.add("active");
+            corbeilleToggle = true;
+        }
+        //Si recherche par fichiers corbeille actif -> désactiver
+        else {
+            corbeilleToggler.classList.remove("active");
+            corbeilleToggle = false;
+        }
+        sendFormData();
+    });
+
     //Fonction qui selon les variables globales fait la requete souhaitée
     function sendFormData() {
-    
         let formData = new FormData();
 
         //Ajout des tags dans le formulaire
@@ -163,12 +163,13 @@
         if (fileTypeSearching == "tout-type") formData.append("fileType", "tout-type");
         else if (fileTypeSearching == "video") formData.append("fileType", "video");
         else formData.append("fileType", "image");
-    
+
+        //Defini si la recherche concerne les fichiers de la corbeille
+        formData.append("corbeille", corbeilleToggle);
+
         let request = new XMLHttpRequest();
         request.open("post", "back/indexLoader/loadGallery.php", true);
         request.send(formData);
         request.onload = displayGallery;
     }
-
-
 })();

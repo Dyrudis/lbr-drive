@@ -72,17 +72,22 @@ body {
 }
 
 #tri-primaire {
-    padding: 15px 6px 5px 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 10px;
+    margin-top: 15px;
+}
+
+.pre-tri {
+    width: 125px;
+    height: 35px;
+    padding: 0;
 }
 
 #type-tag-tri-holder {
     display: flex;
     justify-content: space-evenly;
-}
-
-#toggle-mes-fichiers,
-#toggle-type-fichier {
-    margin-bottom: 10px;
 }
 
 .active {

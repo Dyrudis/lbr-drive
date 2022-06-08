@@ -10,6 +10,8 @@ $user = "";
 $tri = true;
 //string qui retient quel type de fichier à afficher (image, video, les deux)
 $type = "";
+//string qui retient si on affiche la corbeille ou non
+$corbeille = "AND fichier.corbeille IS NULL ";
 
 //récupération du role et de l'id du compte actuellement connecté
 $role = $_SESSION['role'];
@@ -28,7 +30,13 @@ if (isset($_POST['user'])) {
 //Get incoming string from post
 if (isset($_POST['typeTriTag'])) {
     $tri = false;
+}
 
+//Get incoming bool from post
+if (isset($_POST['corbeille'])) {
+    if ($_POST['corbeille'] == "true") {
+        $corbeille = "AND fichier.corbeille IS NOT NULL ";
+    }
 }
 
 
@@ -37,31 +45,28 @@ if (isset($_POST['fileType'])) {
     //Set $type de fichié recherché selon argument entrant
     if ($type == "image") {
         $type = "AND fichier.Type = 'image' ";
-    } 
-    else if ($type == "video") {
+    } else if ($type == "video") {
         $type = "AND fichier.Type = 'video' ";
-    }
-    else {
+    } else {
         $type = " ";
     }
 }
 
-if($role=='invite'){
+if ($role == 'invite') {
     $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
-    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
+    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
     FROM classifier, fichier, utilisateur, tag, categorie , restreindre
     WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag=classifier.IDTag 
-    AND restreindre.IDUtilisateur = '$id' " . $user . " " . $type . " GROUP BY fichier.IDFichier;";
+    AND restreindre.IDUtilisateur = '$id' " . $user . " " . $type . $corbeille . " GROUP BY fichier.IDFichier;";
 
     $result = $mysqli->query($sql);
-}
-else{
+} else {
     // Get the data from the database
     $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
-    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
+    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
     FROM classifier, fichier, utilisateur, tag, categorie
-    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type .
-    "GROUP BY fichier.IDFichier";
+    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type . $corbeille .
+        "GROUP BY fichier.IDFichier";
 
     $result = $mysqli->query($sql);
 }
@@ -102,7 +107,7 @@ else {
     foreach ($rows as $row) {
         $tags = explode(',', $row['IDTags']);
         $tags = array_map('intval', $tags);
-        
+
         if (array_intersect($tags, $tab)) {
             $tmp[] = $row;
         }
