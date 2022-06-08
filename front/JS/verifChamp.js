@@ -127,13 +127,13 @@ function submitInfoCompte(){
                 'role' : document.getElementById('selectRole').value, 'tags' : JSON.stringify(allTag)},
             success: (data) => {
                 console.log(data);
+                window.alert(data);
                 
             }
         });
-        location.reload();
     }
     else{
 
-        //window.alert("L'un des champs n'est pas valide");
+        window.alert("L'un des champs n'est pas valide");
 }
 }

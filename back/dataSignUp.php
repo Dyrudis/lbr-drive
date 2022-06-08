@@ -25,7 +25,7 @@ if ($mysqli->connect_error) {
 $req = "SELECT * FROM utilisateur WHERE Email = '$email'";
 $result = $mysqli->query($req);
 if ($result->num_rows > 0) {
-    echo "<p>email incorrect<br><br>Redirection dans 2s</p>";
+    echo "email incorrect";
 }
 else if($checkBoxMdpTemporaire){
     $mdpTemp = rand(100000,999999);
@@ -47,7 +47,7 @@ else if($checkBoxMdpTemporaire){
             echo "initialisation des tags de invité";
         }
         else{
-            echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
+            echo "Échec l'initialisation des tags de invité";
         }
 
     }
@@ -59,13 +59,13 @@ else if($checkBoxMdpTemporaire){
         $headers[] = 'Content-type: text/html; charset=utf-8';
         $headers[] = 'From: noreply.lbr.drive@gmail.com';
         if(mail($email, $subject, $mailerInscription, implode("\r\n", $headers))){
-            echo "Email envoyé avec succès <br>Redirection dans 2s";
+            echo "Email envoyé avec succès";
         }else{
-            echo "Échec de l'envoi de l'email...<br>Redirection dans 3s";
+            echo "Échec de l'envoi de l'email";
         }
     }
     else{
-        echo "<p>echec de la création de compte<br><br>Redirection dans 3s</p>";
+        echo "<p>echec de la création de compte";
     }
 }
 else{
@@ -85,16 +85,16 @@ else{
             echo "initialisation des tags de invité";
         }
         else{
-            echo "Échec l'initialisation des tags de invité...<br>Redirection dans 3s";
+            echo "Échec l'initialisation des tags de invité";
         }
 
     }
     
     if ($result === TRUE) {
-        echo "<p>Création de compte réussi<br><br>Redirection dans 2s</p>";
+        echo "Création de compte réussi";
     }
     else{
-        echo "<p>echec de la création de compte<br><br>Redirection dans 3s</p>";
+        echo "echec de la création de compte*";
     }
     
 }
