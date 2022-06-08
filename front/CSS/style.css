@@ -76,7 +76,7 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     row-gap: 10px;
-    margin-top: 15px;
+    margin: 15px 0;
 }
 
 .pre-tri {
@@ -109,12 +109,23 @@ body {
     padding-bottom: 250px;
 }
 
+#liste-categories > .barre-title {
+    margin-bottom: -10px;
+}
+
+.barre-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0 0 0;
+}
+
 .category {
     text-align: left;
 }
 
 .category > p {
     margin-bottom: 5px;
+    font-size: 1.3rem;
 }
 
 .taglist {
@@ -191,6 +202,8 @@ body {
 #gallery-container {
     overflow-y: auto;
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 #gallery-container::-webkit-scrollbar {
@@ -206,12 +219,14 @@ body {
     visibility: hidden;
     width: 0px;
 }
+#gallery-header:empty {
+    display: none;
+}
 
 #gallery-header {
-    position: absolute;
     display: inline-flex;
-    padding: 10px;
-    height: 60px;
+    padding: 10px 10px 0 10px;
+    height: min-content;
     gap: 5px;
     align-items: center;
 }
@@ -221,7 +236,7 @@ body {
     column-count: 5;
     column-fill: balance;
     break-inside: avoid;
-    padding: 60px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
 }
 
 #gallery > .file-container {

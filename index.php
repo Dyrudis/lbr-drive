@@ -48,6 +48,7 @@ while ($row = $result->fetch_assoc()) {
     <div id="content">
         <div id="barre" class="undraggable">
 
+            <h1 class="barre-title">Fonctions de tri</h1>
             <div id="tri-primaire">
                 <div class="pre-tri" id="toggle-mes-fichiers">
                     <p>Mes fichiers</p>
@@ -65,6 +66,7 @@ while ($row = $result->fetch_assoc()) {
 
             <div id="liste-categories">
                 <!-- Ici s'appenderont les categories -->
+                <h1 class="barre-title">Trier par tags</h1>
             </div>
 
             <?php if ($_SESSION['role'] != "lecture") { ?>
