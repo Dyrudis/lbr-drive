@@ -10,6 +10,10 @@ $tri = true;
 //string qui retient quel type de fichier à afficher (image, video, les deux)
 $type = "";
 
+//récupération du role et de l'id du compte actuellement connecté
+$role = $_SESSION['role'];
+$id = $_SESSION['id'];
+
 //Get incoming tab from post
 if (isset($_POST['tags'])) {
     $tab = json_decode($_POST['tags']);
@@ -17,8 +21,7 @@ if (isset($_POST['tags'])) {
 
 //Get incoming string from post
 if (isset($_POST['user'])) {
-    $user = $_SESSION['id'];
-    $user = "AND fichier.IDUtilisateur = '$user' ";
+    $user = "AND fichier.IDUtilisateur = '$id' ";
 }
 
 //Get incoming string from post
@@ -49,14 +52,26 @@ if (isset($_POST['fileType'])) {
     }
 }
 
+if($role=='invite'){
+    $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
+    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
+    FROM classifier, fichier, utilisateur, tag, categorie , restreindre
+    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag=classifier.IDTag 
+    AND restreindre.IDUtilisateur = '$id' " . $user . " " . $type . " GROUP BY fichier.IDFichier;";
 
-// Get the data from the database
-$sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
-FROM classifier, fichier, utilisateur, tag, categorie
-WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type .
-"GROUP BY fichier.IDFichier";
+    $result = $mysqli->query($sql);
+}
+else{
+    // Get the data from the database
+    $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
+    as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier
+    FROM classifier, fichier, utilisateur, tag, categorie
+    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type .
+    "GROUP BY fichier.IDFichier";
 
-$result = $mysqli->query($sql);
+    $result = $mysqli->query($sql);
+}
+
 
 
 // Check for errors

@@ -6,7 +6,7 @@
     let fileTypeSearching = "tout-type";
 
     var request = new XMLHttpRequest();
-    request.open("get", "back/indexLoader/loadBarre.php", true);
+    request.open("get", "back/tags/getTags.php", true);
     request.send();
     request.onload = displayBarre;
     
