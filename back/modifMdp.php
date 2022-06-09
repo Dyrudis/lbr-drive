@@ -4,7 +4,7 @@ session_start();
 
 $id = $_SESSION['id'];
 $mdpCompte = $_POST['ancienMdp'];
-$newMdp = $_POST['NewMdp'];
+$newMdp = $_POST['nouveauMdp'];
 
 $req = "SELECT MotDePasse FROM utilisateur WHERE IDUtilisateur = '$id'";
 $result = $mysqli->query($req);
@@ -19,9 +19,7 @@ if (password_verify($mdpCompte, $result->fetch_assoc()['MotDePasse'])) {
     include './logRegister.php';
     registerNewLog($mysqli, $id, "Modifie son mot de passe");
 
-    echo "<p>Mot de passe bien modifié<br><br>Redirection dans 2s</p>";
-    header("refresh:2; url=../compte.php");
+    echo "Succes";
 } else {
-    echo "<p>Mot de passe incorrect<br><br>Redirection dans 2s</p>";
-    header("refresh:2; url=../compte.php");
+    echo "Echec";
 }

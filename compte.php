@@ -33,8 +33,8 @@ foreach ($infoUtilisateur as $info) {
     <link rel="stylesheet" href="front/CSS/compte.css" />
     <link rel="stylesheet" href="front/CSS/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="front/JS/verifChamp.js" defer></script>
     <script src="front/JS/compte.js" defer></script>
+    <script src="front/JS/requeteAjax/requeteModifMdp.js" defer></script>
 </head>
 
 <body>
@@ -103,16 +103,17 @@ foreach ($infoUtilisateur as $info) {
                 <label for="ancienMdp">
                     <strong> Votre ancien mot de passe :</strong>
                 </label>
-                <input type="password" id="IdAncienMdp" placeholder="Ancien mot de passe" name="ancienMdp" required />
-                <label for="newMdp" id="labelNewMdp">
+                <input class='inputNouveauMdp' type="password" id="ancienMdp" placeholder="Ancien mot de passe" name="ancienMdp" required />
+
+                <label for="nouveauMdp" id="labelNouveauMdp">
                     Nouveau mot de passe :
                 </label>
-                <input type="password" id="psw" placeholder="Votre Mot de passe" name="NewMdp" onchange="checkNewMdp()" required />
-                <label id="labelVerifMdp" for="verifMdp">
+                <input class='inputNouveauMdp' type="password" id="nouveauMdp" placeholder="1 maj/1 min/1 chiffre/1 caractère" name="nouveauMdp" onchange="VerifChampMdp()" required />
+                <label for="verifNouveauMdp" id="labelVerifNouveauMdp" >
                     Confirmez le :
                 </label>
-                <input type="password" id="psw2" placeholder="Votre Mot de passe" name="verifMdp" onchange="checkSameMdp()" required />
-                <button id="submitNewMdp" type="submit" class="btn" disabled='true'>Modifier</button>
+                <input class='inputNouveauMdp' type="password" id="verifNouveauMdp" placeholder="" name="verifNouveauMdp" onchange="idemMdp()" required />
+                <button id="bouton" type="button" class="btn" onclick="submitNouveauMdp()" >Modifier</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
             </form>
         </div>

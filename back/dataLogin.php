@@ -22,8 +22,7 @@ if ($result->num_rows > 0 && password_verify($motdepasse,$mdpHash)) {
 
         // INSERT LOG
         registerNewLog($mysqli, $id, "Se connecte pour la première fois et modifie son mot de passe");
-
-        header('Location: ../nouveauMdp.php');
+        echo"firstConnect";
     }
     else if($actif=='1'){
         $_SESSION['id'] = $id;
@@ -32,24 +31,20 @@ if ($result->num_rows > 0 && password_verify($motdepasse,$mdpHash)) {
         // INSERT LOG
         registerNewLog($mysqli, $_SESSION['id'], "Utilisateur connecté");
 
-        header('Location: ../index.php'); 
+        echo"connect";
     }
     else if($actif=='0'){
         // INSERT LOG
         registerNewLog($mysqli, $id, "Tente de se connecter mais compte suspendu");
 
-        echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
-        header("refresh:2, url=../login.php");
+        echo"suspendu";
     }
 }else {
     // INSERT LOG
     registerNewLog($mysqli, -1, "Tentative de connexion de l'utilisateur : " . $email);
     
-    echo" <p>Identifiants incorrects<br><br>Redirection dans 2s</p>";
+    echo"Identifiants incorrects";
     header("refresh:2, url=../login.php");
 
 }
 
-
-// Close the connection
-$mysqli->close();

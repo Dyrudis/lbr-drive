@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="front/JS/admin.js" defer></script>
-    <script src="front/JS/verifChamp.js" defer></script>
+    <script src="front/JS/requeteAjax/verifChamp.js" defer></script>
 </head>
 
 <body id="bodyadmin">
