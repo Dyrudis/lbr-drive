@@ -36,4 +36,17 @@ if (!$result) {
     die("Erreur lors de la restauration du fichier : " . $mysqli->error);
 }
 
+// Get the name of the file
+$name = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
+$result = $mysqli->query($name);
+
+//Check for errors
+if (!$result) {
+    die("Erreur lors de la récupération du nom pour logs : " . $mysqli->error);
+}
+
+// INSERT LOG
+include '../logRegister.php';
+registerNewLog($mysqli, $_SESSION['id'], "Restaure le fichier : " . $name);
+
 echo "OK";
