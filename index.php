@@ -81,6 +81,9 @@ while ($row = $result->fetch_assoc()) {
                             <a class="pointerOnHover" href="admin.php">Gestion des comptes</a>
                         <?php } ?>
                         <a class="pointerOnHover" href="gestionTags.php">Gestion des tags/catégories</a>
+                        <?php if ($_SESSION['role'] == "admin") { ?>
+                            <a class="pointerOnHover" href="logs.php">Accéder aux logs</a>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>
