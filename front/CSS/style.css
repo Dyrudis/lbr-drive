@@ -49,6 +49,34 @@ body {
     width: 0px;
 }
 
+#selection-multiple {
+    display: none;
+}
+
+#selection-multiple p {
+    font-size: medium;
+    font-weight: normal;
+}
+
+#selection-multiple-toggle {
+    background-color: rgb(58, 69, 73);
+    border-radius: 5px;
+    margin: auto;
+    padding: 6px 12px;
+    height: fit-content;
+    width: fit-content;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+    width: 125px;
+    height: 35px;
+}
 .pre-tri {
     background-color: rgb(58, 69, 73);
     border-radius: 5px;
@@ -91,7 +119,7 @@ body {
 }
 
 .active {
-    background-color: rgb(17, 150, 208);
+    background-color: rgb(17, 150, 208) !important;
 }
 
 .Intersection {
@@ -247,6 +275,12 @@ body {
     overflow: hidden;
     background-color: #000000;
     overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+#gallery > .file-container.mutliselected {
+    border: #000000 5px solid;
+    transform: scale(0.9);
 }
 
 #gallery > .file-container > .file-preview {

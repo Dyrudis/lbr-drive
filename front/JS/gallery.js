@@ -134,6 +134,9 @@ function displayFile(file) {
     // On Left Click : Display preview
     preview.click(displayInFullscreen);
 
+    // On left Click on multiple selection mode : Select file
+    container.click(() => toggleSelectFile(container, file));
+
     // Download button
     downloadFile.click(function () {
         const a = document.createElement("a");
@@ -239,6 +242,8 @@ function formatSeconds(s) {
 }
 
 function displayInFullscreen(event) {
+    if (multiselection) return;
+
     let preview = event.currentTarget.cloneNode(true); //.children[0].cloneNode(true);
     // Select "#fullscreen-container" or create it if it doesn't exist
     let container = $("#fullscreen-container");
@@ -246,7 +251,7 @@ function displayInFullscreen(event) {
         container = $("<div>").attr("id", "fullscreen-container");
         $("body").append(container);
     }
-    // If the priview is a video, add controls
+    // If the preview is a video, add controls
     if (preview.tagName == "VIDEO") {
         preview.setAttribute("controls", "controls");
         preview.style.backgroundColor = "black";
@@ -279,7 +284,7 @@ function displayActions(container, file) {
         let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title pointerOnHover undraggable");
         container.find(".file-hover-title").append(editTitle);
         container.find(".file-hover-title").css("cursor", "text");
-        container.find(".file-hover-title").click(function () {
+        editTitle.click(function () {
             container.find(".file-hover-title > img").remove();
             let title = container.find(".file-hover-title > p");
             let input = $("<input>").attr("type", "text").attr("value", title.text()).addClass("edit-title-input");
@@ -318,7 +323,6 @@ function hideActions(container, file) {
     if (input.length > 0) {
         input.change();
     }
-
 }
 
 function deleteTagFromFile(IDFichier, IDTag) {
@@ -364,4 +368,55 @@ function editFileTitle(IDFichier, newTitle) {
             console.log(this.responseText);
         }
     };
+}
+
+/* Selection multiple */
+
+let selectedFiles = [];
+let multiselection = false;
+
+let selectionMultipleToggler = $("#selection-multiple-toggle");
+selectionMultipleToggler.click(function () {
+    if (selectionMultipleToggler.hasClass("active")) {
+        selectionMultipleToggler.removeClass("active").text("Désactivé");
+        $("#selection-multiple").css("display", "none");
+        multiselection = false;
+        $(".file-container").each(function () {
+            unselectFile($(this));
+        });
+    } else {
+        selectionMultipleToggler.addClass("active").text("Activé");
+        $("#selection-multiple").css("display", "block");
+        multiselection = true;
+    }
+});
+
+function toggleSelectFile(container, file) {
+    if (multiselection == false) return;
+
+    if (container.hasClass("mutliselected")) {
+        unselectFile(container, file);
+    } else {
+        selectFile(container, file);
+    }
+    updateSize();
+}
+
+function selectFile(container, file) {
+    container.addClass("mutliselected");
+    selectedFiles.push(file);
+}
+
+function unselectFile(container, file) {
+    container.removeClass("mutliselected");
+    selectedFiles.splice(selectedFiles.indexOf(file), 1);
+}
+
+function updateSize() {
+    let sum = 0;
+    selectedFiles.forEach((file) => {
+        sum += parseInt(file.Taille);
+    });
+
+    $("#selection-multiple-size").text(bytesToSize(sum));
 }

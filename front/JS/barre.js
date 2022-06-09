@@ -12,8 +12,9 @@
 
     function displayBarre() {
         allTags = JSON.parse(this.responseText);
-        allTags.forEach((element) => {
-            displayTag(element);
+        allTags.forEach((tag) => {
+            displayTag(tag);
+            $("#selection-multiple-select").append($("<option>").attr("value", tag.IDTag).text(tag.NomTag).css("background-color", tag.Couleur));
         });
     }
 

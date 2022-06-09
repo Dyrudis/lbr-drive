@@ -36,6 +36,7 @@ while ($row = $result->fetch_assoc()) {
     <link rel="stylesheet" href="front/CSS/style.css" />
     <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="front/JS/selectionMultiple.js" defer></script>
     <script src="front/JS/gallery.js" defer></script>
     <script src="front/JS/barre.js" defer></script>
 </head>
@@ -44,10 +45,20 @@ while ($row = $result->fetch_assoc()) {
     <?php
     include('header.php');
     ?>
-    
+
     <div id="content">
         <div id="barre" class="undraggable">
 
+            <h1 class="barre-title">Selection multiple</h1>
+            <div id="selection-multiple-toggle">Désactivé</div>
+            <div id="selection-multiple">
+                <p><span id="selection-multiple-size">513 Go</span> de fichiers selectionnés</p>
+                <select id="selection-multiple-select">
+                    <option value="" selected disabled>Tag</option>
+                </select>
+                <button>Ajouter</button>
+                <button>Supprimer</button>
+            </div>
             <h1 class="barre-title">Fonctions de tri</h1>
             <div id="tri-primaire">
                 <div class="pre-tri" id="toggle-mes-fichiers">
