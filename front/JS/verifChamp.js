@@ -119,39 +119,40 @@ function modifTagInvite(){
         document.getElementById('nouvelleValeur').style.visibility = 'hidden';
         document.getElementById('labelNouvelleValeur').style.visibility = 'hidden';
         document.getElementById('tagInvite2').style.visibility = 'visible';
-        selectTag = $('#boutonAddTagInvite')
+        var selectTag2 = $('#boutonAddTagInvite')
+        var allTag2= [];
         var request = new XMLHttpRequest();
         request.open("get", "back/tags/getTags.php", true);
         request.send();
         request.onload = function () {
             console.log(JSON.parse(this.responseText));
 
-            let tags = JSON.parse(this.responseText);
-            tags.forEach(function (tag) {
-                selectTag.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+            let tags2 = JSON.parse(this.responseText);
+            tags2.forEach(function (tag) {
+                selectTag2.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
             });
-            selectTag.change(function(){
-                let tagID = selectTag.val();
-                tag = tags.find((tag) => tag.IDTag == tagID);
-                if(tagID!="" && !allTag.includes(tagID)){
-                    let newTag = $("<div>")
+            selectTag2.change(function(){
+                let tagID2 = selectTag2.val();
+                tag = tags2.find((tag) => tag.IDTag == tagID2);
+                if(tagID2!="" && !allTag2.includes(tagID2)){
+                    let newTag2 = $("<div>")
                     .addClass("tag")
                     .attr("data-id", tag.IDTag)
                     .css("background-color", "#" + tag.Couleur);
-                newTag.html("<p>" + tag.NomTag + "</p>");
+                newTag2.html("<p>" + tag.NomTag + "</p>");
 
-                let deleteTag = $("<img>").attr("src", "front/images/close.svg");
-                newTag.append(deleteTag);
-                newTag.css("cursor", "pointer");
-                newTag.click(() => {
-                    newTag.remove();
-                    allTag = allTag.filter(findTag => findTag != tagID);
+                let deleteTag2 = $("<img>").attr("src", "front/images/close.svg");
+                newTag2.append(deleteTag2);
+                newTag2.css("cursor", "pointer");
+                newTag2.click(() => {
+                    newTag2.remove();
+                    allTag2 = allTag2.filter(findTag => findTag != tagID2);
                 });
-                    allTag.push(tagID);
-                    $("#tagInvite2").append(newTag);
+                    allTag2.push(tagID2);
+                    $("#tagInvite2").append(newTag2);
                 }
-                console.log(allTag);
-                selectTag.val("");
+                console.log(allTag2);
+                selectTag2.val("");
             });
         };
     }
@@ -166,7 +167,7 @@ function submitModifCompte(){
     $.ajax({
         type: "POST",
         url: "back/modifCompte.php",
-        data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTag)},
+        data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTag2)},
         success: (data) => {
             console.log(data);
             window.alert(data);
@@ -175,7 +176,6 @@ function submitModifCompte(){
         }
         
     });
-    allTag= [];
     document.getElementById('nouvelleValeur').style.visibility = 'visible';
     document.getElementById('labelNouvelleValeur').style.visibility = 'visible';
     document.getElementById('tagInvite2').style.visibility = 'hidden';
@@ -203,5 +203,4 @@ function submitInfoCompte(){
 
         window.alert("L'un des champs n'est pas valide");
     }
-    allTag= [];
 }
