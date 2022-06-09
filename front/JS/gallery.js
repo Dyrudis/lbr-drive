@@ -295,6 +295,7 @@ function displayActions(container, file) {
                 } else {
                     input.replaceWith(title);
                 }
+                hideActions(container);
             });
         });
     }
@@ -311,6 +312,13 @@ function hideActions(container, file) {
     container.find(".edit-title").remove();
     container.find(".file-hover-title").off("click");
     container.find(".file-hover-title").css("cursor", "default");
+
+    // If there is still an input, trigger the change event to save the title
+    let input = container.find(".edit-title-input");
+    if (input.length > 0) {
+        input.change();
+    }
+
 }
 
 function deleteTagFromFile(IDFichier, IDTag) {
