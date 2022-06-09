@@ -22,4 +22,4 @@ if (!$result) {
 
 // INSERT LOG
 include '../logRegister.php';
-registerNewLog($mysqli, $_SESSION['id'], "Catégorie modifiée : " . $oldName . " -> " . $name . ", " . $oldColor . " -> " . $color);
+registerNewLog($mysqli, $_SESSION['id'], "Catégorie modifiée : " . $oldName . " → " . $name . ", #" . $oldColor . " → #" . $color);

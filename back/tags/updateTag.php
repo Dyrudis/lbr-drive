@@ -25,4 +25,4 @@ if (!$result) {
 
 // INSERT LOG
 include '../logRegister.php';
-registerNewLog($mysqli, $_SESSION['id'], "Tag modifié : " . $oldName . " -> " . $name . ", " . $oldCategorie . " -> " . $categorie);
+registerNewLog($mysqli, $_SESSION['id'], "Tag modifié : " . $oldName . " → " . $name . ", " . $oldCategorie . " → " . $categorie);
