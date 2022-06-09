@@ -19,7 +19,7 @@ function displayLog(log) {
 
     let nomDateDiv = $("<div>").addClass("nom-date");
     let nom = $("<p>").html(log.Prenom + "<br/>" + log.Nom);
-    let date = $("<p>").text(log.Date).addClass("date");
+    let date = $("<p>").html(formatDate(log.Date)).addClass("date");
     nomDateDiv.append(nom);
     nomDateDiv.append(date);
 
@@ -30,4 +30,20 @@ function displayLog(log) {
     logDiv.append(description);
 
     $("#logs").append(logDiv);
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = "" + d.getFullYear(),
+        hours = "" + d.getHours(),
+        minutes = "" + d.getMinutes();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+    if (hours.length < 2) hours = "0" + hours;
+    if (minutes.length < 2) minutes = "0" + minutes;
+
+    return "le " + [day, month, year].join("/") + "<br/>à " + [hours, minutes].join(":");
 }
