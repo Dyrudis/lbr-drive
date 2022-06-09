@@ -2,6 +2,7 @@ var mdpCorrect=0;
 var inputMdp = document.getElementById("mdpCreationCompte");
 var selectTag = $('#boutonAddTag')
 var allTag= [];
+var allTag2= [];
 var request = new XMLHttpRequest();
     request.open("get", "back/tags/getTags.php", true);
     request.send();
@@ -120,7 +121,6 @@ function modifTagInvite(){
         document.getElementById('labelNouvelleValeur').style.visibility = 'hidden';
         document.getElementById('tagInvite2').style.visibility = 'visible';
         var selectTag2 = $('#boutonAddTagInvite')
-        var allTag2= [];
         var request = new XMLHttpRequest();
         request.open("get", "back/tags/getTags.php", true);
         request.send();

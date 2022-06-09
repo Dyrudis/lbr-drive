@@ -14,7 +14,9 @@ if ($champ == 'tag') {
         $id = $info['IDUtilisateur'];
         $role = $info['Role'];
     }
-    if ($role == 'invite') {
+    if($role=='invite'){
+        $reqDelete = "DELETE FROM restreindre WHERE IDUtilisateur = $id";
+        $resultDelete = $mysqli->query($reqDelete);
         $tagAutorise = json_decode($_POST['tags']);
         $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
         foreach ($tagAutorise as $tag) {
