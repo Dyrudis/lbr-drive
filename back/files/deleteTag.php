@@ -11,7 +11,7 @@ $tagName = "SELECT NomTag FROM tag WHERE IDTag = '$IDTag'";
 $tagName = $mysqli->query($tagName)->fetch_assoc()['NomTag'];
 
 //Check for errors
-if (!$result) {
+if (!$tagName) {
     die("Erreur lors de la récupération du nom du tag pour logs : " . $mysqli->error);
 }
 
