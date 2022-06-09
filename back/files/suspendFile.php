@@ -18,8 +18,8 @@ $sql = "SELECT IDUtilisateur FROM fichier WHERE IDFichier = '$IDFichier' AND IDU
 $result = $mysqli->query($sql);
 
 // Get the name of the file
-$fileName = "SELECT NomFichier FROM fichier WHERE IDFichier = '$IDFichier'";
-$fileName = $mysqli->query($fileName)->fetch_assoc()['NomFichier'];
+$fileName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
+$fileName = $mysqli->query($fileName)->fetch_assoc()['Nom'];
 
 // Check for errors
 if (!$result) {
