@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
     $headers[] = 'Content-type: text/html; charset=utf-8';
     $headers[] = 'From: noreply.lbr.drive@gmail.com';
     if(mail($email, $subject, $mailer, implode("\r\n", $headers))){
-      echo "Email envoyé avec succès à <br>Redirection dans 2s";
+      echo "Email envoyé avec succès<br>Redirection dans 2s";
       header('refresh:2, url= ../login.php');
     }else{
       echo "Échec de l'envoi de l'email...<br>Redirection dans 2s";
@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
     }
   }
   else{
-      echo "Échec de l'envoi de l'email, votre compte est banni...<br>Redirection dans 3s";
+      echo "Échec de l'envoi de l'email, votre compte est suspendu...<br>Redirection dans 3s";
       header('refresh:3, url= ../reinitialiserMdp.php');
   }
 }

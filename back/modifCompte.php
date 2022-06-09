@@ -25,15 +25,15 @@ if ($champ == 'tag') {
         $reqTagAutorise = substr($reqTagAutorise, 0, -1);
         $resultTagAutorise = $mysqli->query($reqTagAutorise);
         if ($resultTagAutorise === TRUE) {
-            echo "l'ajout des tags a été un succes";
+            echo "Tags autorisés modifiés";
 
             // INSERT LOG
             registerNewLog($mysqli, $_SESSION['id'], "Modification des tags autorisés pour l'invité " . $email);
         } else {
-            echo "Échec de l'ajout des tags ";
+            echo "Échec de la modification des tags autorisés";
         }
     } else {
-        echo "le compte n'est pas un compte invite";
+        echo "Le compte n'est pas un compte invité";
     }
 } else {
     if ($champ == 'MotDePasse') $valeur = password_hash($valeur, PASSWORD_DEFAULT);
@@ -42,12 +42,12 @@ if ($champ == 'tag') {
     $result = mysqli_query($mysqli, $sql);
 
     if ($result === TRUE) {
-        echo "modification du compte réussie avec succès";
+        echo "Modification du compte réussie";
 
         // INSERT LOG
         if($champ != "Email") registerNewLog($mysqli, $_SESSION['id'], "Modification de l'adresse email de l'utilisateur " . $email . " pour : " . $valeur);
         else registerNewLog($mysqli, $_SESSION['id'], "Modification du champ : " . $champ . " pour l'utilisateur : " . $email);
     } else {
-        echo "echec de la modification du compte";
+        echo "Echec de la modification du compte";
     }
 }
