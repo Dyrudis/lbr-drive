@@ -4,6 +4,15 @@ session_start();
 
 $IDTag = $_POST['IDTag'];
 
+//Get tag name
+$tagName = "SELECT NomTag FROM tag WHERE IDTag = '$IDTag'";
+$tagName = $mysqli->query($tagName)->fetch_assoc()['NomTag'];
+
+//check for errors
+if (!$tagName) {
+    die("Erreur lors de la récupération nom tag pour logs : " . $mysqli->error);
+}
+
 // Suppression du tag
 $sql = "DELETE FROM `tag` WHERE `tag`.`IDTag` = '$IDTag'";
 $result = $mysqli->query($sql);
@@ -15,7 +24,7 @@ if (!$result) {
 
 // INSERT LOG
 include '../logRegister.php';
-registerNewLog($mysqli, $_SESSION['id'], "Tag supprimé : " . $name);
+registerNewLog($mysqli, $_SESSION['id'], "Tag supprimé : " . $tagName);
 
 // Suppression des liens entre tag et fichier
 $sql = "DELETE FROM `classifier` WHERE `classifier`.`IDTag` = '$IDTag'";

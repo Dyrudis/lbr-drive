@@ -11,10 +11,10 @@ if ($NomFichier == "") {
 
 //Get the name of the file
 $oldName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$result = $mysqli->query($oldName);
+$oldName = $mysqli->query($oldName)->fetch_assoc()['Nom'];
 
 //Check for errors
-if (!$result) {
+if (!$oldName) {
     die("Erreur lors de la récupération du nom pour logs : " . $mysqli->error);
 }
 
@@ -29,6 +29,6 @@ if (!$result) {
 
 // INSERT LOG
 include '../logRegister.php';
-registerNewLog($mysqli, $_SESSION['id'], "Modifie le nom du fichier : " . $oldName . " -> " . $NomFichier);
+registerNewLog($mysqli, $_SESSION['id'], "Modifie le nom du fichier : " . $oldName . " → " . $NomFichier);
 
 echo "OK";

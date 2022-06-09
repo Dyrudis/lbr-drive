@@ -276,7 +276,7 @@ function displayActions(container, file) {
             $(this).remove();
         });
 
-        let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title");
+        let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title pointerOnHover");
         container.find(".file-hover-title").append(editTitle);
         container.find(".file-hover-title").css("cursor", "text");
         container.find(".file-hover-title").click(function () {

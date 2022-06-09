@@ -8,7 +8,7 @@ $IDTag = $_POST['IDTag'];
 
 //Get the name of the tag
 $tagName = "SELECT NomTag FROM tag WHERE IDTag = '$IDTag'";
-$result = $mysqli->query($tagName);
+$tagName = $mysqli->query($tagName)->fetch_assoc()['NomTag'];
 
 //Check for errors
 if (!$result) {
@@ -46,10 +46,10 @@ if ($result->num_rows == 0) {
 
 //Get the name of the file
 $fileName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$result = $mysqli->query($fileName);
+$fileName = $mysqli->query($fileName)->fetch_assoc()['Nom'];
 
 //Check for errors
-if (!$result) {
+if (!$fileName) {
     die("Erreur lors de la récupération du nom du fichier pour logs : " . $mysqli->error);
 }
 
