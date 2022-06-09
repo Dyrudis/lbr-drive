@@ -168,7 +168,7 @@
         formData.append("corbeille", corbeilleToggle);
 
         let request = new XMLHttpRequest();
-        request.open("post", "back/indexLoader/loadGallery.php", true);
+        request.open("post", "back/files/getFiles.php", true);
         request.send(formData);
         request.onload = displayGallery;
     }

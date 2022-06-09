@@ -8,7 +8,7 @@ request.onload = function () {
 
     // Get all the files
     var request = new XMLHttpRequest();
-    request.open("get", "back/indexLoader/loadGallery.php", true);
+    request.open("get", "back/files/getFiles.php", true);
     request.send();
     request.onload = displayGallery;
 };
