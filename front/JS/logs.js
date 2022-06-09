@@ -9,25 +9,58 @@ request.onload = function () {
     });
 };
 
+let userTrieur = $('#userTri').on('input', function () {
+
+    $('.log').each(function () {
+
+        if ($(this).find('.nom').text().toLowerCase().includes(userTrieur.val().toLowerCase())) {
+            if ($(this).find('.description').text().toLowerCase().includes(contentTrieur.val().toLowerCase())) {
+                $(this).show();
+            }
+        } else {
+            $(this).hide();
+        }
+    });
+
+});
+
+let contentTrieur = $('#contentTri').on('input', function () {
+    
+    $('.log').each(function () {
+
+        if ($(this).find('.description').text().toLowerCase().includes(contentTrieur.val().toLowerCase())) {
+            if ($(this).find('.nom').text().toLowerCase().includes(userTrieur.val().toLowerCase())) {
+                $(this).show();
+            }
+        } else {
+            $(this).hide();
+        }
+    });
+
+});
+
 function displayLog(log) {
     console.log(log);
     let logDiv = $("<div>").addClass("log");
 
-    let avatarDiv = $("<div>").addClass("avatar");
-    let avatar = $("<img>").attr("src", "/avatars/" + log.IDSource);
+    //Photo de profil
+    let avatarDiv = $("<div>").addClass("avatar undraggable");
+    let avatar = $("<img>").attr("src", "/avatars/" + log.IDSource).addClass("undraggable");
     avatarDiv.append(avatar);
 
-    let nomDateDiv = $("<div>").addClass("nom-date");
+    //Nom de l'utilisateur
+    let nomDiv = $("<div>").addClass("nom");
     let nom = $("<p>").html(log.Prenom + "<br/>" + log.Nom);
-    let date = $("<p>").html(formatDate(log.Date)).addClass("date");
-    nomDateDiv.append(nom);
-    nomDateDiv.append(date);
+    nomDiv.append(nom);
 
     let description = $("<p>").text(log.Description).addClass("description");
 
+    let date = $("<p>").html(formatDate(log.Date)).addClass("date");
+
     logDiv.append(avatarDiv);
-    logDiv.append(nomDateDiv);
+    logDiv.append(nomDiv);
     logDiv.append(description);
+    logDiv.append(date);
 
     $("#logs").append(logDiv);
 }

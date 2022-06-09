@@ -2,22 +2,31 @@
     margin: 0;
 }
 
-body {
-    overflow-y: auto !important;
-}
-
 #content {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    overflow-y: auto !important;
 }
 
 h1 {
     font-size: 26px;
     font-weight: bold;
-    margin: 25px 0;
+    margin: 20px 0;
     color: #393939;
     text-align: center;
+}
+
+#triHolder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 10px 20px 10px;
+    justify-content: center;
+}
+
+#triHolder > * {
+    margin: 0 10px;
 }
 
 #logs {
@@ -31,10 +40,11 @@ h1 {
     display: flex;
     background-color: #393939;
     border-radius: 3px;
-    max-width: 750px;
+    max-width: 900px;
     color: white;
     padding: 10px;
     gap: 10px;
+    align-items: center;
 }
 
 .log .avatar {
@@ -44,6 +54,12 @@ h1 {
     min-height: 65px;
     border-radius: 50%;
     overflow: hidden;
+    margin-right: 15px;
+}
+
+.log .nom {
+    margin-right: 15px;
+    line-height: 1.5rem;
 }
 
 .log .avatar > img {
@@ -52,41 +68,23 @@ h1 {
     object-fit: cover;
 }
 
-.log .nom-date {
-    display: flex;
+.log .nom, .log .date {
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     text-align: center;
     font-weight: bold;
     width: 120px;
     min-width: 120px;
 }
 
-.log .nom-date .date {
-    font-size: 12px;
+.log .date {
+    font-size: 14px;
     color: #a4a4a4;
     font-weight: normal;
+    margin-left: auto;
 }
 
 .log .description {
-    display: flex;
-    align-items: center;
     margin-left: 15px;
 }
 
-/* media querie */
-@media screen and (max-width: 500px) {
-
-    .log {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .log .description {
-        margin-left: 0;
-        margin-top: 15px;
-        width: 100%;
-        font-size: 20px;
-    }
-}

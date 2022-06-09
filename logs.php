@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if($_SESSION['role']!='admin'){
-    header('Location: index.php'); 
+if ($_SESSION['role'] != 'admin') {
+    header('Location: index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -21,9 +21,15 @@ if($_SESSION['role']!='admin'){
     <?php
     include('header.php');
     ?>
-    
+
     <div id="content">
         <h1>Liste des actions enregistrées</h1>
+        <div id="triHolder">
+            <h3>Tri par nom d'utilisateur :</h3>
+            <input type="text" name="userTri" id="userTri" placeholder="ex : John Smith">
+            <h3>Tri par description de l'événement :</h3>
+            <input type="text" name="contentTri" id="contentTri" placeholder="ex : Modifie le ...">
+        </div>
         <div id="logs"></div>
     </div>
 </body>
