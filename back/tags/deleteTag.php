@@ -1,5 +1,6 @@
 <?php
 include("../database.php");
+session_start();
 
 $IDTag = $_POST['IDTag'];
 
@@ -11,6 +12,10 @@ $result = $mysqli->query($sql);
 if (!$result) {
     die('Erreur de supression du tag : ' . $mysqli->error);
 }
+
+// INSERT LOG
+include '../logRegister.php';
+registerNewLog($mysqli, $_SESSION['id'], "Tag supprimé : " . $name);
 
 // Suppression des liens entre tag et fichier
 $sql = "DELETE FROM `classifier` WHERE `classifier`.`IDTag` = '$IDTag'";

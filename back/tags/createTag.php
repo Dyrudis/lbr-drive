@@ -1,5 +1,6 @@
 <?php
 include("../database.php");
+session_start();
 
 $name = $_POST['name'];
 $IDCategorie = $_POST['IDCategorie'];
@@ -20,3 +21,7 @@ $result = $mysqli->query($sql);
 if (!$result) {
     die('Erreur d\'insertion de la catégorie : ' . $mysqli->error);
 }
+
+// INSERT LOG
+include '../logRegister.php';
+registerNewLog($mysqli, $_SESSION['id'], "Tag créé : " . $name);

@@ -78,6 +78,10 @@ if (!$result) {
     die('Erreur d\'insertion des tags : "' . $sql . '". ' . $mysqli->error);
 }
 
+// INSERT LOG
+include './logRegister.php';
+registerNewLog($mysqli, $_SESSION['id'], "Upload de fichier : " . $name);
+
 // Close the connection
 $mysqli->close();
 

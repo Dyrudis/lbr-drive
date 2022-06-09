@@ -1,6 +1,7 @@
 <?php
 include("./database.php");
 session_start();
+include './logRegister.php';
 
 $email = $_POST['email'];
 $motdepasse = $_POST['motdepasse'];
@@ -18,23 +19,37 @@ foreach($result as $info){
 if ($result->num_rows > 0 && password_verify($motdepasse,$mdpHash)) {
     if($actif=='2'){
         $_SESSION['id'] = $id;
+
+        // INSERT LOG
+        registerNewLog($mysqli, $id, "Se connecte pour la première fois et modifie son mot de passe");
+
         header('Location: ../nouveauMdp.php');
     }
     else if($actif=='1'){
         $_SESSION['id'] = $id;
         $_SESSION['role'] = $role;
+
+        // INSERT LOG
+        registerNewLog($mysqli, $_SESSION['id'], "Utilisateur connecté");
+
         header('Location: ../index.php'); 
     }
     else if($actif=='0'){
+        // INSERT LOG
+        registerNewLog($mysqli, $id, "Tente de se connecter mais compte suspendu");
+
         echo" <p> Votre compte est suspendu<br><br>Redirection dans 2s</p>";
         header("refresh:2, url=../login.php");
     }
 }else {
+    // INSERT LOG
+    registerNewLog($mysqli, -1, "Tentative de connexion de l'utilisateur : " . $email);
+    
     echo" <p>Identifiants incorrects<br><br>Redirection dans 2s</p>";
     header("refresh:2, url=../login.php");
 
 }
 
+
 // Close the connection
 $mysqli->close();
-?>
