@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+body {
+    overflow-y: auto !important;
+}
+
 #content {
     display: flex;
     flex-direction: column;
@@ -16,6 +20,9 @@ h1 {
 }
 
 #logs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .log {
@@ -46,7 +53,7 @@ h1 {
 .log .nom-date {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     font-weight: bold;
