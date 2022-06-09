@@ -17,12 +17,14 @@ h1 {
     font-weight: bold;
     margin: 25px 0;
     color: #393939;
+    text-align: center;
 }
 
 #logs {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: 0 auto;
 }
 
 .log {
@@ -63,7 +65,7 @@ h1 {
 
 .log .nom-date .date {
     font-size: 12px;
-    color: #A4A4A4;
+    color: #a4a4a4;
     font-weight: normal;
 }
 
@@ -71,4 +73,20 @@ h1 {
     display: flex;
     align-items: center;
     margin-left: 15px;
+}
+
+/* media querie */
+@media screen and (max-width: 500px) {
+
+    .log {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .log .description {
+        margin-left: 0;
+        margin-top: 15px;
+        width: 100%;
+        font-size: 20px;
+    }
 }
