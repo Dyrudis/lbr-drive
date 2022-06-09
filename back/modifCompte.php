@@ -7,11 +7,6 @@ $email = $_POST['email'];
 $champ = $_POST['champ'];
 $valeur = $_POST['valeur'];
 
-//IL FAUT ENCORE PERMETTRE A UN ADMIN DE RETIRER DES TAGS AUTORISES A UN INVITE
-//IL FAUT ENCORE PERMETTRE A UN ADMIN DE RETIRER DES TAGS AUTORISES A UN INVITE
-//IL FAUT ENCORE PERMETTRE A UN ADMIN DE RETIRER DES TAGS AUTORISES A UN INVITE
-//IL FAUT ENCORE PERMETTRE A UN ADMIN DE RETIRER DES TAGS AUTORISES A UN INVITE
-
 if ($champ == 'tag') {
     $reqRole = "SELECT * FROM utilisateur WHERE Email = '$email'";
     $resultRole = $mysqli->query($reqRole);
@@ -31,7 +26,7 @@ if ($champ == 'tag') {
             echo "l'ajout des tags a été un succes";
 
             // INSERT LOG
-            registerNewLog($mysqli, $_SESSION['id'], "Ajout d'un tag autorisé pour l'invité " . $email);
+            registerNewLog($mysqli, $_SESSION['id'], "Modification des tags autorisés pour l'invité " . $email);
         } else {
             echo "Échec de l'ajout des tags ";
         }
@@ -48,7 +43,8 @@ if ($champ == 'tag') {
         echo "modification du compte réussie avec succès";
 
         // INSERT LOG
-        registerNewLog($mysqli, $_SESSION['id'], "Modification du champ : " . $champ . " pour l'utilisateur : " . $email);
+        if($champ != "Email") registerNewLog($mysqli, $_SESSION['id'], "Modification de l'adresse email de l'utilisateur " . $email . " pour : " . $valeur);
+        else registerNewLog($mysqli, $_SESSION['id'], "Modification du champ : " . $champ . " pour l'utilisateur : " . $email);
     } else {
         echo "echec de la modification du compte";
     }
