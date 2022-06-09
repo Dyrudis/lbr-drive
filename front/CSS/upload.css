@@ -150,7 +150,7 @@
 .drop ul.list li:nth-child(5) {
     transition-delay: 0.56s;
 }
-.drop ul.list li img,
+.drop ul.list li > img,
 .drop ul.list li video {
     border-radius: 5px;
     width: 200px;

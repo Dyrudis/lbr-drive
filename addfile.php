@@ -73,37 +73,4 @@ if ($_SESSION['id']) {
         </svg>
     </div>
 
-    <?php
-    // Connect to the database with mysqli
-    $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
-
-    // Check for errors
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') '
-            . $mysqli->connect_error);
-    }
-
-    // Get all tags
-    $sql = "SELECT IDTag, NomTag FROM `tag`";
-    $result = $mysqli->query($sql);
-
-    echo "<div style='display:none' id='phpresult'>";
-
-    // For each tag
-    while ($row = $result->fetch_assoc()) {
-        // Get the tag name
-        $tagName = $row['NomTag'];
-
-        // Get the tag ID
-        $tagID = $row['IDTag'];
-
-        // Print the result hidden in the DOM
-        echo "" . $tagID . ":" . $tagName . ",";
-    }
-
-    echo "</div>";
-
-
-    ?>
-
 </body>

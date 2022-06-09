@@ -23,7 +23,7 @@ h1 {
 #logs {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     margin: 0 auto;
 }
 
@@ -33,7 +33,7 @@ h1 {
     border-radius: 3px;
     max-width: 750px;
     color: white;
-    padding: 15px;
+    padding: 10px;
     gap: 10px;
 }
 

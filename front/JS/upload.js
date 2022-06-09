@@ -1,11 +1,11 @@
 // Importation des tags de la bdd
 allTags = [];
-tmp = $("#phpresult").text().split(",");
-tmp.pop();
-tmp.forEach((tag) => {
-    tag = tag.split(":");
-    allTags.push({ id: tag[0], name: tag[1] });
-});
+let request = new XMLHttpRequest();
+request.open("get", "back/tags/getTags.php", true);
+request.send();
+request.onload = function () {
+    allTags = JSON.parse(this.responseText);
+};
 
 upload = [
     /*{
@@ -127,7 +127,16 @@ dropArea.on("drop", (e) => {
             });
         let small = $("<small />").text(bytesToSize(file.size));
         let tags = $("<div />").addClass("tags");
-        let addTag = $("<p />").addClass("addTag").text("+tag");
+        let addTag = $("<select />").addClass("addTag").css("width", "70px");
+        addTag.append($("<option />").attr("value", "").text("+ Tag").attr("selected", "selected").attr("disabled", "disabled"));
+        allTags.forEach((tag) => {
+            addTag.append(
+                $("<option />")
+                    .attr("value", tag.IDTag)
+                    .text(tag.NomTag)
+                    .css("background-color", "#" + tag.Couleur)
+            );
+        });
 
         preview.appendTo(li);
         tags.append(addTag);
@@ -135,31 +144,25 @@ dropArea.on("drop", (e) => {
 
         li.appendTo(list);
 
-        addTag.on("click", function (e) {
-            select = $("<select />").addClass("tagSelect");
-            options = allTags;
-            options = options.filter((e) => e.id != "0");
-            select.append($("<option />").attr("value", "Nouveau tag").attr("disabled", "disabled").attr("selected", "selected").text("Nouveau tag"));
-            select.append(
-                $("<option />").attr("value", "Supprimer").text("Supprimer").css({
-                    color: "red",
-                    "font-weight": "bold",
-                })
-            );
-            for (let i = 0; i < options.length; i++) {
-                select.append($("<option />").attr("value", options[i].id).text(options[i].name));
+        addTag.on("change", function () {
+            let tag = $(this).val();
+            let tagList = upload.find((e) => e.file == file).tags;
+            if (tag != "" && !tagList.includes(tag)) {
+                //updateTags(file, tag);
+                let newTag = $("<div />")
+                    .addClass("tag")
+                    .css("background-color", "#" + allTags.find((e) => e.IDTag == tag).Couleur);
+                newTag.append($("<p />").text(allTags.find((e) => e.IDTag == tag).NomTag));
+                newTag.append($("<img />").attr("src", "front/images/close.svg").addClass("close"));
+                newTag.on("click", function () {
+                    newTag.remove();
+                    removeTag(tag, file);
+                });
+                newTag.insertBefore(addTag);
+                insertTag(tag, file);
             }
-            select.change(function () {
-                updateTags(select.parent(), file);
-                if ($(this).val() == "Supprimer") {
-                    $(this).remove();
-                } else {
-                    $("#width_tmp_option").html($(this).find("option:selected").text());
-                    $(this).width($("#width_tmp_select").width());
-                }
-            });
-            select.insertBefore($(this));
-            select.trigger("click");
+            $(this).val("");
+            console.log(upload.find((e) => e.file == file).tags);
         });
 
         upload.push({
@@ -175,6 +178,7 @@ function updateName(name, file) {
     upload.find((e) => e.file == file).name = name;
 }
 
+// TODO : UPDATE
 function updateTags(tagsDiv, file) {
     // For each select inside tagsDiv
     let tagList = [];
@@ -185,6 +189,14 @@ function updateTags(tagsDiv, file) {
         }
     });
     upload.find((e) => e.file == file).tags = tagList;
+}
+
+function insertTag(IDTag, file) {
+    upload.find((e) => e.file == file).tags.push(IDTag);
+}
+
+function removeTag(IDTag, file) {
+    upload.find((e) => e.file == file).tags = upload.find((e) => e.file == file).tags.filter((e) => e != IDTag);
 }
 
 function linear(n) {
