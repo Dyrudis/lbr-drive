@@ -67,7 +67,7 @@
 
   #box2 {
     position: absolute;
-    top: 125%;
+    top: 133%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -299,7 +299,7 @@
       position: absolute;
       padding: 15% 13%;
       width: 74%;
-      right:0px;
+      left:0px;
       margin-right: 142px;
       transition: all 0.7s;
   }
@@ -314,7 +314,7 @@
 
   .active-section {
       position: absolute;
-       right: 750px; 
+       left: 750px; 
   }
   .remove-section {
       position: absolute;
@@ -340,6 +340,14 @@
   #tagInvite , #tagInvite2{
     visibility: hidden;
     display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 12px;    
+  }
+
+  #tagInvite2{
+    visibility: hidden;
+    display: none;
     flex-wrap: wrap;
     margin-top: 10px;
     gap: 12px;    
@@ -384,4 +392,10 @@
 
 .wrapperscroll {
   height: 200%;
+}
+
+#boxwhentag {
+  position: relative;
+  bottom: 150px;
+
 }
