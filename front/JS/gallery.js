@@ -84,9 +84,9 @@ function displayFile(file) {
     // All the actions
     let actions = $("<div>").addClass("file-hover-actions");
 
-    let downloadFile = $("<img>").attr("src", "front/images/download.png");
-    let deleteFile = $("<img>").attr("src", "front/images/delete.svg");
-    let restoreFile = $("<img>").attr("src", "front/images/restore.png");
+    let downloadFile = $("<img>").attr("src", "front/images/download.png").addClass("undraggable");
+    let deleteFile = $("<img>").attr("src", "front/images/delete.svg").addClass("undraggable");
+    let restoreFile = $("<img>").attr("src", "front/images/restore.png").addClass("undraggable");
     let addTag = $("<select>");
     addTag.append($("<option>").attr("value", "0").attr("selected", "selected").attr("disabled", "disabled").text("+ Tag"));
     allTags.forEach((tag) => {
@@ -276,7 +276,7 @@ function displayActions(container, file) {
             $(this).remove();
         });
 
-        let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title pointerOnHover");
+        let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title pointerOnHover undraggable");
         container.find(".file-hover-title").append(editTitle);
         container.find(".file-hover-title").css("cursor", "text");
         container.find(".file-hover-title").click(function () {

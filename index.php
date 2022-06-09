@@ -78,11 +78,11 @@ while ($row = $result->fetch_assoc()) {
                     </div>
                     <div id="espace-admin-links">
                         <?php if ($_SESSION['role'] == "admin") { ?>
-                            <a class="pointerOnHover" href="admin.php">Gestion des comptes</a>
+                            <a class="pointerOnHover undraggable" href="admin.php">Gestion des comptes</a>
                         <?php } ?>
-                        <a class="pointerOnHover" href="gestionTags.php">Gestion des tags/catégories</a>
+                        <a class="pointerOnHover undraggable" href="gestionTags.php">Gestion des tags/catégories</a>
                         <?php if ($_SESSION['role'] == "admin") { ?>
-                            <a class="pointerOnHover" href="logs.php">Accéder aux logs</a>
+                            <a class="pointerOnHover undraggable" href="logs.php">Accéder aux logs</a>
                         <?php } ?>
                     </div>
                 </div>
