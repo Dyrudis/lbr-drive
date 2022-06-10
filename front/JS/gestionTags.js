@@ -235,7 +235,7 @@
 
         // Ajax request to create the category
         $.ajax({
-            url: "/back/tags/createCategory.php",
+            url: "back/tags/createCategory.php",
             type: "POST",
             data: {
                 name: name,
@@ -263,7 +263,7 @@
 
         // Ajax request to create the tag
         $.ajax({
-            url: "/back/tags/createTag.php",
+            url: "back/tags/createTag.php",
             type: "POST",
             data: {
                 name: name,

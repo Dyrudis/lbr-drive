@@ -45,7 +45,7 @@ function displayLog(log) {
 
     //Photo de profil
     let avatarDiv = $("<div>").addClass("avatar undraggable");
-    let avatar = $("<img>").attr("src", "/avatars/" + log.IDSource).addClass("undraggable");
+    let avatar = $("<img>").attr("src", "avatars/" + log.IDSource).addClass("undraggable");
     avatarDiv.append(avatar);
 
     //Nom de l'utilisateur
