@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="front/JS/admin.js" defer></script>
     <script src="front/JS/requeteAjax/verifChamp.js" defer></script>
+    <script src="front/JS/requeteAjax/requeteSupprCompte.js" defer></script>
 </head>
 
 <body id="bodyadmin">
@@ -115,14 +116,14 @@
                 </div>
 
                 <div class="delete delete-section">
-                    <form class="contact-form" action="back/suppCompte.php" method="post">
-                        <label>Email du compte à supprimer</label>
-                        <input  type="email" name="emailSuppr">
+                    <form class="contact-form" >
+                        <label for="emailSuppr">Email du compte à supprimer</label>
+                        <input class="inputSupprCompte" id='emailCompteSuppr' type="email" name="emailSuppr">
                         
                         <label for="mdpCompte">Veuillez entrer votre mot de passe</label>
-                        <input type="password" name="mdpCompte">
+                        <input class="inputSupprCompte" id='motDePasse' type="password" name="mdpCompte">
                                   
-                        <input class="submit" id="btn-suppr" type="submit" value="Supprimer" name="submit">	
+                        <input class="submit" id="btn-suppr" type="button" value="Supprimer" name="submit" onclick="submitSupprCompte()">	
                             
                     </form>
                 </div>
