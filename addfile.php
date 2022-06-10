@@ -33,8 +33,8 @@ if ($_SESSION['id']) {
         <div class="drop">
 
             <div class="center">
-                <div>
-                    <span>Upload</span>
+                <div id="addFileButton">
+                    <span>Ajouter</span>
                     <div class="circle">
                         <svg viewBox="0 0 92 92" fill="currentColor">
                             <path d="M46,80 C55.3966448,80 63.9029705,76.1880913 70.0569683,70.0262831 C76.2007441,63.8747097 80,55.3810367 80,46 C80,36.6003571 76.1856584,28.0916013 70.0203842,21.9371418 C63.8692805,15.7968278 55.3780386, 12 46, 12 C36.596754, 12 28.0850784,15.8172663 21.9300655,21.9867066 C15.7939108,28.1372443 12,36.6255645 12,46 C12,55.4035343 15.8175004,63.9154436 21.9872741,70.0705007 C28.1377665,76.2063225 36.6258528,80 46,80 Z"></path>
@@ -46,12 +46,12 @@ if ($_SESSION['id']) {
                 </div>
             </div>
             <ul class="list"></ul>
-            <button id="uploadButton">Upload</button>
+            <button id="uploadButton">Envoyer</button>
             <div class="intro">
                 <h4>Déposez ici</h4>
-                <p>Drag &amp; Drop pour téléverser vos fichiers</p>
+                <p>Vous pouvez "Drag &amp; Drop" pour téléverser vos fichiers</p>
             </div>
-            <div class="hint">Drop your files to upload</div>
+            <div class="hint">Relâchez pour ajouter vos fichiers</div>
         </div>
     </div>
 

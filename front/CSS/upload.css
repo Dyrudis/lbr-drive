@@ -26,7 +26,7 @@
     position: relative;
     margin: 0 auto;
     min-height: 250px;
-    max-width: 750px;
+    max-width: 520px;
     pointer-events: none;
 }
 .drop > * {
@@ -125,7 +125,7 @@
 }
 .drop ul.list li {
     --y: 8px;
-    padding: 16px;
+    padding: 24px 5px;
     display: flex;
     align-items: center;
     opacity: 0;
@@ -133,7 +133,7 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .drop ul.list li:not(:first-child) {
-    border-top: 1px solid var(--grey-dark);
+    border-top: 1px solid rgba(0, 0, 0, .2);
 }
 .drop ul.list li:nth-child(1) {
     transition-delay: 0.24s;
@@ -142,7 +142,7 @@
     transition-delay: 0.32s;
 }
 .drop ul.list li:nth-child(3) {
-    transition-delay: 0.4s;
+    transition-delay: 0.40s;
 }
 .drop ul.list li:nth-child(4) {
     transition-delay: 0.48s;
@@ -150,32 +150,49 @@
 .drop ul.list li:nth-child(5) {
     transition-delay: 0.56s;
 }
+.drop ul.list li:nth-child(6) {
+    transition-delay: 0.64s;
+}
+.drop ul.list li:nth-child(7) {
+    transition-delay: 0.72s;
+}
+.drop ul.list li:nth-child(8) {
+    transition-delay: 0.80s;
+}
+.drop ul.list li:nth-child(9) {
+    transition-delay: 0.88s;
+}
+.drop ul.list li:nth-child(10) {
+    transition-delay: 0.96s;
+}
 .drop ul.list li > img,
 .drop ul.list li video {
-    border-radius: 5px;
+    border-radius: 0px;
     width: 200px;
+    min-width: 200px;
     height: 125px;
+    min-height: 125px;
     -o-object-fit: cover;
     object-fit: cover;
     margin-right: 12px;
-    box-shadow: 0 4px 12px var(--shadow);
 }
 .drop ul.list li .text {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 .drop ul.list li .text input {
     display: block;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 19px;
+    font-weight: 600;
     color: var(--grey-dark);
     margin-bottom: 4px;
     border: inset 1px var(--grey-dark);
-    border-radius: 2px;
     outline: none;
-    padding: 3px;
+    padding: 5px;
     margin: 0 auto 0 0;
+    width: 100%;
 }
 .drop ul.list li .text small {
     display: block;
@@ -353,6 +370,14 @@
 .drop.show .hint {
     --y: 40px;
     opacity: 0;
+}
+
+#addFileButton {
+    pointer-events: all;
+    cursor: pointer;
+}
+.dropped #addFileButton {
+    display: none;
 }
 
 #emitter {

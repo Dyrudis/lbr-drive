@@ -22,7 +22,7 @@ let dropArea = $("#drop-area"),
     list = dropContainer.children(".list");
 
 let started = false,
-    currentDistance,
+    currentDistance = 0,
     mouse = {
         x: 0,
         y: 0,
@@ -64,6 +64,30 @@ dropArea.on("dragleave", (e) => {
 });
 
 dropArea.on("drop", (e) => {
+    animate();
+    // Add the files on drop
+    for (let i = 0; i < e.originalEvent.dataTransfer.files.length; i++) {
+        addFile(e.originalEvent.dataTransfer.files[i]);
+    }
+});
+
+// Add the files when user click on the button
+document.getElementById("addFileButton").addEventListener("click", function () {
+    let fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.multiple = true;
+    fileInput.accept = "image/*, video/*";
+    fileInput.click();
+    fileInput.addEventListener("change", function () {
+        animate();
+        for (let i = 0; i < fileInput.files.length; i++) {
+            addFile(fileInput.files[i]);
+        }
+    });
+});
+
+// Animation when the user adds a file
+function animate() {
     setTimeout(() => {
         startAnimation(currentDistance, 18, 100, () => {
             dropContainer.removeClass("showDrops");
@@ -72,8 +96,6 @@ dropArea.on("drop", (e) => {
                 setTimeout(() => {
                     dropContainer.addClass("show");
                     dropContainer.removeClass("dragged");
-
-                    //Fake Upload durations
                     setTimeout(() => {
                         if (!dropContainer.hasClass("dropped")) {
                             dropContainer.addClass("dropped");
@@ -81,114 +103,96 @@ dropArea.on("drop", (e) => {
                         }
                         setTimeout(() => {
                             $("#uploadButton").css({ opacity: "1" });
-                        }, 1000);
-
-                        list.find("li .progress").each(function () {
-                            startPercent($(this), 0, 100, 1200);
-                        });
+                        }, 500);
                     }, 800);
                 }, 400);
             }, 200);
         });
-    }, 400);
+    }, 300);
+}
 
-    for (let i = 0; i < e.originalEvent.dataTransfer.files.length; i++) {
-        let file = e.originalEvent.dataTransfer.files[i];
-        let type = file.type.split("/")[0];
-        let name = file.name
-            .split(".")
-            .splice(0, file.name.split(".").length - 1)
-            .join(".");
+// Add the file to the list
+function addFile(file) {
+    let type = file.type.split("/")[0];
+    let name = file.name
+        .split(".")
+        .splice(0, file.name.split(".").length - 1)
+        .join(".");
 
-        /* Création de l'UI */
-        let li = $("<li />");
-        let preview;
-        if (type == "image") {
-            preview = $("<img />").attr("src", URL.createObjectURL(file));
-        } else {
-            preview = $("<video />");
-            let source = $("<source />").attr("src", URL.createObjectURL(file)).attr("type", file.type);
-            preview.append(source);
+    /* Création de l'UI */
+    let li = $("<li />");
+    let preview;
+    if (type == "image") {
+        preview = $("<img />").attr("src", URL.createObjectURL(file));
+    } else {
+        preview = $("<video />");
+        let source = $("<source />").attr("src", URL.createObjectURL(file)).attr("type", file.type);
+        preview.append(source);
 
-            preview.hover(function toggleControls() {
-                if (this.hasAttribute("controls")) {
-                    this.removeAttribute("controls");
-                } else {
-                    this.setAttribute("controls", "controls");
-                }
-            });
-        }
-        let text = $("<div />").addClass("text");
-        let input = $("<input />")
-            .attr("value", name)
-            .attr("placeHolder", "Nom du fichier")
-            .on("change", function () {
-                updateName($(this).val(), file);
-            });
-        let small = $("<small />").text(bytesToSize(file.size));
-        let tags = $("<div />").addClass("tags");
-        let addTag = $("<select />").addClass("addTag").css("width", "70px");
-        addTag.append($("<option />").attr("value", "").text("+ Tag").attr("selected", "selected").attr("disabled", "disabled"));
-        allTags.forEach((tag) => {
-            addTag.append(
-                $("<option />")
-                    .attr("value", tag.IDTag)
-                    .text(tag.NomTag)
-                    .css("background-color", "#" + tag.Couleur)
-            );
-        });
-
-        preview.appendTo(li);
-        tags.append(addTag);
-        text.append(input).append(tags).append(small).appendTo(li);
-
-        li.appendTo(list);
-
-        addTag.on("change", function () {
-            let tag = $(this).val();
-            let tagList = upload.find((e) => e.file == file).tags;
-            if (tag != "" && !tagList.includes(tag)) {
-                //updateTags(file, tag);
-                let newTag = $("<div />")
-                    .addClass("tag")
-                    .css("background-color", "#" + allTags.find((e) => e.IDTag == tag).Couleur);
-                newTag.append($("<p />").text(allTags.find((e) => e.IDTag == tag).NomTag));
-                newTag.append($("<img />").attr("src", "front/images/close.svg").addClass("close"));
-                newTag.on("click", function () {
-                    newTag.remove();
-                    removeTag(tag, file);
-                });
-                newTag.insertBefore(addTag);
-                insertTag(tag, file);
+        preview.hover(function toggleControls() {
+            if (this.hasAttribute("controls")) {
+                this.removeAttribute("controls");
+            } else {
+                this.setAttribute("controls", "controls");
             }
-            $(this).val("");
-            console.log(upload.find((e) => e.file == file).tags);
-        });
-
-        upload.push({
-            file: file,
-            name: name,
-            tags: [],
-            dom: li,
         });
     }
-});
+    let text = $("<div />").addClass("text");
+    let input = $("<input />")
+        .attr("value", name)
+        .attr("placeHolder", "Nom du fichier")
+        .on("change", function () {
+            updateName($(this).val(), file);
+        });
+    let small = $("<small />").text(bytesToSize(file.size));
+    let tags = $("<div />").addClass("tags");
+    let addTag = $("<select />").addClass("addTag").css("width", "70px");
+    addTag.append($("<option />").attr("value", "").text("+ Tag").attr("selected", "selected").attr("disabled", "disabled"));
+    allTags.forEach((tag) => {
+        addTag.append(
+            $("<option />")
+                .attr("value", tag.IDTag)
+                .text(tag.NomTag)
+                .css("background-color", "#" + tag.Couleur)
+        );
+    });
+
+    preview.appendTo(li);
+    tags.append(addTag);
+    text.append(input).append(tags).append(small).appendTo(li);
+
+    li.appendTo(list);
+
+    addTag.on("change", function () {
+        let tag = $(this).val();
+        let tagList = upload.find((e) => e.file == file).tags;
+        if (tag != "" && !tagList.includes(tag)) {
+            //updateTags(file, tag);
+            let newTag = $("<div />")
+                .addClass("tag")
+                .css("background-color", "#" + allTags.find((e) => e.IDTag == tag).Couleur);
+            newTag.append($("<p />").text(allTags.find((e) => e.IDTag == tag).NomTag));
+            newTag.append($("<img />").attr("src", "front/images/close.svg").addClass("close"));
+            newTag.on("click", function () {
+                newTag.remove();
+                removeTag(tag, file);
+            });
+            newTag.insertBefore(addTag);
+            insertTag(tag, file);
+        }
+        $(this).val("");
+    });
+
+    upload.push({
+        file: file,
+        name: name,
+        tags: [],
+        dom: li,
+    });
+}
 
 function updateName(name, file) {
     upload.find((e) => e.file == file).name = name;
-}
-
-// TODO : UPDATE
-function updateTags(tagsDiv, file) {
-    // For each select inside tagsDiv
-    let tagList = [];
-    tagsDiv.find("select").each(function () {
-        let value = $(this).val();
-        if (value != null && value != "Nouveau Tag" && value != "Supprimer") {
-            tagList.push($(this).val());
-        }
-    });
-    upload.find((e) => e.file == file).tags = tagList;
 }
 
 function insertTag(IDTag, file) {
@@ -284,40 +288,6 @@ function calculateRotate(elem, mX, mY) {
     return degree;
 }
 
-function startPercent(progress, from, to, duration) {
-    let stop = false,
-        dur = duration || 200,
-        start = null,
-        end = null;
-
-    function startAnim(timeStamp) {
-        start = timeStamp;
-        end = start + dur;
-        draw(timeStamp);
-    }
-
-    function draw(now) {
-        if (stop) {
-            return;
-        }
-        if (now - start >= dur) {
-            stop = true;
-        }
-        let p = (now - start) / dur;
-        val = linear(p);
-        let x = from + (to - from) * val;
-        if (!progress.hasClass("complete")) {
-            progress.find(".pie").css("strokeDasharray", (x * 2 * Math.PI * 8) / 100 + " " + 2 * Math.PI * 8);
-            if (x >= 100) {
-                progress.addClass("complete");
-            }
-        }
-        requestAnimationFrame(draw);
-    }
-
-    requestAnimationFrame(startAnim);
-}
-
 function bytesToSize(bytes) {
     if (bytes == 0) {
         return "0 Octet";
@@ -327,9 +297,11 @@ function bytesToSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-eva.replace({
-    fill: "currentColor",
-});
+
+
+/*--------------------------------*\
+|   Send the files to the server   |
+\*--------------------------------*/
 
 $("#uploadButton").on("click", () => {
     uploadEverything(upload);
@@ -386,12 +358,11 @@ function uploadFile(file, name, tags, dom) {
 }
 
 async function getDuration(file) {
-    // if it's not a video
+    // Not a video
     if (!file.type.match(/video/)) {
         return 0;
     }
 
-    // if it is a video
     var video = document.createElement("video");
     video.preload = "metadata";
     video.src = URL.createObjectURL(file);
