@@ -38,10 +38,10 @@ if (!$result) {
 
 // Get the name of the file
 $name = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$result = $mysqli->query($name);
+$name = $mysqli->query($name)->fetch_assoc()['Nom'];
 
 //Check for errors
-if (!$result) {
+if (!$name) {
     die("Erreur lors de la récupération du nom pour logs : " . $mysqli->error);
 }
 
