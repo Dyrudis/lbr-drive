@@ -1,6 +1,0 @@
-# Ignore everything in the "upload" folder and "avatars" folder
-/upload/*
-/avatars/*
-
-# Ignore the environment variables file
-/env.php
