@@ -1,14 +1,14 @@
 // Get all the tags
 var allTags = [];
 var request = new XMLHttpRequest();
-request.open("get", "back/tags/getTags.php", true);
+request.open("get", "back/tag/getTags.php", true);
 request.send();
 request.onload = function () {
     allTags = JSON.parse(this.responseText);
 
     // Get all the files
     var request = new XMLHttpRequest();
-    request.open("get", "back/files/getFiles.php", true);
+    request.open("get", "back/file/getFiles.php", true);
     request.send();
     request.onload = displayGallery;
 };
@@ -153,7 +153,7 @@ function displayFile(file) {
             formData.append("IDFichier", JSON.stringify(file.IDFichier));
 
             let request = new XMLHttpRequest();
-            request.open("post", "back/files/suspendFile.php", true);
+            request.open("post", "back/file/suspendFile.php", true);
             request.send(formData);
             request.onload = function () {
                 if (this.responseText == "OK") {
@@ -172,7 +172,7 @@ function displayFile(file) {
             formData.append("IDFichier", JSON.stringify(file.IDFichier));
 
             let request = new XMLHttpRequest();
-            request.open("post", "back/files/restoreFile.php", true);
+            request.open("post", "back/file/restoreFile.php", true);
             request.send(formData);
             request.onload = function () {
                 if (this.responseText == "OK") {
@@ -331,7 +331,7 @@ function deleteTagFromFile(IDFichier, IDTag) {
     formData.append("IDTag", IDTag);
 
     let request = new XMLHttpRequest();
-    request.open("post", "back/files/deleteTag.php", true);
+    request.open("post", "back/file/deleteTag.php", true);
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
@@ -346,7 +346,7 @@ function addTagToFile(IDFichier, IDTag) {
     formData.append("IDTag", IDTag);
 
     let request = new XMLHttpRequest();
-    request.open("post", "back/files/addTag.php", true);
+    request.open("post", "back/file/addTag.php", true);
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
@@ -361,7 +361,7 @@ function editFileTitle(IDFichier, newTitle) {
     formData.append("NomFichier", newTitle);
 
     let request = new XMLHttpRequest();
-    request.open("post", "back/files/updateTitle.php", true);
+    request.open("post", "back/file/updateTitle.php", true);
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {

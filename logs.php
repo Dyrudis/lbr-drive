@@ -11,10 +11,11 @@ if ($_SESSION['role'] != 'admin') {
     <title>Logs</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="front/CSS/style.css" />
+    <link rel="stylesheet" href="front/css/index.css" />
+    <link rel="stylesheet" href="front/css/logs.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="front/JS/logs.js" defer></script>
-    <link rel="stylesheet" href="front/CSS/logs.css">
+    <script src="front/js/logs.js" defer></script>
+    
 </head>
 
 <body>

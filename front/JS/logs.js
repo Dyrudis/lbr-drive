@@ -1,6 +1,6 @@
 // Get the logs from the server
 let request = new XMLHttpRequest();
-request.open("get", "back/getLogs.php", true);
+request.open("get", "back/log/getLogs.php", true);
 request.send();
 request.onload = function () {
     logs = JSON.parse(this.responseText);

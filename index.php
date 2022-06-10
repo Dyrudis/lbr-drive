@@ -1,29 +1,11 @@
 <?php
 session_start();
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
+include('back/database.php');
 
 if ($_SESSION['id']) {
     $id = $_SESSION['id'];
 } else {
     header("Location: login.php");
-}
-
-$query = "SELECT * FROM categorie";
-$result = $mysqli->query($query) or die($mysqli->error);
-$categories = [];
-while ($row = $result->fetch_assoc()) {
-    if ($row['IDCategorie'] != "0") {
-        $categories[] = "<option value=" . $row['IDCategorie'] . ">" . $row['NomCategorie'] . "</option>";
-    }
-}
-
-$query = "SELECT * FROM tag";
-$result = $mysqli->query($query) or die($mysqli->error);
-$tags = [];
-while ($row = $result->fetch_assoc()) {
-    if ($row['IDTag'] != "0") {
-        $tags[] = "<option value=" . $row['IDTag'] . ">" . $row['NomTag'] . "</option>";
-    }
 }
 
 ?>
@@ -33,12 +15,12 @@ while ($row = $result->fetch_assoc()) {
     <title>Espace de stockage</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="front/CSS/style.css" />
+    <link rel="stylesheet" href="front/css/index.css" />
+    <link rel="stylesheet" href="front/css/tag.css" />    
     <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="front/JS/selectionMultiple.js" defer></script>
-    <script src="front/JS/gallery.js" defer></script>
-    <script src="front/JS/barre.js" defer></script>
+    <script src="front/js/gallery.js" defer></script>
+    <script src="front/js/side.js" defer></script>
 </head>
 
 <body>
@@ -91,7 +73,7 @@ while ($row = $result->fetch_assoc()) {
                         <?php if ($_SESSION['role'] == "admin") { ?>
                             <a class="pointerOnHover undraggable" href="admin.php">Gestion des comptes</a>
                         <?php } ?>
-                        <a class="pointerOnHover undraggable" href="gestionTags.php">Gestion des tags/catégories</a>
+                        <a class="pointerOnHover undraggable" href="tagManager.php">Gestion des tags/catégories</a>
                         <?php if ($_SESSION['role'] == "admin") { ?>
                             <a class="pointerOnHover undraggable" href="logs.php">Accéder aux logs</a>
                         <?php } ?>

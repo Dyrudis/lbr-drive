@@ -9,13 +9,13 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="front/CSS/admin.css" />
+    <link rel="stylesheet" href="front/css/admin.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="front/JS/admin.js" defer></script>
-    <script src="front/JS/requeteAjax/verifChamp.js" defer></script>
-    <script src="front/JS/requeteAjax/requeteSupprCompte.js" defer></script>
+    <script src="front/js/admin.js" defer></script>
+    <script src="front/js/account/checkFields.js" defer></script>
+    <script src="front/js/account/deleteAccount.js" defer></script>
 </head>
 
 <body id="bodyadmin">
