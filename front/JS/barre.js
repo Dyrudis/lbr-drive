@@ -1,9 +1,9 @@
 (function () {
     let tagTab = [];
     let userToggle = false;
-    let typeTriTag = "Intersection";
-    let fileTypeSearching = "tout-type";
-    let corbeilleToggle = false;
+    let tagFilter = "Intersection";
+    let typeFilter = "tout-type";
+    let trashToggle = false;
 
     var request = new XMLHttpRequest();
     request.open("get", "back/tags/getTags.php", true);
@@ -94,14 +94,14 @@
             triTagToggler.classList.remove("Intersection");
             triTagToggler.classList.add("Union");
             triTagToggler.innerText = "Union";
-            typeTriTag = "Union";
+            tagFilter = "Union";
         }
         //Si recherche par union actif -> switch intersection
         else {
             triTagToggler.classList.remove("Union");
             triTagToggler.classList.add("Intersection");
             triTagToggler.innerText = "Intersection";
-            typeTriTag = "Intersection";
+            tagFilter = "Intersection";
         }
         sendFormData();
     });
@@ -112,37 +112,37 @@
         if (fileTypeToggler.classList.contains("tout-type")) {
             fileTypeToggler.classList.remove("tout-type");
             fileTypeToggler.classList.add("video");
-            fileTypeSearching = "video";
+            typeFilter = "video";
             fileTypeToggler.innerText = "Vidéo";
         }
         //Si recherche par video -> recherche seulement image
         else if (fileTypeToggler.classList.contains("video")) {
             fileTypeToggler.classList.remove("video");
             fileTypeToggler.classList.add("image");
-            fileTypeSearching = "image";
+            typeFilter = "image";
             fileTypeToggler.innerText = "Image";
         }
         //Si recherche par image -> recherche par tout type de fichiers
         else {
             fileTypeToggler.classList.remove("image");
             fileTypeToggler.classList.add("tout-type");
-            fileTypeSearching = "tout-type";
+            typeFilter = "tout-type";
             fileTypeToggler.innerText = "Image/Vidéo";
         }
         sendFormData();
     });
 
-    let corbeilleToggler = document.getElementById("toggle-corbeille");
-    corbeilleToggler.addEventListener("click", function () {
+    let trashToggler = document.getElementById("toggle-corbeille");
+    trashToggler.addEventListener("click", function () {
         //Si recherche par fichiers corbeille non-actif -> activer
-        if (!corbeilleToggler.classList.contains("active")) {
-            corbeilleToggler.classList.add("active");
-            corbeilleToggle = true;
+        if (!trashToggler.classList.contains("active")) {
+            trashToggler.classList.add("active");
+            trashToggle = true;
         }
         //Si recherche par fichiers corbeille actif -> désactiver
         else {
-            corbeilleToggler.classList.remove("active");
-            corbeilleToggle = false;
+            trashToggler.classList.remove("active");
+            trashToggle = false;
         }
         sendFormData();
     });
@@ -158,15 +158,15 @@
         if (userToggle) formData.append("user", "true");
 
         //Defini le type de recherche de tags
-        if (typeTriTag == "Union") formData.append("typeTriTag", "Union");
+        if (tagFilter == "Union") formData.append("tagFilter", "Union");
 
         //Defini le type de fichier recherché
-        if (fileTypeSearching == "tout-type") formData.append("fileType", "tout-type");
-        else if (fileTypeSearching == "video") formData.append("fileType", "video");
+        if (typeFilter == "tout-type") formData.append("fileType", "tout-type");
+        else if (typeFilter == "video") formData.append("fileType", "video");
         else formData.append("fileType", "image");
 
         //Defini si la recherche concerne les fichiers de la corbeille
-        formData.append("corbeille", corbeilleToggle);
+        formData.append("corbeille", trashToggle);
 
         let request = new XMLHttpRequest();
         request.open("post", "back/files/getFiles.php", true);

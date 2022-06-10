@@ -9,12 +9,12 @@ request.onload = function () {
     });
 };
 
-let userTrieur = $('#userTri').on('input', function () {
+let userFilter = $('#userTri').on('input', function () {
 
     $('.log').each(function () {
 
-        if ($(this).find('.nom').text().toLowerCase().includes(userTrieur.val().toLowerCase())) {
-            if ($(this).find('.description').text().toLowerCase().includes(contentTrieur.val().toLowerCase())) {
+        if ($(this).find('.nom').text().toLowerCase().includes(userFilter.val().toLowerCase())) {
+            if ($(this).find('.description').text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
                 $(this).show();
             }
         } else {
@@ -24,12 +24,12 @@ let userTrieur = $('#userTri').on('input', function () {
 
 });
 
-let contentTrieur = $('#contentTri').on('input', function () {
+let contentFilter = $('#contentTri').on('input', function () {
     
     $('.log').each(function () {
 
-        if ($(this).find('.description').text().toLowerCase().includes(contentTrieur.val().toLowerCase())) {
-            if ($(this).find('.nom').text().toLowerCase().includes(userTrieur.val().toLowerCase())) {
+        if ($(this).find('.description').text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
+            if ($(this).find('.nom').text().toLowerCase().includes(userFilter.val().toLowerCase())) {
                 $(this).show();
             }
         } else {

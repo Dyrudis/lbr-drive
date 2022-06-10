@@ -1,8 +1,8 @@
-var mdpCorrect=0;
-var inputMdp = document.getElementById("mdpCreationCompte");
-var selectTag = $('#boutonAddTag')
+var passwordState=0;
+var passwordInput = document.getElementById("mdpCreationCompte");
+var tagSelect = $('#boutonAddTag')
 var allTag= [];
-var allTag2= [];
+var allTagBis= [];
 var request = new XMLHttpRequest();
     request.open("get", "back/tags/getTags.php", true);
     request.send();
@@ -11,10 +11,10 @@ var request = new XMLHttpRequest();
 
         let tags = JSON.parse(this.responseText);
         tags.forEach(function (tag) {
-            selectTag.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+            tagSelect.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
         });
-        selectTag.change(function(){
-            let tagID = selectTag.val();
+        tagSelect.change(function(){
+            let tagID = tagSelect.val();
             tag = tags.find((tag) => tag.IDTag == tagID);
             if(tagID!="" && !allTag.includes(tagID)){
                 let newTag = $("<div>")
@@ -34,43 +34,43 @@ var request = new XMLHttpRequest();
                 $("#tagInvite").append(newTag);
             }
             console.log(allTag);
-            selectTag.val("");
+            tagSelect.val("");
         });
     };
 function checkMdpTemporaire() {
     const checkBox = document.getElementById('mdpTemporaire').checked;
     if (checkBox === true) {
-        inputMdp.disabled = true;
-        inputMdp.placeholder = 'mot de passe temporaire utilisé';
-        inputMdp.value = '';
-        inputMdp.style.borderColor='';
-        inputMdp.required = false;
+        passwordInput.disabled = true;
+        passwordInput.placeholder = 'mot de passe temporaire utilisé';
+        passwordInput.value = '';
+        passwordInput.style.borderColor='';
+        passwordInput.required = false;
         document.getElementById('labelmdpInput').style.visibility='hidden';
-        mdpCorrect=1;
+        passwordState=1;
         
     } 
     else {
-        inputMdp.disabled = false;
-        inputMdp.required = true;
-        inputMdp.placeholder = '';
-        mdpCorrect=0;
+        passwordInput.disabled = false;
+        passwordInput.required = true;
+        passwordInput.placeholder = '';
+        passwordState=0;
     }
-    console.log(mdpCorrect);
+    console.log(passwordState);
     
 }
 
 function checkMdp() {
-    const val = inputMdp.value;
+    const val = passwordInput.value;
     if(val.match(/[0-9]/g) && val.match( /[A-Z]/g) && val.match(/[a-z]/g) && val.match( /[^a-zA-Z\d]/g)){
         document.getElementById("labelmdpInput").style.visibility = "hidden";
-        inputMdp.style.borderColor = "";
-        mdpCorrect=1;
+        passwordInput.style.borderColor = "";
+        passwordState=1;
 
     }
     else{
         document.getElementById("labelmdpInput").style.visibility = "visible";
-        inputMdp.style.borderColor = "red";
-        mdpCorrect=0;
+        passwordInput.style.borderColor = "red";
+        passwordState=0;
     }
 
 }
@@ -123,7 +123,7 @@ function modifTagInvite(){
         document.getElementById('labelNouvelleValeur').style.display = 'none';
         document.getElementById('tagInvite2').style.visibility = 'visible';
         document.getElementById('tagInvite2').style.display = 'flex';
-        var selectTag2 = $('#boutonAddTagInvite')
+        var tagSelect2 = $('#boutonAddTagInvite')
         var request = new XMLHttpRequest();
         request.open("get", "back/tags/getTags.php", true);
         request.send();
@@ -132,12 +132,12 @@ function modifTagInvite(){
 
             let tags2 = JSON.parse(this.responseText);
             tags2.forEach(function (tag) {
-                selectTag2.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
+                tagSelect2.append($("<option />").attr("value", tag.IDTag).text(tag.NomTag));
             });
-            selectTag2.change(function(){
-                let tagID2 = selectTag2.val();
+            tagSelect2.change(function(){
+                let tagID2 = tagSelect2.val();
                 tag = tags2.find((tag) => tag.IDTag == tagID2);
-                if(tagID2!="" && !allTag2.includes(tagID2)){
+                if(tagID2!="" && !allTagBis.includes(tagID2)){
                     let newTag2 = $("<div>")
                     .addClass("tag")
                     .attr("data-id", tag.IDTag)
@@ -149,13 +149,13 @@ function modifTagInvite(){
                 newTag2.css("cursor", "pointer");
                 newTag2.click(() => {
                     newTag2.remove();
-                    allTag2 = allTag2.filter(findTag => findTag != tagID2);
+                    allTagBis = allTagBis.filter(findTag => findTag != tagID2);
                 });
-                    allTag2.push(tagID2);
+                    allTagBis.push(tagID2);
                     $("#tagInvite2").append(newTag2);
                 }
-                console.log(allTag2);
-                selectTag2.val("");
+                console.log(allTagBis);
+                tagSelect2.val("");
             });
         };
     }
@@ -173,7 +173,7 @@ function submitModifCompte(){
     $.ajax({
         type: "POST",
         url: "back/modifCompte.php",
-        data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTag2)},
+        data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTagBis)},
         success: (data) => {
             console.log(data);
             window.alert(data);
@@ -189,7 +189,7 @@ function submitModifCompte(){
 
 function submitInfoCompte(){ 
     if(document.getElementById('emailCreationCompte').value && document.getElementById('prenomCreationCompte').value && document.getElementById('nomCreationCompte').value
-        && mdpCorrect=='1' && document.getElementById('descriptionCreationCompte').value && document.getElementById('selectRole').value){
+        && passwordState=='1' && document.getElementById('descriptionCreationCompte').value && document.getElementById('selectRole').value){
         
         $.ajax({
             type: "POST",
