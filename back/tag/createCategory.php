@@ -1,27 +1,37 @@
 <?php
-include("../database.php");
+
+// Vérification des droits
 session_start();
+$authorized = ['admin', 'ecriture', 'invite'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour créer une catégorie");
+}
 
 $name = $_POST['name'];
 $color = $_POST['color'];
 
-// Check if the category already exists
-$sql = "SELECT * FROM `categorie` WHERE NomCategorie = '" . $name . "'";
-$result = $mysqli->query($sql);
+include("../database.php");
 
-if ($result->num_rows > 0) {
-    die("Cette catégorie existe déjà");
-}
+try {
+    // Vérification si la catégorie existe déjà
+    $stmt = $mysqli->prepare("SELECT * FROM categorie WHERE NomCategorie = ?");
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        die("La catégorie \"" . $name . "\" existe déjà");
+    }
 
-// Insert the data into the database
-$sql = "INSERT INTO `categorie` (`IDCategorie`, `NomCategorie`, `Couleur`) VALUES (NULL, '" . $name . "', '" . $color . "');";
-$result = $mysqli->query($sql);
-
-// Check for errors
-if (!$result) {
-    die('Erreur d\'insertion de la catégorie : ' . $mysqli->error);
+    // Ajout de la catégorie dans la base de données
+    $stmt = $mysqli->prepare("INSERT INTO categorie (IDCategorie, NomCategorie, Couleur) VALUES (NULL, ?, ?)");
+    $stmt->bind_param("ss", $name, $color);
+    $stmt->execute();
+} catch (mysqli_sql_exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
 // INSERT LOG
 include '../log/registerLog.php';
 registerNewLog($mysqli, $_SESSION['id'], "Catégorie créée : " . $name);
+
+die("OK");

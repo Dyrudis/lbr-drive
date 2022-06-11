@@ -1,12 +1,18 @@
 <?php
+
 include("../database.php");
 
-$sql = "SELECT * FROM `categorie` ORDER BY `categorie`.`IDCategorie` DESC";
-$result = $mysqli->query($sql);
+session_start();
+if(!isset($_SESSION['id'])) {
+    die("Vous devez être connecté pour accéder aux catégories");
+}
 
-// Check for errors
-if (!$result) {
-    die('Erreur de lecture des catégories : ' . $mysqli->error);
+try {
+    $stmt = $mysqli->prepare("SELECT * FROM categorie ORDER BY categorie.IDCategorie DESC");
+    $stmt->execute();
+    $result = $stmt->get_result();
+} catch (mysqli_sql_exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
 echo json_encode($result->fetch_all(MYSQLI_ASSOC));

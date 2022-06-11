@@ -8,7 +8,7 @@ function registerNewLog($mysqli, $id, $descr) {
 
 
     // Insert the data into the database
-    $sql = $mysqli->prepare("INSERT INTO `log` (`IDLog`, `IDSource`, `Date`, `Description`)
+    $sql = $mysqli->prepare("INSERT INTO log (IDLog, IDSource, Date, Description)
     VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)");
 
     $sql->bind_param("is", $id, $descr);

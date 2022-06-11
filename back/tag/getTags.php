@@ -1,30 +1,27 @@
 <?php
+
 include("../database.php");
+
 session_start();
+if (!isset($_SESSION['id'])) {
+    die("Vous devez être connecté pour accéder aux tags");
+}
 
-//récupération du role et de l'id du compte actuellement connecté
-$role = $_SESSION['role'];
 $id = $_SESSION['id'];
+$role = $_SESSION['role'];
 
-// Regarde si le compte est invité afin de restreindre les tags visible
-if($role == 'invite'){
-    $sql = "SELECT * FROM tag, categorie,restreindre WHERE tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag = tag.IDTag AND restreindre.IDUtilisateur = $id";
-    $result = $mysqli->query($sql);
-
-    // Check for errors
-    if (!$result) {
-        die('Erreur de lecture des tags : ' . $mysqli->error);
+try {
+    // Restriction des tags visibles si l'utilisateur est un invité
+    if ($role == 'invite') {
+        $stmt = $mysqli->prepare("SELECT * FROM tag, categorie, restreindre WHERE tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag = tag.IDTag AND restreindre.IDUtilisateur = ? ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC");
+        $stmt->bind_param("i", $id);
+    } else {
+        $stmt = $mysqli->prepare("SELECT * FROM tag, categorie WHERE tag.IDCategorie = categorie.IDCategorie ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC");
     }
+    $stmt->execute();
+    $result = $stmt->get_result();
+} catch (mysqli_sql_exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
-else{
-    $sql = "SELECT * FROM `tag`, `categorie` WHERE tag.IDCategorie = categorie.IDCategorie";
-    $result = $mysqli->query($sql);
-
-    // Check for errors
-    if (!$result) {
-        die('Erreur de lecture des tags : ' . $mysqli->error);
-    }
-}
-
 
 echo json_encode($result->fetch_all(MYSQLI_ASSOC));

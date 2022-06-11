@@ -7,10 +7,13 @@
     request.open("get", "back/tag/getCategories.php", true);
     request.send();
     request.onload = function () {
-        console.log(this.responseText);
-        console.log(JSON.parse(this.responseText));
+        try {
+            categories = JSON.parse(this.responseText);
+        } catch {
+            console.error(this.responseText);
+            return;
+        }
 
-        categories = JSON.parse(this.responseText);
         categories.forEach(function (category) {
             displayCategory(category);
             $("#categorySelected").append("<option value='" + category.IDCategorie + "'>" + category.NomCategorie + "</option>");
@@ -21,9 +24,13 @@
         request.open("get", "back/tag/getTags.php", true);
         request.send();
         request.onload = function () {
-            console.log(JSON.parse(this.responseText));
+            try {
+                tags = JSON.parse(this.responseText);
+            } catch {
+                console.error(this.responseText);
+                return;
+            }
 
-            tags = JSON.parse(this.responseText);
             tags.forEach(function (tag) {
                 displayTag(tag, categories);
             });
@@ -45,22 +52,13 @@
         newCategory.append(preview);
 
         let form = $("<form>");
-        let input = $("<input>")
-            .attr("type", "text")
-            .attr("value", category.NomCategorie)
-            .addClass("textInput");
+        let input = $("<input>").attr("type", "text").attr("value", category.NomCategorie).addClass("textInput");
         let color = $("<input>")
             .attr("type", "color")
             .attr("value", "#" + category.Couleur)
             .addClass("colorInput");
-        let confirm = $("<input>")
-            .attr("type", "button")
-            .attr("value", "Confirmer")
-            .addClass("confirmInput");
-        let remove = $("<input>")
-            .attr("type", "button")
-            .attr("value", "Supprimer")
-            .addClass("removeInput");
+        let confirm = $("<input>").attr("type", "button").attr("value", "Confirmer").addClass("confirmInput");
+        let remove = $("<input>").attr("type", "button").attr("value", "Supprimer").addClass("removeInput");
         form.append(input);
         form.append(color);
         form.append(confirm);
@@ -87,20 +85,17 @@
                     color: color.val().substring(1),
                 },
                 success: function (data) {
-                    console.log(data);
-                    location.reload();
+                    if (data != "OK") {
+                        console.error(data);
+                    } else {
+                        location.reload();
+                    }
                 },
             });
         });
 
         remove.on("click", function () {
-            if (
-                window.confirm(
-                    'Êtes-vous sûr de vouloir supprimer la catégorie "' +
-                        category.NomCategorie +
-                        '" ?'
-                )
-            ) {
+            if (window.confirm('Êtes-vous sûr de vouloir supprimer la catégorie "' + category.NomCategorie + '" ?')) {
                 $.ajax({
                     url: "back/tag/deleteCategory.php",
                     type: "POST",
@@ -108,8 +103,11 @@
                         IDCategorie: category.IDCategorie,
                     },
                     success: function (data) {
-                        console.log(data);
-                        location.reload();
+                        if (data != "OK") {
+                            console.error(data);
+                        } else {
+                            location.reload();
+                        }
                     },
                 });
             }
@@ -130,28 +128,17 @@
         newTag.append(preview);
 
         let form = $("<form>");
-        let input = $("<input>")
-            .attr("type", "text")
-            .attr("value", tag.NomTag)
-            .addClass("textInput");
+        let input = $("<input>").attr("type", "text").attr("value", tag.NomTag).addClass("textInput");
         let catInput = $("<select>").addClass("selectInput");
         categories.forEach(function (category) {
-            let option = $("<option>")
-                .attr("value", category.IDCategorie)
-                .text(category.NomCategorie);
+            let option = $("<option>").attr("value", category.IDCategorie).text(category.NomCategorie);
             if (category.IDCategorie == tag.IDCategorie) {
                 option.attr("selected", "selected");
             }
             catInput.append(option);
         });
-        let confirm = $("<input>")
-            .attr("type", "button")
-            .attr("value", "Confirmer")
-            .addClass("confirmInput");
-        let remove = $("<input>")
-            .attr("type", "button")
-            .attr("value", "Supprimer")
-            .addClass("removeInput");
+        let confirm = $("<input>").attr("type", "button").attr("value", "Confirmer").addClass("confirmInput");
+        let remove = $("<input>").attr("type", "button").attr("value", "Supprimer").addClass("removeInput");
         form.append(input);
         form.append(catInput);
         form.append(confirm);
@@ -165,12 +152,7 @@
         });
 
         catInput.on("change", function () {
-            tagPreview.css(
-                "background-color",
-                "#" +
-                    categories.find((e) => e.IDCategorie == catInput.val())
-                        .Couleur
-            );
+            tagPreview.css("background-color", "#" + categories.find((e) => e.IDCategorie == catInput.val()).Couleur);
         });
 
         confirm.on("click", function () {
@@ -183,20 +165,17 @@
                     IDCategorie: catInput.val(),
                 },
                 success: function (data) {
-                    console.log(data);
-                    location.reload();
+                    if (data != "OK") {
+                        console.error(data);
+                    } else {
+                        location.reload();
+                    }
                 },
             });
         });
 
         remove.on("click", function () {
-            if (
-                window.confirm(
-                    'Êtes-vous sûr de vouloir supprimer le tag "' +
-                        tag.NomTag +
-                        '" ?'
-                )
-            ) {
+            if (window.confirm('Êtes-vous sûr de vouloir supprimer le tag "' + tag.NomTag + '" ?')) {
                 $.ajax({
                     url: "back/tag/deleteTag.php",
                     type: "POST",
@@ -204,8 +183,11 @@
                         IDTag: tag.IDTag,
                     },
                     success: function (data) {
-                        console.log(data);
-                        location.reload();
+                        if (data != "OK") {
+                            console.error(data);
+                        } else {
+                            location.reload();
+                        }
                     },
                 });
             }
@@ -214,11 +196,8 @@
 
     // Create a new category
     $("#createCategory").click(function () {
-        console.log("createCategory");
         let name = $("#categoryInput").val();
-        console.log(name);
         let color = $("#categoryColor").val();
-        console.log(color);
 
         // Check if the fields are empty
         if (name == "" || color == "") {
@@ -242,19 +221,19 @@
                 color: color,
             },
             success: function (data) {
-                console.log(data);
-                location.reload();
+                if (data != "OK") {
+                    console.error(data);
+                } else {
+                    location.reload();
+                }
             },
         });
     });
 
     // Create a new tag
     $("#createTag").click(function () {
-        console.log("createTag");
         let name = $("#tagInput").val();
-        console.log(name);
         let IDCategorie = $("#categorySelected").val();
-        console.log(IDCategorie);
 
         // Check if the fields are empty
         if (name == "" || IDCategorie == "") {
@@ -270,10 +249,12 @@
                 IDCategorie: IDCategorie,
             },
             success: function (data) {
-                console.log(data);
-                location.reload();
+                if (data != "OK") {
+                    console.error(data);
+                } else {
+                    location.reload();
+                }
             },
         });
     });
-
 })();

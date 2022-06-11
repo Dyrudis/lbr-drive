@@ -6,7 +6,7 @@ $IDFichier = $_POST['IDFichier'];
 $IDTag = $_POST['IDTag'];
 
 // Ajout du tag dans la table classifier
-$sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES ('$IDFichier', '$IDTag')";
+$sql = "INSERT INTO classifier (IDFichier, IDTag) VALUES ('$IDFichier', '$IDTag')";
 $result = $mysqli->query($sql);
 
 // Vérification des erreurs

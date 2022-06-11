@@ -16,7 +16,7 @@ if (!$tagName) {
 }
 
 // Suppression du lien entre le fichier et le tag
-$sql = "DELETE FROM `classifier` WHERE `classifier`.`IDFichier` = '$IDFichier' AND `classifier`.`IDTag` = '$IDTag'";
+$sql = "DELETE FROM classifier WHERE classifier.IDFichier = '$IDFichier' AND classifier.IDTag = '$IDTag'";
 $result = $mysqli->query($sql);
 
 // Vérification des erreurs
@@ -25,7 +25,7 @@ if (!$result) {
 }
 
 // On récupère les tags de ce fichier
-$sql = "SELECT IDFichier FROM `classifier` WHERE `classifier`.`IDFichier` = '$IDFichier'";
+$sql = "SELECT IDFichier FROM classifier WHERE classifier.IDFichier = '$IDFichier'";
 $result = $mysqli->query($sql);
 
 // Vérification des erreurs
@@ -35,7 +35,7 @@ if (!$result) {
 
 // Si le fichier n'a plus de tag, on ajoute le tag '0'
 if ($result->num_rows == 0) {
-    $sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES ('$IDFichier', '0')";
+    $sql = "INSERT INTO classifier (IDFichier, IDTag) VALUES ('$IDFichier', '0')";
     $result = $mysqli->query($sql);
 
     // Vérification des erreurs

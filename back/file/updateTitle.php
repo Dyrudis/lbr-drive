@@ -19,7 +19,7 @@ if (!$oldName) {
 }
 
 // Modification du nom du fichier
-$sql = "UPDATE `fichier` SET `Nom` = '$NomFichier' WHERE `fichier`.`IDFichier` = '$IDFichier'";
+$sql = "UPDATE fichier SET Nom = '$NomFichier' WHERE fichier.IDFichier = '$IDFichier'";
 $result = $mysqli->query($sql);
 
 // Vérifications des erreurs

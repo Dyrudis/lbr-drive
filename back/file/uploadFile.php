@@ -45,7 +45,7 @@ if ($tmpFilePath == "") {
 include("../database.php");
 
 // Insert the data into the database
-$sql = "INSERT INTO `fichier` (`IDFichier`, `Nom`, `IDUtilisateur`, `Date`, `Taille`, `Type`, `Extension`, `Duree`, `Corbeille`)
+$sql = "INSERT INTO fichier (IDFichier, Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree, Corbeille)
 VALUES (NULL, '$name', " . $_SESSION['id'] . ", '$date', " . $file['size'] . ", '$type', '$extension', '$duration', NULL);";
 $result = $mysqli->query($sql);
 
@@ -65,7 +65,7 @@ if (empty($tags)) {
 }
 
 // Insert the tags into the database
-$sql = "INSERT INTO `classifier` (`IDFichier`, `IDTag`) VALUES ";
+$sql = "INSERT INTO classifier (IDFichier, IDTag) VALUES ";
 foreach ($tags as $tag) {
     // Add an array to the query
     $sql .= "(" . $IDFichier . ", " . $tag . "),";

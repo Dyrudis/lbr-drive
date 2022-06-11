@@ -1,10 +1,12 @@
 <?php
 
-// Connexion à la bdd
-$mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
+// Activation des rapports d'erreurs
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-// Vérification des erreurs
-if ($mysqli->connect_error) {
-    die('Erreur lors de la connexion à la base de données (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
+// Connexion à la base de données
+try {
+    $mysqli = new mysqli('localhost', 'root', '', 'lbr_drive');
+} catch (mysqli_sql_exception $e) {
+    // return error in utf8
+    die('Erreur de connexion à la base de données : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
