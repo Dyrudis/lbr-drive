@@ -9,6 +9,10 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
 
 $IDCategorie = $_POST['IDCategorie'];
 
+if ($IDCategorie == '0') {
+    die("Vous ne pouvez pas supprimer la catégorie \"Autres\"");
+}
+
 include("../database.php");
 
 try {

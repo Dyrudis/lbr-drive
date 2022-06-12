@@ -11,6 +11,10 @@ $IDCategorie = $_POST['IDCategorie'];
 $name = $_POST['name'];
 $color = $_POST['color'];
 
+if ($IDCategorie == '0') {
+    die("Vous ne pouvez pas modifier la catégorie \"Autres\"");
+}
+
 include("../database.php");
 
 try {

@@ -1,24 +1,17 @@
 <?php
 
-function registerNewLog($mysqli, $id, $descr) {
-
-    /*------------------------------------*\
-    |   Add all the info to the database   |
-    \*------------------------------------*/
-
-
-    // Insert the data into the database
-    $sql = $mysqli->prepare("INSERT INTO log (IDLog, IDSource, Date, Description)
-    VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)");
-
+function registerNewLog($mysqli, $id, $descr)
+{
+    // Ajout du log dans la base de données
+    $sql = $mysqli->prepare("INSERT INTO log (IDLog, IDSource, Date, Description) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)");
     $sql->bind_param("is", $id, $descr);
-
     $sql->execute();
 }
 
-/*exemple of insertion for use : 
+/* Exemple d'utilisation de la fonction registerNewLog : 
 
 // INSERT LOG
 include '../log/registerLog.php';
 registerNewLog($mysqli, $_SESSION['id'], "Catégorie créée : " . $name);
+
 */

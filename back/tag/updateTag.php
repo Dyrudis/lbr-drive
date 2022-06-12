@@ -11,6 +11,10 @@ $IDTag = $_POST['IDTag'];
 $name = $_POST['name'];
 $IDCategorie = $_POST['IDCategorie'];
 
+if ($IDTag == '0') {
+    die("Vous ne pouvez pas modifier le tag \"Sans tag\"");
+}
+
 include("../database.php");
 
 try {

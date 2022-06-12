@@ -1,44 +1,43 @@
 <?php
-include("../database.php");
+
+// Vérification des droits
 session_start();
-
-if (!isset($_POST['IDFichier'])) {
-    die("Aucun fichier à suspendre envoyé");
+$authorized = ['admin', 'ecriture', 'invite'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour mettre ce fichier à la corbeille");
 }
 
-$IDFichier = json_decode($_POST['IDFichier']);
+$IDFichier = $_POST['IDFichier'];
 
-if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
-    die("Vous n'êtes pas connecté");
-}
+include("../database.php");
 
+try {
+    // Si c'est un invité on vérifie qu'il peut éditer ce fichier
+    if ($_SESSION['role'] == 'invite') {
+        $id = $_SESSION['id'];
 
-// Get the id of the user who posted the file
-$sql = "SELECT IDUtilisateur FROM fichier WHERE IDFichier = '$IDFichier' AND IDUtilisateur = '$_SESSION[id]'";
-$result = $mysqli->query($sql);
+        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
+        $stmt->bind_param("ii", $IDFichier, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-// Get the name of the file
-$fileName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$fileName = $mysqli->query($fileName)->fetch_assoc()['Nom'];
+        if ($result->num_rows == 0) {
+            die("Vous n'avez pas accès à ce fichier en tant qu'invité");
+        }
+    }
 
-// Check for errors
-if (!$result) {
-    die("Erreur lors de la vérification des authorisations" . $mysqli->error);
-}
+    // Récupération du nom du fichier pour les logs
+    $stmt = $mysqli->prepare("SELECT Nom FROM fichier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+    $fileName = $stmt->get_result()->fetch_assoc()['Nom'];
 
-// Check for the autorization
-if ($result->num_rows == 0 && $_SESSION['role'] != 'admin' && $_SESSION['role'] != 'ecriture') {
-    die("Vous n'avez pas les droits pour suspendre ce fichier : " . $sql);
-}
-
-// Add current date to the file
-$sql = "UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = '$IDFichier'";
-
-$result = $mysqli->query($sql);
-
-// Check for errors
-if (!$result) {
-    die("Erreur lors de la suspension du fichier : " . $mysqli->error);
+    // Ajout de la date de mise en corbeille du fichier
+    $stmt = $mysqli->prepare("UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
 // INSERT LOG

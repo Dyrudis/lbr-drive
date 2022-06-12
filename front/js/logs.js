@@ -3,49 +3,48 @@ let request = new XMLHttpRequest();
 request.open("get", "back/log/getLogs.php", true);
 request.send();
 request.onload = function () {
-    logs = JSON.parse(this.responseText);
-    logs.forEach(function (log) {
-        displayLog(log);
-    });
+    try {
+        logs = JSON.parse(this.responseText);
+        logs.forEach(function (log) {
+            displayLog(log);
+        });
+    } catch {
+        console.error(this.responseText);
+    }
 };
 
-let userFilter = $('#userTri').on('input', function () {
-
-    $('.log').each(function () {
-
-        if ($(this).find('.nom').text().toLowerCase().includes(userFilter.val().toLowerCase())) {
-            if ($(this).find('.description').text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
+let userFilter = $("#userTri").on("input", function () {
+    $(".log").each(function () {
+        if ($(this).find(".nom").text().toLowerCase().includes(userFilter.val().toLowerCase())) {
+            if ($(this).find(".description").text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
                 $(this).show();
             }
         } else {
             $(this).hide();
         }
     });
-
 });
 
-let contentFilter = $('#contentTri').on('input', function () {
-    
-    $('.log').each(function () {
-
-        if ($(this).find('.description').text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
-            if ($(this).find('.nom').text().toLowerCase().includes(userFilter.val().toLowerCase())) {
+let contentFilter = $("#contentTri").on("input", function () {
+    $(".log").each(function () {
+        if ($(this).find(".description").text().toLowerCase().includes(contentFilter.val().toLowerCase())) {
+            if ($(this).find(".nom").text().toLowerCase().includes(userFilter.val().toLowerCase())) {
                 $(this).show();
             }
         } else {
             $(this).hide();
         }
     });
-
 });
 
 function displayLog(log) {
-    console.log(log);
     let logDiv = $("<div>").addClass("log");
 
     //Photo de profil
     let avatarDiv = $("<div>").addClass("avatar undraggable");
-    let avatar = $("<img>").attr("src", "avatars/" + log.IDSource).addClass("undraggable");
+    let avatar = $("<img>")
+        .attr("src", "avatars/" + log.IDSource)
+        .addClass("undraggable");
     avatarDiv.append(avatar);
 
     //Nom de l'utilisateur

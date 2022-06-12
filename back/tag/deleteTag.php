@@ -9,6 +9,10 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
 
 $IDTag = $_POST['IDTag'];
 
+if ($IDTag == '0') {
+    die("Vous ne pouvez pas supprimer le tag \"Sans tag\"");
+}
+
 include("../database.php");
 
 try {

@@ -90,12 +90,14 @@ function displayFile(file) {
     let addTag = $("<select>");
     addTag.append($("<option>").attr("value", "0").attr("selected", "selected").attr("disabled", "disabled").text("+ Tag"));
     allTags.forEach((tag) => {
-        addTag.append(
-            $("<option>")
-                .attr("value", tag.IDTag)
-                .text(tag.NomTag)
-                .css({ "background-color": "#" + tag.Couleur, color: "white" })
-        );
+        if (tag.IDTag != 0) {
+            addTag.append(
+                $("<option>")
+                    .attr("value", tag.IDTag)
+                    .text(tag.NomTag)
+                    .css({ "background-color": "#" + tag.Couleur, color: "white" })
+            );
+        }
     });
 
     actions.append(downloadFile); // FOR EVERYONE
@@ -150,7 +152,7 @@ function displayFile(file) {
     deleteFile.click(function () {
         if (confirm("Voulez-vous vraiment supprimer ce fichier ?")) {
             let formData = new FormData();
-            formData.append("IDFichier", JSON.stringify(file.IDFichier));
+            formData.append("IDFichier", file.IDFichier);
 
             let request = new XMLHttpRequest();
             request.open("post", "back/file/suspendFile.php", true);
@@ -159,7 +161,7 @@ function displayFile(file) {
                 if (this.responseText == "OK") {
                     container.remove();
                 } else {
-                    console.log(this.responseText);
+                    console.error(this.responseText);
                 }
             };
         }
@@ -169,7 +171,7 @@ function displayFile(file) {
     restoreFile.click(function () {
         if (confirm("Voulez-vous vraiment restaurer ce fichier ?")) {
             let formData = new FormData();
-            formData.append("IDFichier", JSON.stringify(file.IDFichier));
+            formData.append("IDFichier", file.IDFichier);
 
             let request = new XMLHttpRequest();
             request.open("post", "back/file/restoreFile.php", true);
@@ -178,7 +180,7 @@ function displayFile(file) {
                 if (this.responseText == "OK") {
                     container.remove();
                 } else {
-                    console.log(this.responseText);
+                    console.error(this.responseText);
                 }
             };
         }
@@ -187,25 +189,44 @@ function displayFile(file) {
     // Add tag button
     addTag.change(function () {
         let tagID = addTag.val();
-        tag = allTags.find((tag) => tag.IDTag == tagID);
-        if (tagID != 0) {
-            addTagToFile(file.IDFichier, tagID);
 
-            let newTag = $("<div>")
-                .addClass("tag")
-                .attr("data-id", tag.IDTag)
-                .css("background-color", "#" + tag.Couleur);
-            newTag.html("<p>" + tag.NomTag + "</p>");
-
-            let deleteTag = $("<img>").attr("src", "front/images/close.svg");
-            newTag.append(deleteTag);
-            newTag.css("cursor", "pointer");
-            newTag.click(() => {
-                deleteTagFromFile(file.IDFichier, tag.IDTag);
-                newTag.remove();
-            });
-            container.find(".file-hover-tags").append(newTag);
+        // if the tag is already in the file
+        if (container.find(".tag[data-id='" + tagID + "']").length > 0) {
+            // Reset the select
+            addTag.val(0);
+            return;
         }
+
+        tag = allTags.find((tag) => tag.IDTag == tagID);
+        addTagToFile(file.IDFichier, tagID);
+
+        let newTag = $("<div>")
+            .addClass("tag")
+            .attr("data-id", tagID)
+            .css("background-color", "#" + tag.Couleur);
+        newTag.html("<p>" + tag.NomTag + "</p>");
+
+        let deleteTag = $("<img>").attr("src", "front/images/close.svg");
+        newTag.append(deleteTag);
+        newTag.css("cursor", "pointer");
+        newTag.click(() => {
+            deleteTagFromFile(file.IDFichier, tagID);
+            newTag.remove();
+
+            // If there is no tag, add the tag div with data-id = 0
+            if (container.find(".tag").length == 0) {
+                let tag = $("<div>")
+                    .addClass("tag")
+                    .attr("data-id", "0")
+                    .css("background-color", "#" + allTags.find((tag) => tag.IDTag == 0).Couleur);
+                tag.html("<p>Aucun tag</p>");
+                container.find(".file-hover-tags").append(tag);
+            }
+        });
+        container.find(".file-hover-tags").append(newTag);
+
+        // Remove the tag div with data-id = 0
+        container.find(".file-hover-tags").find("[data-id='0']").remove();
 
         // Reset the select
         addTag.val(0);
@@ -272,13 +293,24 @@ function displayActions(container, file) {
 
     // Only allow to delete tag/edit title if the file is editable
     if (file.isEditable) {
+        // Select all tags except the one with data-id = 0
+        let tags = container.find(".tag").not("[data-id='0']");
         let deleteTag = $("<img>").attr("src", "front/images/close.svg");
-        let tags = container.find(".tag");
         tags.append(deleteTag);
         tags.css("cursor", "pointer");
         tags.click(function () {
             deleteTagFromFile(file.IDFichier, $(this).attr("data-id"));
             $(this).remove();
+
+            // If there is no tag, add the tag div with data-id = 0
+            if (container.find(".tag").length == 0) {
+                let tag = $("<div>")
+                    .addClass("tag")
+                    .attr("data-id", "0")
+                    .css("background-color", "#" + allTags.find((tag) => tag.IDTag == 0).Couleur);
+                tag.html("<p>Aucun tag</p>");
+                container.find(".file-hover-tags").append(tag);
+            }
         });
 
         let editTitle = $("<img>").attr("src", "front/images/edit.svg").addClass("edit-title pointerOnHover undraggable");
@@ -335,7 +367,7 @@ function deleteTagFromFile(IDFichier, IDTag) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.log(this.responseText);
+            console.error(this.responseText);
         }
     };
 }
@@ -350,7 +382,10 @@ function addTagToFile(IDFichier, IDTag) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.log(this.responseText);
+            console.error(this.responseText);
+            return false;
+        } else {
+            return true;
         }
     };
 }
@@ -365,7 +400,7 @@ function editFileTitle(IDFichier, newTitle) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.log(this.responseText);
+            console.error(this.responseText);
         }
     };
 }

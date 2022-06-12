@@ -1,30 +1,48 @@
 <?php
-include("../database.php");
+
+// Vérification des droits
 session_start();
+$authorized = ['admin', 'ecriture', 'invite'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour modifier un titre");
+}
 
 $IDFichier = $_POST['IDFichier'];
 $NomFichier = $_POST['NomFichier'];
 
-if ($NomFichier == "") {
-    die("Erreur de modification du nom du fichier : Nom du fichier vide");
+if (preg_match('/^\s*$/', $NomFichier)) {
+    die("Vous ne pouvez pas mettre un titre vide");
 }
 
-//Get the name of the file
-$oldName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$oldName = $mysqli->query($oldName)->fetch_assoc()['Nom'];
+include("../database.php");
 
-//Check for errors
-if (!$oldName) {
-    die("Erreur lors de la récupération du nom pour logs : " . $mysqli->error);
-}
+try {
+    // Si c'est un invité on vérifie qu'il peut éditer ce fichier
+    if ($_SESSION['role'] == 'invite') {
+        $id = $_SESSION['id'];
 
-// Modification du nom du fichier
-$sql = "UPDATE fichier SET Nom = '$NomFichier' WHERE fichier.IDFichier = '$IDFichier'";
-$result = $mysqli->query($sql);
+        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
+        $stmt->bind_param("ii", $IDFichier, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-// Vérifications des erreurs
-if (!$result) {
-    die('Erreur de modification du nom du fichier : ' . $mysqli->error);
+        if ($result->num_rows == 0) {
+            die("Vous n'avez pas accès à ce fichier en tant qu'invité");
+        }
+    }
+
+    // Récupération de l'ancien nom du fichier pour les logs
+    $stmt = $mysqli->prepare("SELECT Nom FROM fichier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+    $oldName = $stmt->get_result()->fetch_assoc()['Nom'];
+
+    // Modification du nom du fichier
+    $stmt = $mysqli->prepare("UPDATE fichier SET Nom = ? WHERE IDFichier = ?");
+    $stmt->bind_param("si", $NomFichier, $IDFichier);
+    $stmt->execute();
+} catch (mysqli_sql_exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
 // INSERT LOG

@@ -1,40 +1,51 @@
 <?php
-include("../database.php");
+
+// Vérification des droits
 session_start();
-
-if (!isset($_POST['IDFichier'])) {
-    die("Aucun fichier à supprimer envoyé");
+$authorized = ['admin', 'ecriture', 'invite'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour supprimer définitivement ce fichier");
 }
 
-$IDFichier = json_decode($_POST['IDFichier']);
+$IDFichier = $_POST['IDFichier'];
 
-if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
-    die("Vous n'êtes pas connecté");
+include("../database.php");
+
+try {
+    // Si c'est un invité on vérifie qu'il peut éditer ce fichier
+    if ($_SESSION['role'] == 'invite') {
+        $id = $_SESSION['id'];
+
+        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
+        $stmt->bind_param("ii", $IDFichier, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 0) {
+            die("Vous n'avez pas accès à ce fichier en tant qu'invité");
+        }
+    }
+
+    // Récupération du nom et de l'extension du fichier pour les logs
+    $stmt = $mysqli->prepare("SELECT Nom, Extension FROM fichier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $fileName = $result['Nom'];
+    $fileExtension = $result['Extension'];
+
+    // Suppression définitive du fichier dans la base de données
+    $stmt = $mysqli->prepare("DELETE FROM fichier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
-
-// Get the id of the user who posted the file
-$sql = "SELECT IDUtilisateur FROM fichier WHERE IDFichier = '$IDFichier' AND IDUtilisateur = '$_SESSION[id]'";
-$result = $mysqli->query($sql);
-
-// Check for errors
-if (!$result) {
-    die("Erreur lors de la vérification des authorisations" . $mysqli->error);
-}
-
-// Check for the autorization
-if ($result->num_rows == 0 && $_SESSION['role'] != 'admin' && $_SESSION['role'] != 'ecriture') {
-    die("Vous n'avez pas les droits pour supprimer ce fichier : ". $sql);
-}
-
-// Delete the file
-$sql = "DELETE FROM fichier WHERE IDFichier = '$IDFichier'";
-
-$result = $mysqli->query($sql);
-
-// Check for errors
-if (!$result) {
-    die("Erreur lors de la suppression du fichier : " . $mysqli->error);
+// Suppression du fichier physique
+$filePath = "../../upload/" . $IDFichier . "." . $fileExtension;
+if (file_exists($filePath)) {
+    unlink($filePath);
 }
 
 echo "Fichier supprimé";

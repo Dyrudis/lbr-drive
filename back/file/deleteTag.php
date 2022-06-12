@@ -1,56 +1,53 @@
 <?php
-include("../database.php");
+
+// Vérification des droits
 session_start();
+$authorized = ['admin', 'ecriture', 'invite'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour supprimer un tag");
+}
 
 $IDFichier = $_POST['IDFichier'];
 $IDTag = $_POST['IDTag'];
 
-
-//Get the name of the tag
-$tagName = "SELECT NomTag FROM tag WHERE IDTag = '$IDTag'";
-$tagName = $mysqli->query($tagName)->fetch_assoc()['NomTag'];
-
-//Check for errors
-if (!$tagName) {
-    die("Erreur lors de la récupération du nom du tag pour logs : " . $mysqli->error);
+if ($IDTag == '0') {
+    die("Vous ne pouvez pas supprimer le tag \"Sans tag\" d'un fichier");
 }
 
-// Suppression du lien entre le fichier et le tag
-$sql = "DELETE FROM classifier WHERE classifier.IDFichier = '$IDFichier' AND classifier.IDTag = '$IDTag'";
-$result = $mysqli->query($sql);
+include("../database.php");
 
-// Vérification des erreurs
-if (!$result) {
-    die('Erreur de supression du tag d\'un fichier : ' . $mysqli->error);
-}
+try {
+    // Récupération du nom du tag pour les logs
+    $stmt = $mysqli->prepare("SELECT NomTag FROM tag WHERE IDTag = ?");
+    $stmt->bind_param("i", $IDTag);
+    $stmt->execute();
+    $tagName = $stmt->get_result()->fetch_assoc()['NomTag'];
 
-// On récupère les tags de ce fichier
-$sql = "SELECT IDFichier FROM classifier WHERE classifier.IDFichier = '$IDFichier'";
-$result = $mysqli->query($sql);
+    // Récupération du nom du fichier pour les logs
+    $stmt = $mysqli->prepare("SELECT Nom FROM fichier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+    $fileName = $stmt->get_result()->fetch_assoc()['Nom'];
 
-// Vérification des erreurs
-if (!$result) {
-    die('Erreur de la récupération des tag d\'un fichier : ' . $mysqli->error);
-}
+    // Suppression du lien entre le fichier et le tag
+    $stmt = $mysqli->prepare("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = ?");
+    $stmt->bind_param("ii", $IDFichier, $IDTag);
+    $stmt->execute();
 
-// Si le fichier n'a plus de tag, on ajoute le tag '0'
-if ($result->num_rows == 0) {
-    $sql = "INSERT INTO classifier (IDFichier, IDTag) VALUES ('$IDFichier', '0')";
-    $result = $mysqli->query($sql);
+    // On récupère les tags de ce fichier
+    $stmt = $mysqli->prepare("SELECT IDTag FROM classifier WHERE IDFichier = ?");
+    $stmt->bind_param("i", $IDFichier);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Vérification des erreurs
-    if (!$result) {
-        die('Erreur d\'ajout du tag \'Sans tag\' sur un fichier sans tag : ' . $mysqli->error);
+    // Si le fichier n'a plus de tag, on ajoute le tag "Sans tag"
+    if ($result->num_rows == 0) {
+        $stmt = $mysqli->prepare("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, 0)");
+        $stmt->bind_param("i", $IDFichier);
+        $stmt->execute();
     }
-}
-
-//Get the name of the file
-$fileName = "SELECT Nom FROM fichier WHERE IDFichier = '$IDFichier'";
-$fileName = $mysqli->query($fileName)->fetch_assoc()['Nom'];
-
-//Check for errors
-if (!$fileName) {
-    die("Erreur lors de la récupération du nom du fichier pour logs : " . $mysqli->error);
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
 // INSERT LOG
