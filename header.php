@@ -11,18 +11,18 @@ $currentFile = end($currentFile);
     <?php
     if (isset($_SESSION['role']) && $_SESSION['role'] != 'lecture') {
     ?>
-        <a id="lienUpload" class="undraggable" href="uploadFile.php">Ajouter un fichier</a>
+        <a id="lienUpload" class="pointerOnHover undraggable" href="uploadFile.php">Ajouter un fichier</a>
     <?php
     }
     ?>
     <?php
     if (isset($_SESSION['id']) && $currentFile != 'account.php') {
     ?>
-        <a id="lienCompte" class="undraggable" href="account.php">Mon compte</a>
+        <a id="lienCompte" class="pointerOnHover undraggable" href="account.php">Mon compte</a>
     <?php
     } else if (isset($_SESSION['id']) && $currentFile == 'account.php') {
     ?>
-        <a id="lienCompte" class="undraggable" href="back/account/logOut.php">Deconnexion</a>
+        <a id="lienCompte" class="pointerOnHover undraggable" href="back/account/logOut.php">Deconnexion</a>
     <?php
     }
     ?>

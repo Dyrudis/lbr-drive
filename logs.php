@@ -1,7 +1,13 @@
 <?php
 session_start();
 
-if ($_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
+    header("Location: login.php");
+}
+$id = $_SESSION['id'];
+$role = $_SESSION['role'];
+
+if ($role != 'admin') {
     header('Location: index.php');
 }
 ?>

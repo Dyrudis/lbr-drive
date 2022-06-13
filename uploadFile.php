@@ -1,9 +1,14 @@
 <?php
 session_start();
-if ($_SESSION['id']) {
-    $id = $_SESSION['id'];
-} else {
+
+if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
+}
+$id = $_SESSION['id'];
+$role = $_SESSION['role'];
+
+if ($role == 'lecture') {
+    header('Location: index.php');
 }
 ?>
 

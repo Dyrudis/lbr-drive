@@ -1,13 +1,17 @@
 <?php
 session_start();
 
-include('back/database.php');
-
-if ($_SESSION['id']) {
-    $id = $_SESSION['id'];
-} else {
+if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
 }
+$id = $_SESSION['id'];
+$role = $_SESSION['role'];
+
+if ($role != 'admin') {
+    header('Location: index.php');
+}
+
+include('back/database.php');
 
 $sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";
 $result = $mysqli->query($sql);
@@ -20,7 +24,6 @@ foreach ($infoUtilisateur as $info) {
     $email = $info["Email"];
     $role = $info["Role"];
 }
-
 ?>
 
 <!DOCTYPE html>

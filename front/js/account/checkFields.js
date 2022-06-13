@@ -31,7 +31,7 @@ var request = new XMLHttpRequest();
                 allTag = allTag.filter(findTag => findTag != tagID);
             });
                 allTag.push(tagID);
-                $("#tagInvite").append(newTag);
+                selectTag.before(newTag);
             }
             console.log(allTag);
             selectTag.val("");
@@ -125,7 +125,7 @@ function modifTagInvite(){
                     allTag2 = allTag2.filter(findTag => findTag != tagID2);
                 });
                     allTag2.push(tagID2);
-                    $("#tagInvite2").append(newTag2);
+                    selectTag2.before(newTag2);
                 }
                 console.log(allTag2);
                 selectTag2.val("");

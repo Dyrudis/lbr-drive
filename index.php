@@ -1,13 +1,11 @@
 <?php
 session_start();
-include('back/database.php');
 
-if ($_SESSION['id']) {
-    $id = $_SESSION['id'];
-} else {
+if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
 }
-
+$id = $_SESSION['id'];
+$role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 
@@ -63,19 +61,19 @@ if ($_SESSION['id']) {
                 </div>
             </div>
 
-            <?php if ($_SESSION['role'] != "lecture") { ?>
+            <?php if ($role != "lecture") { ?>
                 <div id="espace-admin" class="undraggable">
                     <div id="espace-admin-title" class="pointerOnHover" onclick="$('#espace-admin').toggleClass('shown');">
                         <img src="front/images/arrow.png" class="undraggable">
-                        <h3>Espace <?php if ($_SESSION['role'] == "invite") echo "invité";
-                                    else echo $_SESSION['role'] ?></h3>
+                        <h3>Espace <?php if ($role == "invite") echo "invité";
+                                    else echo $role ?></h3>
                     </div>
                     <div id="espace-admin-links">
-                        <?php if ($_SESSION['role'] == "admin") { ?>
+                        <?php if ($role == "admin") { ?>
                             <a class="pointerOnHover undraggable" href="admin.php">Gestion des comptes</a>
                         <?php } ?>
                         <a class="pointerOnHover undraggable" href="tagManager.php">Gestion des tags/catégories</a>
-                        <?php if ($_SESSION['role'] == "admin") { ?>
+                        <?php if ($role == "admin") { ?>
                             <a class="pointerOnHover undraggable" href="logs.php">Accéder aux logs</a>
                         <?php } ?>
                     </div>
