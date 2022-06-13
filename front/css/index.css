@@ -44,6 +44,11 @@ body {
     flex-direction: column;
 }
 
+#barre-scroll {
+    overflow-y: auto;
+    padding-bottom: 230px;
+}
+
 ::-webkit-scrollbar {
     visibility: hidden;
     width: 0px;
@@ -131,10 +136,8 @@ body {
 }
 
 #liste-categories {
-    overflow: auto;
     flex-grow: 1;
     margin: 0 15px;
-    padding-bottom: 250px;
 }
 
 #liste-categories > .barre-title {
@@ -177,6 +180,7 @@ body {
     transform: translateY(calc(100% - 57px));
     transition: transform 0.25s ease;
     background: #af001e;
+    overflow: hidden;
 }
 
 #espace-admin.shown {
