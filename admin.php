@@ -27,9 +27,9 @@
         <div class="container">
                 <div class="menu">
                     <h1> Espace Admin</h1>
-                    <a href="#creation" class="btn-creation"><h2>Création d'un compte</h2></a>
-                    <a href="#modif" class="btn-modif active"><h2>Modification de compte</h2></a>
-                    <a href="#delete" class="btn-delete active"><h2>Supression de compte</h2></a>
+                    <a class="btn-creation"><h2>Création d'un compte</h2></a>
+                    <a class="btn-modif active"><h2>Modification de compte</h2></a>
+                    <a class="btn-delete active"><h2>Supression de compte</h2></a>
                 </div>
                 
                 <div class="wrapperscroll"> 
