@@ -1,7 +1,7 @@
 var fixedwidth = 300 + 10, //the +10 is for 10px horizontal margin
     gallery = $("#gallery"); // cache a reference to our container
 
-function layoutImages() {
+function masonry() {
     var children = gallery.children(); // cache a reference to our image list
     var columncount = parseInt(gallery.width() / fixedwidth, 10) || 1, // find how many columns fit in container,
         childWidth = gallery.width() / columncount - 10, // calculate the width of a column
@@ -25,9 +25,4 @@ function layoutImages() {
     });
 }
 
-$(window).resize(layoutImages).trigger("resize");
-
-/* When there is a change in the dom, trigger the function */
-$(document).ready(function () {
-    $(document).on("DOMSubtreeModified", "#gallery", layoutImages);
-});
+$(window).resize(masonry);

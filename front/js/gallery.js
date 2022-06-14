@@ -61,6 +61,7 @@ function displayFile(file) {
         preview.append(source);
     }
     preview.addClass("file-preview");
+    preview.on("load", masonry);
     let hover = $("<div>").addClass("file-hover");
     let hoverTags = $("<div>").addClass("file-hover-tags");
     file.Tags.forEach((tag) => {
