@@ -9,16 +9,18 @@ function submitLogin(){
                 if(data=='connect'){
                     document.location.href="index.php"; 
                 }
-                if(data=='firstConnect'){
+                else if(data=='firstConnect'){
                     document.location.href="setPassword.php"; 
                 }
-                if(data=='Identifiants incorrects'){
+                else if(data=='Identifiants incorrects'){
                     window.alert("Identifiants incorrects");
                     $(".inputLogin").val("");
                 }
-                if(data=='suspendu'){
+                else if(data=='suspendu'){
                     window.alert("Votre compte est suspendu");
                     $(".inputLogin").val("");
+                } else {
+                    console.error(data);
                 }
             }
         });
