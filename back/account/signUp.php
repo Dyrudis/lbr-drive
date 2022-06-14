@@ -17,83 +17,88 @@ if (isset($_POST['motDePasse'])) {
     $motdepasse = $_POST['motDePasse'];
 }
 
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') '
-        . $mysqli->connect_error);
-}
+try {
+    //requete avec l'email entré dans la création de compte
+    $stmt = $mysqli->prepare("SELECT * FROM utilisateur WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    //test si il y a au moins un resultat
+    if ($stmt->num_rows > 0) {
+        echo "email incorrect";
+    } else {
 
-$req = "SELECT * FROM utilisateur WHERE Email = '$email'";
-$result = $mysqli->query($req);
-if ($result->num_rows > 0) {
-    echo "email incorrect";
-} else {
+        // INSERT LOG
+        include '../log/registerLog.php';
+        registerNewLog($mysqli, $_SESSION['id'], "Ajout d'un utilisateur : " . $email);
 
-    // INSERT LOG
-    include '../log/registerLog.php';
-    registerNewLog($mysqli, $_SESSION['id'], "Ajout d'un utilisateur : " . $email);
+        //si la case mot de passe temporaire est coché
+        if ($checkBoxMdpTemporaire) {
+            //creation mdp temporaire
+            $mdpTemp = rand(100000, 999999);
+            $hash = password_hash($mdpTemp, PASSWORD_DEFAULT);
 
+            //requete pour créer un nouvel utilisateur
+            $stmt = $mysqli->prepare("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '2')");
+            $stmt->bind_param("ssssss", $nom,$prenom ,$hash, $email, $description,$role);
+            $stmt->execute();
 
-    if ($checkBoxMdpTemporaire) {
-        $mdpTemp = rand(100000, 999999);
-        include('mail/mailerInscription.php');
-        $hash = password_hash($mdpTemp, PASSWORD_DEFAULT);
+            //recupere l'id de compte creer
+            $idNouveauCompte = $mysqli->insert_id;
 
-        $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '2')";
-        $result = $mysqli->query($req);
+            //test si le role est invite
+            if ($role == 'invite') {
 
-        $idNouveauCompte = $mysqli->insert_id;
-        if ($role == 'invite') {
-            $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
-            foreach ($tagAutorise as $tag) {
-                $reqTagAutorise .= "(" . $idNouveauCompte . "," . $tag . "),";
+                $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
+                $stmt->bind_param("ii", $IDFichier, $currentTag);
+                foreach ($tagAutorise as $tag) {
+                    $currentTag = $tag;
+                    $stmt->execute();
+                }
+
+                echo "Envoie du mail d'inscription au compte invité";
             }
-            $reqTagAutorise = substr($reqTagAutorise, 0, -1);
-            $resultTagAutorise = $mysqli->query($reqTagAutorise);
-            if ($result === TRUE) {
-                echo "initialisation des tags de invité";
-            } else {
-                echo "Échec l'initialisation des tags de invité";
-            }
-        }
 
-        if ($result === TRUE) {
+            include('../mail/mailerInscription.php');
 
             $subject = 'Inscription lbr drive';
             $headers[] = 'MIME-Version: 1.0';
             $headers[] = 'Content-type: text/html; charset=utf-8';
-            $headers[] = 'From: noreply.lbr.drive@gmail.com';
+            $headers[] = 'From: no-reply@lesbriquesrouges.fr';
             if (mail($email, $subject, $mailerInscription, implode("\r\n", $headers))) {
                 echo "Email envoyé avec succès";
             } else {
                 echo "Échec de l'envoi de l'email";
             }
+        //si la case mot de passe temporaire n'est pas coché
         } else {
-            echo "<p>echec de la création de compte";
-        }
-    } else {
-        $hash = password_hash($motdepasse, PASSWORD_DEFAULT);
-        $req = "INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES ('$nom','$prenom' ,'$hash', '$email', '$description','$role', '1')";
-        $result = $mysqli->query($req);
+            $hash = password_hash($motdepasse, PASSWORD_DEFAULT);
 
-        $idNouveauCompte = $mysqli->insert_id;
-        if ($role == 'invite') {
-            $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
-            foreach ($tagAutorise as $tag) {
-                $reqTagAutorise .= "(" . $idNouveauCompte . "," . $tag . "),";
-            }
-            $reqTagAutorise = substr($reqTagAutorise, 0, -1);
-            $resultTagAutorise = $mysqli->query($reqTagAutorise);
-            if ($result === TRUE) {
-                echo "initialisation des tags de invité";
-            } else {
-                echo "Échec l'initialisation des tags de invité";
-            }
-        }
+            //requete pour créer un nouvel utilisateur
+            $stmt = $mysqli->prepare("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '1')");
+            $stmt->bind_param("ssssss", $nom,$prenom ,$hash, $email, $description,$role);
+            $stmt->execute();
 
-        if ($result === TRUE) {
+            //recupere l'id de compte creer
+            $idNouveauCompte = $mysqli->insert_id;
+
+            //test si le role est invite
+            if ($role == 'invite') {
+
+                $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
+                $stmt->bind_param("ii", $IDFichier, $currentTag);
+                foreach ($tagAutorise as $tag) {
+                    $currentTag = $tag;
+                    $stmt->execute();
+                }
+
+                echo "Envoie du mail d'inscription au compte invité";
+            }
+
             echo "Création de compte réussi";
-        } else {
-            echo "echec de la création de compte*";
         }
     }
+}catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
+

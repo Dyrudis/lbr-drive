@@ -3,26 +3,36 @@ include("../database.php");
 session_start();
 
 $id = $_SESSION['id'];
-$mdpCompte = $_POST['mdpCompte'];
+$mdpAdmin = $_POST['mdpCompte'];
 $emailSuppr = $_POST['emailSuppr'];
 
-$sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id'";
-$result = $mysqli->query($sql);
+//requete au serveur pour recuperer le mdp du compte admin
+try{
+    $stmt = $mysqli->prepare("SELECT MotDePasse FROM utilisateur WHERE IDUtilisateur = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($mdpHash);
+    $stmt->fetch();
 
 
 
-if(password_verify($mdpCompte,$result->fetch_assoc()['MotDePasse'])){
-    $req = "UPDATE utilisateur SET Actif = '0' WHERE Email = '$emailSuppr'";
-    $resultReq = mysqli_query($mysqli,$req);
-    
-    if($resultReq == TRUE){
+//test le mot de passe de l'admin 
+    if(password_verify($mdpAdmin,$mdpHash)){
+        //requete pour actualiser l'actif du compte a supprimer a 0
+        $stmt = $mysqli->prepare("UPDATE utilisateur SET Actif = '0' WHERE Email = ?");
+        $stmt->bind_param("s", $emailSuppr);
+        $stmt->execute();
+        echo"Succes";
+
         // INSERT LOG
         include '../log/registerLog.php';
         registerNewLog($mysqli, $id, "Suspension du compte : " . $emailSuppr );
-        
-        echo"Succes";
+
     }
-}
-else{
-    echo"Echec mdp";
+    else{
+        echo"Echec mdp";
+    }
+} catch(Exception $e){
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
