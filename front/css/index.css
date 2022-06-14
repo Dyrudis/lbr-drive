@@ -377,7 +377,10 @@ body {
 #gallery > .file-container > .file-hover > .file-hover-author {
     font-size: 0.8rem;
     margin: 0;
-    display: inline;
+    width: calc(100% - 100px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #gallery > .file-container > .file-hover > .file-hover-info {
@@ -387,6 +390,7 @@ body {
     text-align: right;
     position: absolute;
     right: 10px;
+    bottom: 56px;
 }
 
 #gallery > .file-container > .file-hover > .file-hover-actions {

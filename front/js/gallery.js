@@ -76,7 +76,8 @@ function displayFile(file) {
         .html("<p>" + file.NomFichier + "</p>");
     let author = $("<div>")
         .addClass("file-hover-author")
-        .text("de " + file.Prenom + " " + file.Nom + ", " + file.Date);
+        .text("de " + file.Prenom + " " + file.Nom + ", " + file.Date)
+        .attr("title", "de " + file.Prenom + " " + file.Nom + ", " + file.Date);
     let info = $("<div>")
         .addClass("file-hover-info")
         .text(bytesToSize(file.Taille) + (file.Duree != "0" ? " - " + formatSeconds(file.Duree) : ""));
