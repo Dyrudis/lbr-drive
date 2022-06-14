@@ -145,7 +145,7 @@ p {
                                           <tbody>
                                             <tr>
                                               <td align='center' style='font-size:0px;padding:10px 25px;padding-top:30px;word-break:break-word;'>
-                                                <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;letter-spacing:1px;line-height:1;text-align:center;text-transform:uppercase;color:#ffffff;'><a style='color: #ffffff' ; style='text-decoration: none;' href='https://www.LBR-drive/index.php'>LBR_Drive.fr</a></div>
+                                                <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;letter-spacing:1px;line-height:1;text-align:center;text-transform:uppercase;color:#ffffff;'><a style='color: #ffffff' ; style='text-decoration: none;' href='https://drive.lesbriquesrouges.fr/'>drive.lesbriquesrouges.fr</a></div>
                                               </td>
                                             </tr>
                                             <tr>
@@ -255,7 +255,7 @@ p {
                               <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;width:300px;line-height:100%;'>
                                 <tr>
                                   <td align='center' bgcolor='#5e6ebf' role='presentation' style='border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#5e6ebf;' valign='middle'>
-                                    <a href='https://www.LBR_drive/login.php' style='display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;' target='_blank'> Connexion LBR drive </a>
+                                    <a href='https://drive.lesbriquesrouges.fr/login.php' style='display:inline-block;width:250px;background:#5e6ebf;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;' target='_blank'> Connexion au drive </a>
                                   </td>
                                 </tr>
                               </table>

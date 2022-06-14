@@ -61,7 +61,7 @@ if ($role != 'admin') {
             <label>Description</label>
             <input class="inputCreationCompte" id="descriptionCreationCompte" type="text" name="description" required>
 
-            <select id='selectRole' name="role" onchange="tagVisible()" required>
+            <select class="inputCreationCompte" id='selectRole' name="role" onchange="tagVisible()" required>
                 <option value="" disabled selected> Choix d'un role</option>
                 <option value="lecture">Lecture</option>
                 <option value="ecriture">Ecriture</option>
