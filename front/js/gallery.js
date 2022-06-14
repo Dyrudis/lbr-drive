@@ -279,6 +279,8 @@ function displayInFullscreen(event) {
         preview.style.backgroundColor = "black";
     }
     container.append(preview);
+    preview.style.width = "auto";
+    preview.style.height = "auto";
     container.click(function (e) {
         if (e.target !== this) return;
         container.remove();

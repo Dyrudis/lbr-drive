@@ -144,7 +144,7 @@ body {
     margin-bottom: -10px;
 }
 
-#selection-multiple-toggle{
+#selection-multiple-toggle {
     margin-top: 10px;
 }
 
@@ -268,22 +268,17 @@ body {
 }
 
 #gallery {
-    column-width: 300px;
-    column-count: 5;
-    column-fill: balance;
-    break-inside: avoid;
-    padding: 10px 10px 10px 10px;
+    width: calc(100% - 10px);
+    position: relative;
+    margin: 10px;
 }
 
 #gallery > .file-container {
-    margin-bottom: 15px;
-    width: 100%;
-    position: relative;
+    position: absolute;
     cursor: pointer;
-    overflow: hidden;
     background-color: #000000;
     overflow: hidden;
-    transition: all 0.2s ease;
+    min-height: 154px;
 }
 
 #gallery > .file-container.mutliselected {
@@ -293,7 +288,8 @@ body {
 
 #gallery > .file-container > .file-preview {
     width: 100%;
-    vertical-align: top;
+    height: 100%;
+    object-fit: cover;
 }
 
 #gallery > .file-container > .file-hover {
