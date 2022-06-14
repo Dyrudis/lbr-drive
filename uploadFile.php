@@ -20,6 +20,7 @@ if ($role == 'lecture') {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/tag.css" />
     <link rel="stylesheet" href="front/css/uploadFile.css">
+    <link rel="icon" href="front/images/iconelbr.ico"/>
     <script src="https://unpkg.com/eva-icons"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/js/uploadFile.js" defer></script>

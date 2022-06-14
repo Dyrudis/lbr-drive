@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/login.css" />
+    <link rel="icon" href="front/images/iconelbr.ico"/>
 </head>
 
 <body id="bodylogin">

@@ -15,6 +15,7 @@ $role = $_SESSION['role'];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/index.css" />
     <link rel="stylesheet" href="front/css/tag.css" />
+    <link rel="icon" href="front/images/iconelbr.ico"/>
     <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="front/js/masonry.js" defer></script>
