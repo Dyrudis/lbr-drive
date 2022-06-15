@@ -7,10 +7,6 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
 $id = $_SESSION['id'];
 $role = $_SESSION['role'];
 
-if ($role != 'admin') {
-    header('Location: index.php');
-}
-
 include('back/database.php');
 
 $sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";

@@ -14,18 +14,13 @@ include("../database.php");
 
 try {
     // Vérification si la catégorie existe déjà
-    $stmt = $mysqli->prepare("SELECT * FROM categorie WHERE NomCategorie = ?");
-    $stmt->bind_param("s", $name);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
+    $result = query("SELECT * FROM categorie WHERE NomCategorie = ?", "s", $name);
+    if ($result) {
         die("La catégorie \"" . $name . "\" existe déjà");
     }
 
     // Ajout de la catégorie dans la base de données
-    $stmt = $mysqli->prepare("INSERT INTO categorie (IDCategorie, NomCategorie, Couleur) VALUES (NULL, ?, ?)");
-    $stmt->bind_param("ss", $name, $color);
-    $stmt->execute();
+    query("INSERT INTO categorie (NomCategorie, Couleur) VALUES (?, ?)", "ss", $name, $color);
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
