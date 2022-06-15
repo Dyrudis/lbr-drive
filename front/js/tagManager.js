@@ -223,6 +223,7 @@
             success: function (data) {
                 if (data != "OK") {
                     console.error(data);
+                    alert("Catégorie déjà existante");
                 } else {
                     location.reload();
                 }
@@ -251,6 +252,7 @@
             success: function (data) {
                 if (data != "OK") {
                     console.error(data);
+                    alert("Tag déjà existant");
                 } else {
                     location.reload();
                 }

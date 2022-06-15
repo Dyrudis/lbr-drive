@@ -15,6 +15,8 @@ if ($IDTag == '0') {
     die("Vous ne pouvez pas modifier le tag \"Sans tag\"");
 }
 
+
+
 include("../database.php");
 
 try {
@@ -52,6 +54,9 @@ try {
         $row = $result->fetch_assoc();
         $categorie = $row['NomCategorie'];
     }
+
+    
+    
 
     // Modification du tag dans la base de données
     $stmt = $mysqli->prepare("UPDATE tag SET NomTag = ?, IDCategorie = ? WHERE IDTag = ?");
