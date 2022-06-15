@@ -17,20 +17,14 @@ include("../database.php");
 
 try {
     // Récupération du nom de la catégorie pour les logs
-    $stmt = $mysqli->prepare("SELECT NomCategorie FROM categorie WHERE categorie.IDCategorie = ?");
-    $stmt->bind_param("i", $IDCategorie);
-    $stmt->execute();
-    $name = $stmt->get_result()->fetch_assoc()['NomCategorie'];
+    $result = query("SELECT NomCategorie FROM categorie WHERE IDCategorie = ?", "i", $IDCategorie);
+    $name = $result[0]['NomCategorie'];
 
     // Suppression de la catégorie dans la base de données
-    $stmt = $mysqli->prepare("DELETE FROM categorie WHERE categorie.IDCategorie = ?");
-    $stmt->bind_param("i", $IDCategorie);
-    $stmt->execute();
+    query("DELETE FROM categorie WHERE IDCategorie = ?", "i", $IDCategorie);
 
     // Change la catégorie des tags associés par Autres
-    $stmt = $mysqli->prepare("UPDATE tag SET IDCategorie = '0' WHERE tag.IDCategorie = ?");
-    $stmt->bind_param("i", $IDCategorie);
-    $stmt->execute();
+    query("UPDATE tag SET IDCategorie = '0' WHERE IDCategorie = ?", "i", $IDCategorie);
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

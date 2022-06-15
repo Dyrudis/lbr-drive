@@ -14,25 +14,18 @@ include("../database.php");
 
 try {
     // Vérification si le tag existe déjà dans cette catégorie
-    $stmt = $mysqli->prepare("SELECT * FROM tag WHERE NomTag = ? AND IDCategorie = ?");
-    $stmt->bind_param("si", $name, $IDCategorie);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
+    $result = query("SELECT * FROM tag WHERE NomTag = ? AND IDCategorie = ?", "si", $name, $IDCategorie);
+    if ($result) {
         die("Le tag \"" . $name . "\" existe déjà dans cette catégorie");
     }
 
     // Ajout du tag dans la base de données
-    $stmt = $mysqli->prepare("INSERT INTO tag (IDTag, NomTag, IDCategorie) VALUES (NULL, ?, ?)");
-    $stmt->bind_param("si", $name, $IDCategorie);
-    $stmt->execute();
+    query("INSERT INTO tag (NomTag, IDCategorie) VALUES (?, ?)", "si", $name, $IDCategorie);
     $IDTag = $mysqli->insert_id;
 
     // Si l'utilisateur est un invité on ajoute le tag dans la liste des tags visibles par l'utilisateur
     if ($_SESSION['role'] == "invite") {
-        $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
-        $stmt->bind_param("ii", $_SESSION['id'], $IDTag);
-        $stmt->execute();
+        query("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)", "ii", $_SESSION['id'], $IDTag);
     }
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

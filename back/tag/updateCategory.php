@@ -19,20 +19,14 @@ include("../database.php");
 
 try {
     // Récupération de l'ancien nom et couleur de la catégorie pour les logs
-    $stmt = $mysqli->prepare("SELECT NomCategorie, Couleur FROM categorie WHERE IDCategorie = ?");
-    $stmt->bind_param("i", $IDCategorie);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $oldName = $row['NomCategorie'];
-        $oldColor = $row['Couleur'];
+    $result = query("SELECT NomCategorie, Couleur FROM categorie WHERE IDCategorie = ?", "i", $IDCategorie);
+    if ($result) {
+        $oldName = $result[0]['NomCategorie'];
+        $oldColor = $result[0]['Couleur'];
     }
 
     // Modification de la catégorie dans la base de données
-    $stmt = $mysqli->prepare("UPDATE categorie SET NomCategorie = ?, Couleur = ? WHERE IDCategorie = ?");
-    $stmt->bind_param("ssi", $name, $color, $IDCategorie);
-    $stmt->execute();
+    query("UPDATE categorie SET NomCategorie = ?, Couleur = ? WHERE IDCategorie = ?", "ssi", $name, $color, $IDCategorie);
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

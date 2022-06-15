@@ -13,15 +13,13 @@ $role = $_SESSION['role'];
 try {
     // Restriction des tags visibles si l'utilisateur est un invité
     if ($role == 'invite') {
-        $stmt = $mysqli->prepare("SELECT * FROM tag, categorie, restreindre WHERE tag.IDCategorie = categorie.IDCategorie AND restreindre.IDTag = tag.IDTag AND restreindre.IDUtilisateur = ? ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC");
-        $stmt->bind_param("i", $id);
+        $result = query("SELECT * FROM tag, categorie, restreindre WHERE tag.IDCategorie = categorie.IDCategorie AND
+        restreindre.IDTag = tag.IDTag AND restreindre.IDUtilisateur = ? ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC", "i", $id);
     } else {
-        $stmt = $mysqli->prepare("SELECT * FROM tag, categorie WHERE tag.IDCategorie = categorie.IDCategorie ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC");
+        $result = query("SELECT * FROM tag, categorie WHERE tag.IDCategorie = categorie.IDCategorie ORDER BY categorie.IDCategorie DESC, tag.NomTag ASC");
     }
-    $stmt->execute();
-    $result = $stmt->get_result();
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
-echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+echo json_encode($result);

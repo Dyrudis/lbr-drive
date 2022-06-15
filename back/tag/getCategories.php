@@ -8,11 +8,9 @@ if(!isset($_SESSION['id'])) {
 }
 
 try {
-    $stmt = $mysqli->prepare("SELECT * FROM categorie ORDER BY categorie.IDCategorie DESC");
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $result = query("SELECT * FROM categorie ORDER BY categorie.IDCategorie DESC");
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
-echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+echo json_encode($result);
