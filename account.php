@@ -31,7 +31,7 @@ foreach ($infoUtilisateur as $info) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/account.css" />
     <link rel="stylesheet" href="front/css/tag.css" />
-    <link rel="icon" href="front/images/iconelbr.ico"/>
+    <link rel="icon" href="front/images/iconelbr.ico" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="front/js/account/updateAvatar.js" defer></script>
     <script src="front/js/account/updatePassword.js" defer></script>
@@ -45,15 +45,8 @@ foreach ($infoUtilisateur as $info) {
     <div id="main">
         <div id="title">
             <div id="avatar-container">
-                <img class='undraggable' <?php
-                                            // Check if file exist
-                                            if (file_exists("avatars/$id")) {
-                                                echo "src='avatars/$id'";
-                                            } else {
-                                                echo "src='avatars/default.jpg'";
-                                            }
-                                            ?> alt="avatar" id="avatar" />
-                                            <p>Modifier</p>
+                <img class='undraggable' <?php echo "src='avatars/$id'"; ?> alt="avatar" id="avatar" />
+                <p>Modifier</p>
             </div>
             <div id="title-content">
                 <div id="title-content-up">
@@ -109,11 +102,11 @@ foreach ($infoUtilisateur as $info) {
                     Nouveau mot de passe :
                 </label>
                 <input class='inputNouveauMdp' type="password" id="nouveauMdp" placeholder="1 maj/1 min/1 chiffre/1 caractère" name="nouveauMdp" onchange="VerifChampMdp()" required />
-                <label for="verifNouveauMdp" id="labelVerifNouveauMdp" >
+                <label for="verifNouveauMdp" id="labelVerifNouveauMdp">
                     Confirmez le :
                 </label>
                 <input class='inputNouveauMdp' type="password" id="verifNouveauMdp" placeholder="" name="verifNouveauMdp" onchange="idemMdp()" required />
-                <button id="bouton" type="button" class="btn" onclick="submitNouveauMdp()" >Modifier</button>
+                <button id="bouton" type="button" class="btn" onclick="submitNouveauMdp()">Modifier</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
             </form>
         </div>

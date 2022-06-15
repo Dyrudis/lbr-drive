@@ -50,7 +50,7 @@ try {
             if ($role == 'invite') {
 
                 $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
-                $stmt->bind_param("ii", $IDFichier, $currentTag);
+                $stmt->bind_param("ii", $idNouveauCompte, $currentTag);
                 foreach ($tagAutorise as $tag) {
                     $currentTag = $tag;
                     $stmt->execute();
@@ -86,7 +86,7 @@ try {
             if ($role == 'invite') {
 
                 $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
-                $stmt->bind_param("ii", $IDFichier, $currentTag);
+                $stmt->bind_param("ii", $idNouveauCompte, $currentTag);
                 foreach ($tagAutorise as $tag) {
                     $currentTag = $tag;
                     $stmt->execute();
@@ -97,6 +97,9 @@ try {
 
             echo "Création de compte réussi";
         }
+
+        //creation de la photo de profil par defaut
+        copy("../../avatars/default.jpg", "../../avatars/" . $idNouveauCompte);
     }
 }catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

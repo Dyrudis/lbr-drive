@@ -47,24 +47,20 @@ include("../database.php");
 
 try {
     // Ajout du fichier dans la base de données
-    $stmt = $mysqli->prepare("INSERT INTO fichier (Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree) VALUES (?, ?, CURRENT_DATE, ?, ?, ?, ?)");
-    $stmt->bind_param("sissss", $name, $_SESSION['id'], $file['size'], $type, $extension, $duration);
-    $stmt->execute();
+    query("INSERT INTO fichier (Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree)VALUES (?, ?, CURRENT_DATE, ?, ?, ?, ?)",
+    "sissss", $name, $_SESSION['id'], $file['size'], $type, $extension, $duration);
 
     // Récupération de l'ID du fichier
     $IDFichier = $mysqli->insert_id;
 
-    // Si le tableau des tags est vide, on ajoute le tag "Sant tag"
+    // Si le tableau des tags est vide, on ajoute le tag "Sans tag"
     if (empty($tags)) {
         $tags = array(0);
     }
 
     // Ajout des tags dans la base de données
-    $stmt = $mysqli->prepare("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)");
-    $stmt->bind_param("si", $IDFichier, $currentTag);
     foreach ($tags as $tag) {
-        $currentTag = $tag;
-        $stmt->execute();
+        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "si", $IDFichier, $tag);
     }
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

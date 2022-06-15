@@ -3,9 +3,7 @@
 function registerNewLog($mysqli, $id, $descr)
 {
     // Ajout du log dans la base de données
-    $sql = $mysqli->prepare("INSERT INTO log (IDLog, IDSource, Date, Description) VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)");
-    $sql->bind_param("is", $id, $descr);
-    $sql->execute();
+    query("INSERT INTO log (IDSource, Date, Description) VALUES (?, CURRENT_TIMESTAMP, ?)", "is", $id, $descr);
 }
 
 /* Exemple d'utilisation de la fonction registerNewLog : 

@@ -8,11 +8,9 @@ if ($_SESSION['role'] != 'admin') {
 
 // Récupération des logs
 try {
-    $stmt = $mysqli->prepare("SELECT IDSource, Nom, Prenom, Date, log.Description FROM log, utilisateur WHERE log.IDSource = utilisateur.IDUtilisateur ORDER BY Date DESC");
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $result = query("SELECT IDSource, Nom, Prenom, Date, log.Description FROM log, utilisateur WHERE log.IDSource = utilisateur.IDUtilisateur ORDER BY Date DESC");
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
-echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+echo json_encode($result);
