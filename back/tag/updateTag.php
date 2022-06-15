@@ -45,8 +45,11 @@ try {
         $categorie = $row['NomCategorie'];
     }
 
-    
-    
+    // Vérifie si le tag modifié existe déjà
+    $result = query("SELECT NomTag FROM tag WHERE NomTag = ? AND ? = tag.IDCategorie", "si", $name, $IDCategorie);
+    if ($result) {
+        die("Ce tag existe déjà dans cette catégorie");
+    }
 
     // Modification du tag dans la base de données
     query("UPDATE tag SET NomTag = ?, IDCategorie = ? WHERE IDTag = ?", "ssi", $name, $IDCategorie, $IDTag);

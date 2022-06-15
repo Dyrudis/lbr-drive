@@ -25,6 +25,13 @@ try {
         $oldColor = $result[0]['Couleur'];
     }
 
+    // Vérifie si la categorie modifiée existe déjà
+    $result = query("SELECT NomCategorie FROM categorie WHERE NomCategorie = ?", "s", $name);
+    if ($result) {
+        die("Cette catégorie existe déjà");
+    }
+
+
     // Modification de la catégorie dans la base de données
     query("UPDATE categorie SET NomCategorie = ?, Couleur = ? WHERE IDCategorie = ?", "ssi", $name, $color, $IDCategorie);
 } catch (mysqli_sql_exception $e) {
