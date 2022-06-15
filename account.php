@@ -9,25 +9,22 @@ $role = $_SESSION['role'];
 
 include('back/database.php');
 
-$sql = "SELECT * FROM utilisateur WHERE IDUtilisateur = '$id' ";
-$result = $mysqli->query($sql);
+$result = query("SELECT * FROM utilisateur WHERE IDUtilisateur = ?", "i", $id);
 
-$infoUtilisateur = $result->fetch_all(MYSQLI_ASSOC);
-foreach ($infoUtilisateur as $info) {
-    $prenom = $info["Prenom"];
-    $nom = $info["Nom"];
-    $description = $info["Description"];
-    $email = $info["Email"];
-    $role = $info["Role"];
-}
+$prenom = $result[0]["Prenom"];
+$nom = $result[0]["Nom"];
+$description = $result[0]["Description"];
+$email = $result[0]["Email"];
+$role = $result[0]["Role"];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <title>Mon compte</title>
-    <meta charset="utf-8" />
+    
+    <head>
+        <title>Mon compte</title>
+        <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/account.css" />
     <link rel="stylesheet" href="front/css/tag.css" />
