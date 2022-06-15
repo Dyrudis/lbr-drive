@@ -2,6 +2,9 @@
 session_start();
 include("../database.php");
 
+//liste des types/arguments qui seront bind à la requête
+$typeToBind = "";
+$argsToBind = [];
 //tab contenant les tags pour requete
 $tab = [];
 //string pour requete seulement fichiers à soi
@@ -24,7 +27,9 @@ if (isset($_POST['tags'])) {
 
 //Get incoming string from post
 if (isset($_POST['user'])) {
-    $user = "AND fichier.IDUtilisateur = '$id' ";
+    $user = "AND fichier.IDUtilisateur = ? ";
+    $typeToBind .= "i";
+    $argsToBind[] = $id;
 }
 
 //Get incoming string from post
@@ -51,52 +56,44 @@ if (isset($_POST['fileType'])) {
         $type = " ";
     }
 }
+
+try {
+
     // Get the data from the database
     $sql = "SELECT fichier.Nom as NomFichier, GROUP_CONCAT(classifier.IDTag) as 'IDTags', GROUP_CONCAT(tag.NomTag) as 'NomTags', GROUP_CONCAT(categorie.Couleur) 
     as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
     FROM classifier, fichier, utilisateur, tag, categorie
-    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . " " . $type . $corbeille .
+    WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . $type . $corbeille .
         "GROUP BY fichier.IDFichier";
 
-    $result = $mysqli->query($sql);
+    $result = query($sql, $typeToBind, $argsToBind);
 
-
-// Check for errors
-if (!$result) {
-    die('Erreur de recuperation des fichiers : ' . $mysqli->error);
-}
-
-// Parse the result into an array and return it in js
-$rows = array();
-while ($row = $result->fetch_assoc()) {
-    $rows[] = $row;
-}
-
-$result = $rows;
-
-if($role=='invite'){
-    $result = [];
-    $tagRestreint = "SELECT IDTag FROM restreindre WHERE IDUtilisateur = $id";
-    $resultTagRestreint = $mysqli->query($tagRestreint);
-    $allTagRestreint= [];
-    foreach($resultTagRestreint as $row){
-        $allTagRestreint[] = intval($row['IDTag']);
-    }
-    foreach ($rows as $row) {
-        $tags = explode(',', $row['IDTags']);
-        $tags = array_map('intval', $tags);
-        
-        if (array_intersect($tags, $allTagRestreint)) {
-            $result[] = $row;
+    if ($role == 'invite') {
+        $rows = $result;
+        $result = [];
+        $tagRestreint = "SELECT IDTag FROM restreindre WHERE IDUtilisateur = $id";
+        $resultTagRestreint = $mysqli->query($tagRestreint);
+        $allTagRestreint = [];
+        foreach ($resultTagRestreint as $row) {
+            $allTagRestreint[] = intval($row['IDTag']);
         }
+        foreach ($rows as $row) {
+            $tags = explode(',', $row['IDTags']);
+            $tags = array_map('intval', $tags);
 
+            if (array_intersect($tags, $allTagRestreint)) {
+                $result[] = $row;
+            }
+        }
     }
+} catch (Exception $e) {
+    echo "Erreur : " . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine();
 }
 
-$tmp = [];
+$filteredResult = [];
 
 //Recherche de type INTERSECTION
-if ($tri || !$tab ) {
+if ($tri || !$tab) {
     //Filters and returns only rows containing AT LEAST the researched tags
 
     foreach ($result as $row) {
@@ -104,8 +101,7 @@ if ($tri || !$tab ) {
         $tags = array_map('intval', $tags);
 
         if (!array_diff($tab, $tags)) {
-
-            $tmp[] = $row;
+            $filteredResult[] = $row;
         }
     }
 }
@@ -118,19 +114,19 @@ else {
         $tags = array_map('intval', $tags);
 
         if (array_intersect($tags, $tab)) {
-            $tmp[] = $row;
+            $filteredResult[] = $row;
         }
     }
 }
 
 // Add a boolean property named 'isEditable' to each file
-foreach ($tmp as $index => $value) {
-    if ($value['IDUtilisateur'] === $_SESSION['id'] || $_SESSION['role'] == 'admin' || $_SESSION['role'] == 'ecriture') {
-        $tmp[$index]['isEditable'] = true;
+foreach ($filteredResult as $index => $value) {
+    if ($value['IDUtilisateur'] == $_SESSION['id'] || $_SESSION['role'] == 'admin' || $_SESSION['role'] == 'ecriture') {
+        $filteredResult[$index]['isEditable'] = true;
     } else {
-        $tmp[$index]['isEditable'] = false;
+        $filteredResult[$index]['isEditable'] = false;
     }
 }
 
 
-echo json_encode($tmp);
+echo json_encode($filteredResult);

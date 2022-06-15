@@ -21,38 +21,25 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
-        $stmt->bind_param("ii", $IDFichier, $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows == 0) {
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Ajout du tag dans la table classifier
-    $stmt = $mysqli->prepare("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)");
-    $stmt->bind_param("ii", $IDFichier, $IDTag);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "ii", $IDFichier, $IDTag);
 
     // Suppresion du tag "Sans tag" du fichier (si il existe)
-    $stmt = $mysqli->prepare("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = 0");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
+    query("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = 0", "i", $IDFichier);
 
     // Récupération du nom du tag pour les logs
-    $stmt = $mysqli->prepare("SELECT NomTag FROM tag WHERE IDTag = ?");
-    $stmt->bind_param("i", $IDTag);
-    $stmt->execute();
-    $tagName = $stmt->get_result()->fetch_assoc()['NomTag'];
+    $result = query("SELECT NomTag FROM tag WHERE IDTag = ?", "i", $IDTag);
+    $tagName = $result[0]['NomTag'];
 
     // Récupération du nom du fichier pour les logs
-    $stmt = $mysqli->prepare("SELECT Nom FROM fichier WHERE IDFichier = ?");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
-    $fileName = $stmt->get_result()->fetch_assoc()['Nom'];
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $fileName = $result[0]['Nom'];
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

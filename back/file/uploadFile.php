@@ -48,7 +48,7 @@ include("../database.php");
 try {
     // Ajout du fichier dans la base de données
     query("INSERT INTO fichier (Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree)VALUES (?, ?, CURRENT_DATE, ?, ?, ?, ?)",
-    "sissss", $name, $_SESSION['id'], $file['size'], $type, $extension, $duration);
+    "siissi", $name, $_SESSION['id'], $file['size'], $type, $extension, $duration);
 
     // Récupération de l'ID du fichier
     $IDFichier = $mysqli->insert_id;
@@ -60,7 +60,7 @@ try {
 
     // Ajout des tags dans la base de données
     foreach ($tags as $tag) {
-        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "si", $IDFichier, $tag);
+        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "ii", $IDFichier, $tag);
     }
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

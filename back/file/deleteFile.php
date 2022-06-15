@@ -16,28 +16,19 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
-        $stmt->bind_param("ii", $IDFichier, $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows == 0) {
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Récupération du nom et de l'extension du fichier pour les logs
-    $stmt = $mysqli->prepare("SELECT Nom, Extension FROM fichier WHERE IDFichier = ?");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
-    $result = $stmt->get_result()->fetch_assoc();
-    $fileName = $result['Nom'];
-    $fileExtension = $result['Extension'];
+    $result = query("SELECT Nom, Extension FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $fileName = $result[0]['Nom'];
+    $fileExtension = $result[0]['Extension'];
 
     // Suppression définitive du fichier dans la base de données
-    $stmt = $mysqli->prepare("DELETE FROM fichier WHERE IDFichier = ?");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
+    query("DELETE FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

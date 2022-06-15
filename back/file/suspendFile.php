@@ -16,26 +16,18 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $stmt = $mysqli->prepare("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?");
-        $stmt->bind_param("ii", $IDFichier, $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows == 0) {
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Récupération du nom du fichier pour les logs
-    $stmt = $mysqli->prepare("SELECT Nom FROM fichier WHERE IDFichier = ?");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
-    $fileName = $stmt->get_result()->fetch_assoc()['Nom'];
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $fileName = $result[0]['Nom'];
 
     // Ajout de la date de mise en corbeille du fichier
-    $stmt = $mysqli->prepare("UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = ?");
-    $stmt->bind_param("i", $IDFichier);
-    $stmt->execute();
+    query("UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = ?", "i", $IDFichier);
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
