@@ -17,7 +17,6 @@ if ($role != 'admin') {
     <title>Logs</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="front/css/index.css" />
     <link rel="stylesheet" href="front/css/logs.css">
     <link rel="icon" href="front/images/iconelbr.ico"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

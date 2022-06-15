@@ -47,6 +47,7 @@ body {
 #barre-scroll {
     overflow-y: auto;
     padding-bottom: 230px;
+    height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -438,4 +439,21 @@ body {
 #fullscreen-container > video {
     max-width: 80vw;
     max-height: 90vh;
+}
+
+@media (max-width: 820px) {
+    #content {
+    height: calc(100vh - 184px);
+    }
+    #menuToggle {
+        display: inline !important;
+    }
+
+    #barre {
+        display: none;
+    }
+
+    #barre.visible {
+        display: block;
+    }
 }

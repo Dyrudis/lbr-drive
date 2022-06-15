@@ -4,8 +4,11 @@ $currentFile = end($currentFile);
 ?>
 
 <header>
-    <a href="index.php">
-        <img id="home" class="pointerOnHover undraggable" src="front/images/logoLONGUEURBlanc.png">
+
+    <img id="menuToggle" src="front/images/menu.svg">
+
+    <a id="home" class="pointerOnHover undraggable" href="index.php">
+        <img src="front/images/logoLONGUEURBlanc.png">
     </a>
 
     <?php

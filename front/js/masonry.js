@@ -1,4 +1,4 @@
-var fixedwidth = 300 + 10, //the +10 is for 10px horizontal margin
+var fixedwidth = 280 + 10, //the +10 is for 10px horizontal margin
     gallery = $("#gallery"); // cache a reference to our container
 
 function masonry() {

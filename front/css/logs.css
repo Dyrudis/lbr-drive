@@ -2,11 +2,14 @@
     margin: 0;
 }
 
+body {
+    overflow-y: auto;
+}
+
 #content {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    overflow-y: auto !important;
 }
 
 h1 {

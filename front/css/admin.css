@@ -97,6 +97,7 @@ select {
     grid-template-rows: 1fr 1fr;
     justify-content: center;
     gap: 25px;
+    overflow: hidden;
 }
 
 #formCreationCompte {

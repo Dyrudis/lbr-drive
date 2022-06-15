@@ -31,46 +31,75 @@ header {
     font-size: 20px;
     font-weight: bold;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     list-style: none;
     height: 85px;
+    overflow: hidden;
+    gap: 40px;
+    padding: 0 40px 0 0;
+}
+
+#menuToggle {
+    height: 40px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
 }
 
 #home {
-    margin: 0;
-    position: absolute;
-    left: 25px;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 360px;
+    height: 85px;
 }
 
-header img {
-    height: 100%;
-}
-
-#lienCompte {
-    text-decoration: none;
-    color: #ffffff;
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#lienCompte:hover {
-    color: blue;
+#home img {
+    width: 100%;
 }
 
 #lienUpload {
     text-decoration: none;
+    white-space: nowrap;
     color: #ffffff;
-    position: absolute;
-    right: 200px;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: auto;
+    padding: 12px;
+    border-radius: 5px;
 }
 
 #lienUpload:hover {
-    color: blue;
+    background-color: rgba(0, 0, 0, 0.1);
 }
+
+#lienCompte {
+    text-decoration: none;
+    white-space: nowrap;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+#lienCompte:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Media querie */
+
+@media (max-width: 820px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        gap: 5px;
+        padding: 0;
+    }
+
+    #lienUpload {
+        margin: -15px 0 0 0;
+    }
+
+    #lienCompte {
+        margin-bottom: 10px;
+    }
+}
+

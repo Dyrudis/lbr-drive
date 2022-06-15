@@ -1,6 +1,7 @@
 #main {
     padding: 60px;
     max-width: 900px;
+    overflow: hidden;
 }
 
 #title {
@@ -27,21 +28,21 @@
 }
 
 #title #avatar-container p {
-  background-color: rgba(0, 0, 0, 0.75);
-  color: white;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 20px 0;
-  text-align: center;
-  transform: translateY(100%);
-  transition: transform 0.25s ease;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
 }
 
 #title #avatar-container:hover p {
-  transform: translateY(0%);
+    transform: translateY(0%);
 }
 
 #role-compte {
@@ -95,86 +96,86 @@
     overflow-wrap: normal;
 }
 
-
 .open-btn {
-  box-sizing: border-box;
-  font-family: Roboto, Helvetica, sans-serif;
+    box-sizing: border-box;
+    font-family: Roboto, Helvetica, sans-serif;
 }
 /* Stylez et fixez le bouton sur la page */
 .open-button {
-  background-color: #000000;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  margin-top: 15px;
+    background-color: #000000;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    margin-top: 15px;
 }
 /* Positionnez la forme Popup */
 .login-popup {
-  position: relative;
-  text-align: center;
-  width: 100%;
+    position: relative;
+    text-align: center;
+    width: 100%;
 }
 /* Masquez la forme Popup */
 .form-popup {
-  display: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #666;
-  z-index: 9;
-  width: fit-content;
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #666;
+    z-index: 9;
+    width: fit-content;
 }
 /* Styles pour le conteneur de la forme */
 .form-container {
-  max-width: 300px;
-  padding: 20px;
-  background-color: #fff;
+    max-width: 300px;
+    padding: 20px;
+    background-color: #fff;
 }
 /* Largeur complète pour les champs de saisie */
 .form-container input[type="text"],
 .form-container input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #eee;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #eee;
 }
 /* Quand les entrées sont concentrées, faites quelque chose */
 .form-container input[type="text"]:focus,
 .form-container input[type="password"]:focus {
-  background-color: #ddd;
-  outline: none;
+    background-color: #ddd;
+    outline: none;
 }
 /* Stylez le bouton de connexion */
 .form-container .btn {
-  background-color: #8ebf42;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom: 10px;
-  opacity: 0.8;
+    background-color: #8ebf42;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
 }
 /* Stylez le bouton pour annuler */
 .form-container .cancel {
-  background-color: #cc0000;
+    background-color: #cc0000;
 }
 /* Planez les effets pour les boutons */
 .form-container .btn:hover,
 .open-button:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
-#mesFichiers{
+#mesFichiers {
     margin-top: 100px;
 }
 
-#labelNewMdp,#labelVerifMdp{
+#labelNewMdp,
+#labelVerifMdp {
     font-weight: bold;
 }

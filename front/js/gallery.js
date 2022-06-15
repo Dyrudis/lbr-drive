@@ -53,15 +53,16 @@ function displayFile(file) {
     let preview;
     if (file.Type == "image") {
         preview = $("<img />").attr("src", path);
+        preview.on("load", masonry);
     } else {
         preview = $("<video />");
+        preview.on("loadeddata", masonry);
         let source = $("<source />")
             .attr("src", path)
             .attr("type", file.Type + "/" + file.Extension);
         preview.append(source);
     }
     preview.addClass("file-preview");
-    preview.on("load", masonry);
     let hover = $("<div>").addClass("file-hover");
     let hoverTags = $("<div>").addClass("file-hover-tags");
     file.Tags.forEach((tag) => {
@@ -459,3 +460,8 @@ function updateSize() {
 
     $("#selection-multiple-size").text(bytesToSize(sum));
 }
+
+$("#menuToggle").click(() => {
+    $("#barre").toggleClass("visible");
+    masonry();
+})
