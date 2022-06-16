@@ -163,8 +163,12 @@ function displayFile(file) {
             request.onload = function () {
                 if (this.responseText == "OK") {
                     container.remove();
+                    masonry();
                 } else {
-                    console.error(this.responseText);
+                    alert.create({
+                        content: "Action impossible",
+                        type: "error",
+                    });
                 }
             };
         }
@@ -182,8 +186,12 @@ function displayFile(file) {
             request.onload = function () {
                 if (this.responseText == "OK") {
                     container.remove();
+                    masonry();
                 } else {
-                    console.error(this.responseText);
+                    alert.create({
+                        content: "Action impossible",
+                        type: "error",
+                    });
                 }
             };
         }
@@ -372,7 +380,10 @@ function deleteTagFromFile(IDFichier, IDTag) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.error(this.responseText);
+            alert.create({
+                content: "Action impossible",
+                type: "error",
+            });
         }
     };
 }
@@ -387,7 +398,10 @@ function addTagToFile(IDFichier, IDTag) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.error(this.responseText);
+            alert.create({
+                content: "Action impossible",
+                type: "error",
+            });
             return false;
         } else {
             return true;
@@ -405,7 +419,10 @@ function editFileTitle(IDFichier, newTitle) {
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.error(this.responseText);
+            alert.create({
+                content: "Action impossible",
+                type: "error",
+            });
         }
     };
 }
@@ -464,4 +481,4 @@ function updateSize() {
 $("#menuToggle").click(() => {
     $("#barre").toggleClass("visible");
     masonry();
-})
+});

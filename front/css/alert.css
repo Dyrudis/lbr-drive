@@ -1,0 +1,72 @@
+/* Alert styling */
+
+.alert-container {
+	position: fixed;
+	width: 350px;
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 10px;
+	user-select: none;
+}
+
+.alert {
+	position: relative;
+	background-color: rgb(236, 240, 241);
+	color: rgb(44, 62, 80);
+	font-size: 1.3em;
+	width: 100%;
+	margin: 0;
+	padding: 10px 10px 10px 41px;
+	border-bottom: 5px solid;
+	border-radius: 5px;
+	transition: all 0.5s ease-in-out;
+
+	/* Default styling */
+	border-bottom-color: rgb(41, 128, 185);
+}
+
+.alert::before {
+	position: absolute;
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	background-size: 25px 25px;
+	width: 25px;
+	height: 25px;
+	content: ' ';
+
+	/* Default styling */
+	background-image: url('/front/images/alert/info.png');
+	filter: invert(47%) sepia(8%) saturate(5024%) hue-rotate(162deg)
+		brightness(90%) contrast(82%);
+}
+
+.alert-success {
+	border-bottom-color: rgb(39, 174, 96);
+}
+
+.alert-success::before {
+	background-image: url('/front/images/alert/success.png');
+	filter: invert(52%) sepia(94%) saturate(355%) hue-rotate(93deg)
+		brightness(88%) contrast(90%);
+}
+
+.alert-warning {
+	border-bottom-color: rgb(241, 196, 15);
+}
+
+.alert-warning::before {
+	background-image: url('/front/images/alert/warning.png');
+	filter: invert(77%) sepia(53%) saturate(734%) hue-rotate(357deg)
+		brightness(97%) contrast(94%);
+}
+
+.alert-error {
+	border-bottom-color: rgb(192, 57, 43);
+}
+
+.alert-error::before {
+	background-image: url('/front/images/alert/error.png');
+	filter: invert(23%) sepia(31%) saturate(5351%) hue-rotate(348deg)
+		brightness(97%) contrast(83%);
+}

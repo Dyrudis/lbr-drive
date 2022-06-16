@@ -10,7 +10,10 @@
         try {
             categories = JSON.parse(this.responseText);
         } catch {
-            console.error(this.responseText);
+            alert.create({
+                content: this.responseText,
+                type: "error",
+            });
             return;
         }
 
@@ -27,7 +30,10 @@
             try {
                 tags = JSON.parse(this.responseText);
             } catch {
-                console.error(this.responseText);
+                alert.create({
+                    content: this.responseText,
+                    type: "error",
+                });
                 return;
             }
 
@@ -87,11 +93,11 @@
                 success: function (data) {
                     if (data == "Modification nulle") {
                         // Pas de modification
-                    }
-                    else if (data != "OK") {
-                        console.error(data);
-                        alert(data);
-                        location.reload();
+                    } else if (data != "OK") {
+                        alert.create({
+                            content: data,
+                            type: "error",
+                        });
                     } else {
                         location.reload();
                     }
@@ -109,7 +115,10 @@
                     },
                     success: function (data) {
                         if (data != "OK") {
-                            console.error(data);
+                            alert.create({
+                                content: data,
+                                type: "error",
+                            });
                         } else {
                             location.reload();
                         }
@@ -172,11 +181,11 @@
                 success: function (data) {
                     if (data == "Modification nulle") {
                         // Pas de modification
-                    }
-                    else if (data != "OK") {
-                        console.error(data);
-                        alert(data);
-                        location.reload();
+                    } else if (data != "OK") {
+                        alert.create({
+                            content: data,
+                            type: "error",
+                        });
                     } else {
                         location.reload();
                     }
@@ -194,7 +203,10 @@
                     },
                     success: function (data) {
                         if (data != "OK") {
-                            console.error(data);
+                            alert.create({
+                                content: data,
+                                type: "error",
+                            });
                         } else {
                             location.reload();
                         }
@@ -232,8 +244,10 @@
             },
             success: function (data) {
                 if (data != "OK") {
-                    console.error(data);
-                    alert("Catégorie déjà existante");
+                    alert.create({
+                        content: data,
+                        type: "error",
+                    });
                 } else {
                     location.reload();
                 }
@@ -261,8 +275,10 @@
             },
             success: function (data) {
                 if (data != "OK") {
-                    console.error(data);
-                    alert("Tag déjà existant");
+                    alert.create({
+                        content: data,
+                        type: "error",
+                    });
                 } else {
                     location.reload();
                 }

@@ -1,4 +1,4 @@
-$("#avatar-container").click(function() {
+$("#avatar-container").click(function () {
     // Create a new file input
     let fileInput = document.createElement("input");
     fileInput.setAttribute("type", "file");
@@ -14,14 +14,17 @@ function readURL(fileInput) {
     let file = fileInput.files[0];
 
     let formData = new FormData();
-    formData.append('avatar', file);
+    formData.append("avatar", file);
 
     let request = new XMLHttpRequest();
     request.open("post", "back/account/updateAvatar.php", true);
     request.send(formData);
     request.onload = function () {
         if (this.responseText != "OK") {
-            console.log(this.responseText);
+            alert.create({
+                content: this.responseText,
+                type: "error",
+            });
         }
     };
 

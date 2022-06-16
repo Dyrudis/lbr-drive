@@ -6,19 +6,27 @@ function submitSupprCompte(){
             data : {'mdpCompte' : document.getElementById('motDePasse').value, 'emailSuppr' : document.getElementById('emailCompteSuppr').value},
             success: (data) => {
                 if(data=='Succes'){
-                    window.alert("Le compte a été supprimé");
+                    alert.create({
+                        content: "Le compte a été supprimé",
+                        type: "success",
+                    });
                     $(".inputSupprCompte").val("");
                 }
                 if(data=='Echec mdp'){
-                    window.alert("Mot de passe invalide");
+                    alert.create({
+                        content: "Mot de passe invalide",
+                        type: "error",
+                    });
                     $(".inputSupprCompte").val("");
                 }
             }
         });
     }
     else{
-
-        window.alert("L'un des champs n'est pas valide");
+        alert.create({
+            content: "L'un des champs n'est pas valide",
+            type: "error",
+        });
     }
 
 }
