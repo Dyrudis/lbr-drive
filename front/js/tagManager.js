@@ -85,7 +85,10 @@
                     color: color.val().substring(1),
                 },
                 success: function (data) {
-                    if (data != "OK") {
+                    if (data == "Modification nulle") {
+                        // Pas de modification
+                    }
+                    else if (data != "OK") {
                         console.error(data);
                         alert(data);
                         location.reload();
@@ -167,7 +170,10 @@
                     IDCategorie: catInput.val(),
                 },
                 success: function (data) {
-                    if (data != "OK") {
+                    if (data == "Modification nulle") {
+                        // Pas de modification
+                    }
+                    else if (data != "OK") {
                         console.error(data);
                         alert(data);
                         location.reload();

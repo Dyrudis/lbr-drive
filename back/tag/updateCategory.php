@@ -26,10 +26,16 @@ try {
     }
 
     // Vérifie si la categorie modifiée existe déjà
-    $result = query("SELECT NomCategorie FROM categorie WHERE NomCategorie = ?", "s", $name);
+    $result = query("SELECT IDCategorie, Couleur FROM categorie WHERE NomCategorie = ?", "s", $name);
     if ($result) {
-        die("Cette catégorie existe déjà");
+        if ($result[0]['IDCategorie'] != $IDCategorie) {
+            die("Cette catégorie existe déjà");
+        }
+        else if ($result[0]['Couleur'] == $color) {
+            die ("Modification nulle");
+        }
     }
+    
 
 
     // Modification de la catégorie dans la base de données
