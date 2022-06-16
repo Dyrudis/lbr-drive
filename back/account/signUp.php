@@ -17,14 +17,17 @@ if (isset($_POST['motDePasse'])) {
     $motdepasse = $_POST['motDePasse'];
 }
 
+$authorized = ['admin'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour ajouter un tag");
+}
+
 try {
     //requete avec l'email entré dans la création de compte
-    $stmt = $mysqli->prepare("SELECT * FROM utilisateur WHERE Email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s", $email);
+
     //test si il y a au moins un resultat
-    if ($stmt->num_rows > 0) {
+    if ($result) {
         echo "email incorrect";
     } else {
 
@@ -39,24 +42,17 @@ try {
             $hash = password_hash($mdpTemp, PASSWORD_DEFAULT);
 
             //requete pour créer un nouvel utilisateur
-            $stmt = $mysqli->prepare("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '2')");
-            $stmt->bind_param("ssssss", $nom,$prenom ,$hash, $email, $description,$role);
-            $stmt->execute();
+            query("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '2')", "ssssss", $nom,$prenom ,$hash, $email, $description,$role);
 
             //recupere l'id de compte creer
             $idNouveauCompte = $mysqli->insert_id;
-
             //test si le role est invite
-            if ($role == 'invite') {
-
-                $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
-                $stmt->bind_param("ii", $idNouveauCompte, $currentTag);
+            if ($role == 'invite') {                
                 foreach ($tagAutorise as $tag) {
-                    $currentTag = $tag;
-                    $stmt->execute();
+                    query("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)","ii",$idNouveauCompte,$tag);
                 }
 
-                echo "Envoie du mail d'inscription au compte invité";
+                echo "compte invité créé";
             }
 
             include('../mail/mailerInscription.php');
@@ -75,24 +71,16 @@ try {
             $hash = password_hash($motdepasse, PASSWORD_DEFAULT);
 
             //requete pour créer un nouvel utilisateur
-            $stmt = $mysqli->prepare("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '1')");
-            $stmt->bind_param("ssssss", $nom,$prenom ,$hash, $email, $description,$role);
-            $stmt->execute();
+            query("INSERT INTO utilisateur (Nom,Prenom, MotDePasse, Email, Description , Role, Actif) VALUES (?,? ,?, ?, ?,?, '1')", "ssssss", $nom,$prenom ,$hash, $email, $description,$role);
 
             //recupere l'id de compte creer
             $idNouveauCompte = $mysqli->insert_id;
-
             //test si le role est invite
-            if ($role == 'invite') {
-
-                $stmt = $mysqli->prepare("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)");
-                $stmt->bind_param("ii", $idNouveauCompte, $currentTag);
+            if ($role == 'invite') {                
                 foreach ($tagAutorise as $tag) {
-                    $currentTag = $tag;
-                    $stmt->execute();
+                    query("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)","ii",$idNouveauCompte,$tag);
                 }
-
-                echo "Envoie du mail d'inscription au compte invité";
+                echo "compte invité créé";
             }
 
             echo "Création de compte réussi";

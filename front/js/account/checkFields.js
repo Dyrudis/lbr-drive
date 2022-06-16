@@ -149,15 +149,26 @@ function submitModifCompte(){
         data : {'email' : document.getElementById('emailModifCompte').value, 'champ' : document.getElementById('selectChamp').value, 'valeur' : document.getElementById('nouvelleValeur').value, 'tags' : JSON.stringify(allTag2)},
         success: (data) => {
             console.log(data);
-            window.alert(data);
+            if(data == "Succes"){
+                window.alert("Compte modifié");
+            }
+            else if(data == "Succes invite"){
+                window.alert("Tags de restriction modifié");
+            }
+            else{
+                window.alert("Echec de la modification du compte");
+            }
             $(".inputModifCompte").val("");
 
         }
         
     });
     document.getElementById('nouvelleValeur').style.visibility = 'visible';
+    document.getElementById('nouvelleValeur').style.display = 'flex';
     document.getElementById('labelNouvelleValeur').style.visibility = 'visible';
+    document.getElementById('labelNouvelleValeur').style.display = 'flex';
     document.getElementById('tagInvite2').style.visibility = 'hidden';
+    document.getElementById('tagInvite2').style.display = 'none';
 }
 
 function submitInfoCompte(){ 

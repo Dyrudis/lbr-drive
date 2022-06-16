@@ -62,7 +62,6 @@ header {
     text-decoration: none;
     white-space: nowrap;
     color: #ffffff;
-    margin-left: auto;
     padding: 12px;
     border-radius: 5px;
 }
@@ -81,6 +80,10 @@ header {
 
 #lienCompte:hover {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+header a:nth-child(3){
+    margin-left: auto;
 }
 
 /* Media querie */

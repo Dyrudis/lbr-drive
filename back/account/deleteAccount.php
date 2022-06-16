@@ -6,23 +6,22 @@ $id = $_SESSION['id'];
 $mdpAdmin = $_POST['mdpCompte'];
 $emailSuppr = $_POST['emailSuppr'];
 
-//requete au serveur pour recuperer le mdp du compte admin
+//vérification des droits 
+$authorized = ['admin'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour suspendre un compte");
+}
+
+
 try{
-    $stmt = $mysqli->prepare("SELECT MotDePasse FROM utilisateur WHERE IDUtilisateur = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($mdpHash);
-    $stmt->fetch();
+    //requete au serveur pour recuperer le mdp du compte admin
+    $result = query("SELECT MotDePasse FROM utilisateur WHERE IDUtilisateur = ?", "i", $id);
 
 
-
-//test le mot de passe de l'admin 
-    if(password_verify($mdpAdmin,$mdpHash)){
+    //test le mot de passe de l'admin 
+    if(password_verify($mdpAdmin,$result[0]['MotDePasse'])){
         //requete pour actualiser l'actif du compte a supprimer a 0
-        $stmt = $mysqli->prepare("UPDATE utilisateur SET Actif = '0' WHERE Email = ?");
-        $stmt->bind_param("s", $emailSuppr);
-        $stmt->execute();
+        query("UPDATE utilisateur SET Actif = '0' WHERE Email = ?", "s", $emailSuppr);
         echo"Succes";
 
         // INSERT LOG

@@ -7,19 +7,19 @@ $email = $_POST['email'];
 $motdepasse = $_POST['motdepasse'];
 
 try {
-    $stmt = $mysqli->prepare("SELECT IDUtilisateur, Actif, MotDePasse, Role FROM utilisateur WHERE Email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($id, $actif, $mdpHash, $role);
-    $stmt->fetch();
+    $result = query("SELECT IDUtilisateur, Actif, MotDePasse, Role FROM utilisateur WHERE Email = ?", "s", $email);
+    $id = $result[0]['IDUtilisateur'];
+    $mdpHash = $result[0]['MotDePasse'];
+    $role = $result[0]['Role'];
+    $actif = $result[0]['Actif'];
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
 
-if ($stmt->num_rows > 0 && password_verify($motdepasse, $mdpHash)) {
+if ($result && password_verify($motdepasse, $mdpHash)) {
     if ($actif == '2') {
         $_SESSION['id'] = $id;
+        $_SESSION['role'] = $role;
 
         // INSERT LOG
         registerNewLog($mysqli, $id, "Se connecte pour la première fois et modifie son mot de passe");

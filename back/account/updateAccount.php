@@ -7,47 +7,50 @@ $email = $_POST['email'];
 $champ = $_POST['champ'];
 $valeur = $_POST['valeur'];
 
-if ($champ == 'tag') {
-    $reqRole = "SELECT * FROM utilisateur WHERE Email = '$email'";
-    $resultRole = $mysqli->query($reqRole);
-    foreach ($resultRole as $info) {
-        $id = $info['IDUtilisateur'];
-        $role = $info['Role'];
-    }
-    if($role=='invite'){
-        $reqDelete = "DELETE FROM restreindre WHERE IDUtilisateur = $id";
-        $resultDelete = $mysqli->query($reqDelete);
-        $tagAutorise = json_decode($_POST['tags']);
-        $reqTagAutorise = "INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES ";
-        foreach ($tagAutorise as $tag) {
-            $reqTagAutorise .= "(" . $id . "," . $tag . "),";
-        }
-        $reqTagAutorise = substr($reqTagAutorise, 0, -1);
-        $resultTagAutorise = $mysqli->query($reqTagAutorise);
-        if ($resultTagAutorise === TRUE) {
-            echo "Tags autorisés modifiés";
+$authorized = ['admin'];
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
+    die("Vous n'avez pas les droits pour ajouter un tag");
+}
 
+try{
+    //changement du champ tag pour l'invité
+    if ($champ == 'tag') {
+        //requete pour avoir l'id et le role du compte invité à modifier
+        $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s", $email);
+        $idCompte = $result[0]['IDUtilisateur'];
+        $roleCompte = $result[0]['Role'];
+        //vérification que c'est un invité
+        if($roleCompte=='invite'){
+            //retire tous ses tag de restriction existant
+            query("DELETE FROM restreindre WHERE IDUtilisateur = ?", "i", $idCompte);
+
+            $tagAutorise = json_decode($_POST['tags']);
+            // push les tags restreint associé au compte 
+            foreach ($tagAutorise as $tag) {
+                query("INSERT INTO restreindre (IDUtilisateur, IDTag) VALUES (?, ?)", "ii", $idCompte, $tag);
+            }
+
+            echo"Succes invite";
             // INSERT LOG
             registerNewLog($mysqli, $_SESSION['id'], "Modification des tags autorisés pour l'invité " . $email);
+
         } else {
-            echo "Échec de la modification des tags autorisés";
+            echo "Echec invite";
         }
     } else {
-        echo "Le compte n'est pas un compte invité";
-    }
-} else {
-    if ($champ == 'MotDePasse') $valeur = password_hash($valeur, PASSWORD_DEFAULT);
+        //vérification si c'est un mot de passe a modifier afin de le hasher
+        if ($champ == 'MotDePasse'){
+            $valeur = password_hash($valeur, PASSWORD_DEFAULT);
+        } 
 
-    $sql = "UPDATE utilisateur SET $champ = '$valeur' WHERE Email = '$email'";
-    $result = mysqli_query($mysqli, $sql);
+        query("UPDATE utilisateur SET $champ = ? WHERE Email = ?", "ss" ,$valeur, $email);
 
-    if ($result === TRUE) {
-        echo "Modification du compte réussie";
+        echo"Succes"; 
 
         // INSERT LOG
         if($champ != "Email") registerNewLog($mysqli, $_SESSION['id'], "Modification de l'adresse email de l'utilisateur " . $email . " pour : " . $valeur);
         else registerNewLog($mysqli, $_SESSION['id'], "Modification du champ : " . $champ . " pour l'utilisateur : " . $email);
-    } else {
-        echo "Echec de la modification du compte";
     }
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
