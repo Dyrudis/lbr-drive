@@ -42,6 +42,12 @@ try{
         if ($champ == 'MotDePasse'){
             $valeur = password_hash($valeur, PASSWORD_DEFAULT);
         } 
+        if($champ == 'Email'){
+            $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s" , $valeur);
+            if($result){
+                die("email incorrect");
+            }
+        }
 
         query("UPDATE utilisateur SET $champ = ? WHERE Email = ?", "ss" ,$valeur, $email);
 
