@@ -4,7 +4,7 @@ session_start();
 
 $email = $_POST['email'];
 $mdpTemp = rand(100000,999999);
-include('mail/mailer.php');
+include('../mail/mailer.php');
 
 try{
   $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s", $email);

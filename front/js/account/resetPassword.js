@@ -9,13 +9,22 @@ function submitResetMdp(){
                     document.location.href="login.php"; 
                 }
                 else if(data=='Echec'){
-                    window.alert("Echec de l'envoie de mail");
+                    alert.create({
+                        content: "Echec de l'envoie de mail",
+                        type: "error",
+                    });
                 }
                 else if(data=='compte suspendu'){
-                    window.alert("Votre compte a été suspendu");
+                    alert.create({
+                        content: "Votre compte a été suspendu",
+                        type: "error",
+                    });
                 }
                 else{
-                    window.alert("Email incorrect");
+                    alert.create({
+                        content: "Email incorrect",
+                        type: "error",
+                    });
                 }
             }
         });

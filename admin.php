@@ -95,6 +95,7 @@ if ($role != 'admin') {
                 <option value="Email">Email</option>
                 <option value="Role">Role</option>
                 <option value="MotDePasse">Mot de passe</option>
+                <option value="Description">Description</option>
                 <option value="tag">Tag visible</option>
             </select>
 

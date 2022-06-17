@@ -36,7 +36,12 @@ $role = $_SESSION['role'];
                 <h1 class="barre-title">Selection multiple</h1>
                 <div id="selection-multiple-toggle">Désactivé</div>
                 <div id="selection-multiple">
-                    <p><span id="selection-multiple-size">513 Go</span> de fichiers selectionnés</p>
+                    <p><span id="selection-multiple-size">0 Octet</span> de fichiers selectionnés</p>
+                    <?php if($_SESSION['Role']=='lecture'){
+                    ?>
+                    <div class="actionMultiple" onclick="downloadAll()"><img src="front/images/download.png" class="undraggable pointerOnHover"></div>
+                    <?php
+                    }else{?>
                     <select id="selection-multiple-select">
                         <option value="" selected disabled>Tag</option>
                     </select>
@@ -53,6 +58,9 @@ $role = $_SESSION['role'];
                         <div class="actionMultiple" onclick="downloadAll()"><img src="front/images/download.png" class="undraggable pointerOnHover"></div>
                         <div class="actionMultiple" onclick="deleteAll()"><img src="front/images/delete.svg" class="undraggable pointerOnHover"></div>
                     </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <h1 class="barre-title">Fonctions de tri</h1>
                 <div id="tri-primaire">
@@ -95,7 +103,7 @@ $role = $_SESSION['role'];
                     <?php if ($role == "admin") {
                         include("back/database.php");
                         function formatBytes($bytes, $precision = 2) { 
-                            $units = array('o', 'Ko', 'Mo', 'Go', 'To'); 
+                            $units = array('Octets', 'Ko', 'Mo', 'Go', 'To'); 
                         
                             $bytes = max($bytes, 0); 
                             $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
