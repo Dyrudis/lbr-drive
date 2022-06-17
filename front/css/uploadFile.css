@@ -8,7 +8,10 @@
     --lighter: #e4ecfa;
     --shadow: rgba(18, 22, 33, 0.1);
 }
-
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
 #drop-area {
     width: 100%;
     padding-top: 50px;
@@ -133,7 +136,7 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .drop ul.list li:not(:first-child) {
-    border-top: 1px solid rgba(0, 0, 0, .2);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .drop ul.list li:nth-child(1) {
     transition-delay: 0.24s;
@@ -142,7 +145,7 @@
     transition-delay: 0.32s;
 }
 .drop ul.list li:nth-child(3) {
-    transition-delay: 0.40s;
+    transition-delay: 0.4s;
 }
 .drop ul.list li:nth-child(4) {
     transition-delay: 0.48s;
@@ -157,7 +160,7 @@
     transition-delay: 0.72s;
 }
 .drop ul.list li:nth-child(8) {
-    transition-delay: 0.80s;
+    transition-delay: 0.8s;
 }
 .drop ul.list li:nth-child(9) {
     transition-delay: 0.88s;
@@ -229,78 +232,6 @@
 }
 .drop ul.list li .text .tags select {
     width: 122px;
-}
-.drop ul.list li .progress {
-    border-radius: 50%;
-    background: #fffee6;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0;
-}
-.drop ul.list li .progress:before {
-    --s: 1;
-    content: "";
-    width: 26px;
-    height: 26px;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    position: absolute;
-    background: #fffee6;
-    border-radius: inherit;
-    transform: translate(-50%, -50%) scale(var(--s));
-    transition: transform 0.32s ease;
-}
-.drop ul.list li .progress svg {
-    display: block;
-    fill: none;
-}
-.drop ul.list li .progress svg.pie {
-    --s: 1;
-    width: 32px;
-    height: 32px;
-    transform: rotate(-90deg) scale(var(--s));
-    transition: transform 0.5s ease;
-}
-.drop ul.list li .progress svg.pie circle {
-    stroke-width: 16;
-    stroke: var(--primary);
-}
-.drop ul.list li .progress svg.tick {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke: var(--primary);
-    transition: stroke 0.3s ease 0.8s;
-}
-.drop ul.list li .progress svg.tick polyline {
-    stroke-dasharray: 18 18 18;
-    stroke-dashoffset: 18;
-    transition: stroke-dashoffset 0.4s ease 0.7s;
-}
-.drop ul.list li .progress.complete {
-    background: none;
-}
-.drop ul.list li .progress.complete:before {
-    --s: 0;
-}
-.drop ul.list li .progress.complete svg.pie {
-    --s: 0.08;
-    -webkit-animation: tick 0.3s linear forwards 0.4s;
-    animation: tick 0.3s linear forwards 0.4s;
-}
-.drop ul.list li .progress.complete svg.tick {
-    stroke: var(--success);
-}
-.drop ul.list li .progress.complete svg.tick polyline {
-    stroke-dashoffset: 36;
 }
 .drop.dragged .center {
     --y: 4px;
@@ -431,15 +362,6 @@
 .loader svg rect {
     fill: var(--primary);
 }
-.progress {
-    transition: opacity 0.5s ease;
-}
-.pending .progress {
-    opacity: 0;
-}
-.progress.complete {
-    opacity: 1;
-}
 .uploaded .loader {
     opacity: 0;
 }
@@ -454,6 +376,21 @@
 }
 .failed .loader {
     opacity: 0;
+}
+.progressBar {
+    height: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    opacity: 0;
+    transform: all 1s ease;
+    overflow: hidden;
+}
+.progress {
+    height: 100%;
+    width: 0;
+    background: var(--primary);
+    border-radius: 40px;
+    transition: all .5s ease;
 }
 
 @-webkit-keyframes move {

@@ -156,10 +156,13 @@ function addFile(file) {
                 .css("background-color", "#" + tag.Couleur)
         );
     });
+    let progressBar = $("<div />").addClass("progressBar");
+    let progress = $("<div />").addClass("progress");
+    progressBar.append(progress);
 
     preview.appendTo(li);
     tags.append(addTag);
-    text.append(input).append(tags).append(small).appendTo(li);
+    text.append(input).append(tags).append(small).append(progressBar).appendTo(li);
 
     li.appendTo(list);
 
@@ -297,8 +300,6 @@ function bytesToSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-
-
 /*--------------------------------*\
 |   Send the files to the server   |
 \*--------------------------------*/
@@ -319,42 +320,53 @@ $("#uploadButton").on("click", () => {
 function uploadEverything(upload) {
     upload.forEach((e) => {
         uploadFile(e.file, e.name, e.tags, e.dom);
-        let loader = $("#loader");
-
-        // Copy and paste the loader in e.dom and remove the id
-        loader.clone().appendTo(e.dom).removeAttr("id");
-        let progress = $("<div />").addClass("progress").html('<svg class="pie" width="32" height="32"><circle r="8" cx="16" cy="16" /></svg><svg class="tick" viewBox="0 0 24 24"><polyline points="18,7 11,16 6,12" /></svg>');
-        progress.appendTo(e.dom);
-        progress.find(".pie").css("strokeDasharray", 0 + " " + 2 * Math.PI * 8);
     });
 }
 
-function uploadFile(file, name, tags, dom) {
-    getDuration(file).then((duration) => {
-        let formData = new FormData();
-        formData.append("file", file);
-        formData.append("name", name);
-        formData.append("tags", JSON.stringify(tags));
-        formData.append("duration", duration);
-        fetch("./back/file/uploadFile.php", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => response.text())
-            .then((res) => {
-                if (res === "success") {
-                    dom.addClass("uploaded");
-                    dom.find(".progress").addClass("complete");
-                } else {
-                    dom.addClass("failed");
-                    setTimeout(() => {
-                        let error = $("<div>").addClass("error").text(res);
-                        dom.append(error);
-                    }, 500);
-                }
-            })
-            .catch((error) => console.log(error));
-    });
+async function uploadFile(file, name, tags, dom) {
+    let duration = await getDuration(file);
+    let uploaded = 0;
+    let total = file.size;
+    let chunkSize = 1024 * 1024;
+    let id = makeid();
+    let blob = file.slice(uploaded, uploaded + chunkSize);
+    sendChunk();
+    dom.find(".progressBar").css("opacity", "1");
+
+    function sendChunk() {
+        let data = new FormData();
+        data.append("file", blob);
+        data.append("name", name);
+        data.append("tags", JSON.stringify(tags));
+        data.append("duration", duration);
+        data.append("currentChunkNumber", 1 + uploaded / chunkSize);
+        data.append("totalChunkNumber", Math.ceil(total / chunkSize));
+        data.append("id", id);
+        data.append("extension", file.name.split(".").pop());
+
+        let request = new XMLHttpRequest();
+        request.open("post", "./back/file/uploadFile.php", true);
+        request.send(data);
+        request.onload = function () {
+            if (this.responseText != "OK" && this.responseText != "Chunk received") {
+                console.error(this.responseText);
+                return;
+            }
+
+            uploaded += chunkSize;
+            let progress = (uploaded / total) * 100;
+            if (uploaded < total) {
+                blob = file.slice(uploaded, uploaded + chunkSize);
+                sendChunk();
+                dom.find(".progressBar .progress").css("width", progress + "%");
+            } else {
+                uploaded = total;
+                console.log("Done");
+                dom.find(".progressBar .progress").css("width", progress + "%");
+                dom.find(".progressBar .progress").css("background-color", "green");
+            }
+        };
+    }
 }
 
 async function getDuration(file) {
@@ -372,4 +384,13 @@ async function getDuration(file) {
             resolve(video.duration);
         };
     });
+}
+
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 10; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }
