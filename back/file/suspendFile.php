@@ -16,18 +16,18 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "si", $IDFichier, $id);
         if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Récupération du nom du fichier pour les logs
-    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
     $fileName = $result[0]['Nom'];
 
     // Ajout de la date de mise en corbeille du fichier
-    query("UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = ?", "i", $IDFichier);
+    query("UPDATE fichier SET Corbeille = CURRENT_DATE WHERE IDFichier = ?", "s", $IDFichier);
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

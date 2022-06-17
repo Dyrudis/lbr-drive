@@ -22,18 +22,18 @@ try {
     $tagName = $result[0]['NomTag'];
 
     // Récupération du nom du fichier pour les logs
-    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
     $fileName = $result[0]['Nom'];
 
     // Suppression du lien entre le fichier et le tag
-    query("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = ?", "ii", $IDFichier, $IDTag);
+    query("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = ?", "si", $IDFichier, $IDTag);
 
     // On récupère les tags de ce fichier
-    $result = query("SELECT IDTag FROM classifier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT IDTag FROM classifier WHERE IDFichier = ?", "s", $IDFichier);
 
     // Si le fichier n'a plus de tag, on ajoute le tag "Sans tag"
     if (!$result) {
-        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, 0)", "i", $IDFichier);
+        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, 0)", "s", $IDFichier);
     }
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

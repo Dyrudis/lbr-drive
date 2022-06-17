@@ -42,7 +42,7 @@ try {
     // On ajoute le tag '0' à tous ces fichiers
     foreach ($filesWithoutTag as $file) {
         $IDFichier = $file['IDFichier'];
-        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, '0')", "i", $IDFichier);
+        query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, '0')", "s", $IDFichier);
     }
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());

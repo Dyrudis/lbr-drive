@@ -21,18 +21,18 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "si", $IDFichier, $id);
         if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Récupération de l'ancien nom du fichier pour les logs
-    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
     $oldName = $result[0]['Nom'];
 
     // Modification du nom du fichier
-    query("UPDATE fichier SET Nom = ? WHERE IDFichier = ?", "si", $NomFichier, $IDFichier);
+    query("UPDATE fichier SET Nom = ? WHERE IDFichier = ?", "ss", $NomFichier, $IDFichier);
 } catch (mysqli_sql_exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

@@ -16,19 +16,19 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "si", $IDFichier, $id);
         if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
     // Récupération du nom et de l'extension du fichier pour les logs
-    $result = query("SELECT Nom, Extension FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT Nom, Extension FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
     $fileName = $result[0]['Nom'];
     $fileExtension = $result[0]['Extension'];
 
     // Suppression définitive du fichier dans la base de données
-    query("DELETE FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    query("DELETE FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }

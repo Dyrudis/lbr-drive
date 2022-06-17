@@ -21,24 +21,30 @@ try {
     if ($_SESSION['role'] == 'invite') {
         $id = $_SESSION['id'];
 
-        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "ii", $IDFichier, $id);
+        $result = query("SELECT * FROM fichier WHERE IDFichier = ? AND IDUtilisateur = ?", "si", $IDFichier, $id);
         if (!$result) {
             die("Vous n'avez pas accès à ce fichier en tant qu'invité");
         }
     }
 
+    // Vérification que le tag n'est pas déjà associé à ce fichier
+    $result = query("SELECT * FROM classifier WHERE IDFichier = ? AND IDTag = ?", "si", $IDFichier, $IDTag);
+    if ($result) {
+        die("Ce tag est déjà associé à ce fichier");
+    }
+
     // Ajout du tag dans la table classifier
-    query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "ii", $IDFichier, $IDTag);
+    query("INSERT INTO classifier (IDFichier, IDTag) VALUES (?, ?)", "si", $IDFichier, $IDTag);
 
     // Suppresion du tag "Sans tag" du fichier (si il existe)
-    query("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = 0", "i", $IDFichier);
+    query("DELETE FROM classifier WHERE IDFichier = ? AND IDTag = 0", "s", $IDFichier);
 
     // Récupération du nom du tag pour les logs
     $result = query("SELECT NomTag FROM tag WHERE IDTag = ?", "i", $IDTag);
     $tagName = $result[0]['NomTag'];
 
     // Récupération du nom du fichier pour les logs
-    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "i", $IDFichier);
+    $result = query("SELECT Nom FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
     $fileName = $result[0]['Nom'];
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
