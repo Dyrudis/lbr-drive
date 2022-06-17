@@ -80,7 +80,7 @@ try {
     WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . $type . $corbeille .
         "GROUP BY fichier.IDFichier";
 
-    $result = query($sql, $typeToBind, $argsToBind);
+    $result = query($sql, $typeToBind, ...$argsToBind);
 
     if ($role == 'invite') {
         $rows = $result;
