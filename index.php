@@ -92,6 +92,30 @@ $role = $_SESSION['role'];
                             <a class="pointerOnHover undraggable" href="logs.php">Accéder aux logs</a>
                         <?php } ?>
                     </div>
+                    <?php if ($role == "admin") {
+                        include("back/database.php");
+                        function formatBytes($bytes, $precision = 2) { 
+                            $units = array('o', 'Ko', 'Mo', 'Go', 'To'); 
+                        
+                            $bytes = max($bytes, 0); 
+                            $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
+                            $pow = min($pow, count($units) - 1);     
+                            $bytes /= pow(1024, $pow);                    
+                            return round($bytes, $precision) . ' ' . $units[$pow]; 
+                        } 
+
+                        $espaceDisk = formatBytes(disk_free_space("/"),0);
+
+                        try{
+                            $result = query("SELECT SUM(Taille) FROM fichier");
+                        }catch (mysqli_sql_exception $e) {
+                            die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
+                        }
+
+                        $espaceUpload = formatBytes($result[0]['SUM(Taille)'],0);
+                        echo"<p id='storage'><img src='front/images/cloud.png' >Espace utilisé : " . $espaceUpload . " sur " . $espaceDisk .  " </p>";
+                        
+                    } ?>
                 </div>
             <?php } ?>
 

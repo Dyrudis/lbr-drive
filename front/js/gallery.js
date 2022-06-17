@@ -496,12 +496,16 @@ function addTagAll(){
                 });
                 return false;
             } else {
-                
+                alert.create({
+                    content: "Tag ajouté aux fichiers sélectionnés",
+                    type: "success",
+                });
+                location.reload();
                 return true;
             }
         };
     });
-    location.reload();
+    
 }
 
 //suppression du tag pour tous les fichiers selectionnés
@@ -522,12 +526,16 @@ function deleteTagAll(){
                 });
                 return false;
             } else {
-                
+                alert.create({
+                    content: "Tag supprimé aux fichiers sélectionnés",
+                    type: "success",
+                });
+                location.reload();
                 return true;
             }
         };
     });
-    location.reload();
+    
 }
 
 //download tous les fichiers selectionnés

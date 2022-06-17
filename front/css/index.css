@@ -260,6 +260,19 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+#storage{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 10px;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.9rem;
+}
+
+#storage img{
+    width: 30px;
+}
+
 /* Gallerie */
 
 #gallery-container {
