@@ -3,6 +3,7 @@ session_start();
 
 if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
+    exit;
 }
 $id = $_SESSION['id'];
 $role = $_SESSION['role'];
