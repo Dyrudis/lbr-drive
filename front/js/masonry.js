@@ -3,7 +3,7 @@ var fixedwidth = 280 + 10, //the +10 is for 10px horizontal margin
 
 function masonry() {
     var children = gallery.children(); // cache a reference to our image list
-    var columncount = parseInt(gallery.width() / fixedwidth, 10) || 1, // find how many columns fit in container,
+    var columncount = Math.min(parseInt(gallery.width() / fixedwidth, 10) || 1, 6), // find how many columns fit in container,
         childWidth = gallery.width() / columncount - 10, // calculate the width of a column
         columns = [];
 
