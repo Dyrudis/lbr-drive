@@ -95,7 +95,7 @@ try {
             $tags = explode(',', $row['IDTags']);
             $tags = array_map('intval', $tags);
 
-            if (array_intersect($tags, $allTagRestreint)) {
+            if (array_intersect($tags, $allTagRestreint) || $row["IDUtilisateur"] == $id) {
                 $result[] = $row;
             }
         }
