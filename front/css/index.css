@@ -83,6 +83,32 @@ body {
     width: 125px;
     height: 35px;
 }
+
+#selection-multiple-select{
+    width: 225px;
+}
+
+#actionPrimaire {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+    margin: 30px 0 0 0;
+    text-align: center;
+}
+
+#actionSelect{
+    display: flex;
+    margin: 3px 0px;
+}
+
+.actionMultiple{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    margin:auto;
+}
+
+
 .pre-tri {
     background-color: rgb(58, 69, 73);
     border-radius: 5px;

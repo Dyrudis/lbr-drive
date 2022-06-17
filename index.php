@@ -40,8 +40,19 @@ $role = $_SESSION['role'];
                     <select id="selection-multiple-select">
                         <option value="" selected disabled>Tag</option>
                     </select>
-                    <button>Ajouter</button>
-                    <button>Supprimer</button>
+                    <br>
+                    <div id="actionSelect">
+                        <div onclick="addTagAll()" class="pre-tri tout-type" id="selection-multiple-ajouter">
+                            <p>Ajouter</p>
+                        </div>
+                        <div onclick="deleteTagAll()" class="pre-tri tout-type" id="selection-multiple-delete">
+                            <p>Supprimer</p>
+                        </div>
+                    </div>
+                    <div id="actionPrimaire">
+                        <div class="actionMultiple" onclick="downloadAll()"><img src="front/images/download.png" class="undraggable pointerOnHover"></div>
+                        <div class="actionMultiple" onclick="deleteAll()"><img src="front/images/delete.svg" class="undraggable pointerOnHover"></div>
+                    </div>
                 </div>
                 <h1 class="barre-title">Fonctions de tri</h1>
                 <div id="tri-primaire">

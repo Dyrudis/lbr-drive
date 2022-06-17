@@ -478,6 +478,94 @@ function updateSize() {
     $("#selection-multiple-size").text(bytesToSize(sum));
 }
 
+//ajout du tag pour tous les fichiers selectionnés
+function addTagAll(){
+    selectedFiles.forEach(file=>{
+        let formData = new FormData();
+        formData.append("IDFichier", file.IDFichier);
+        formData.append("IDTag", document.getElementById('selection-multiple-select').value);
+
+        let request = new XMLHttpRequest();
+        request.open("post", "back/file/addTag.php", true);
+        request.send(formData);
+        request.onload = function () {
+            if (this.responseText != "OK") {
+                alert.create({
+                    content: "Action impossible",
+                    type: "error",
+                });
+                return false;
+            } else {
+                
+                return true;
+            }
+        };
+    });
+    location.reload();
+}
+
+//suppression du tag pour tous les fichiers selectionnés
+function deleteTagAll(){
+    selectedFiles.forEach(file=>{
+        let formData = new FormData();
+        formData.append("IDFichier", file.IDFichier);
+        formData.append("IDTag", document.getElementById('selection-multiple-select').value);
+
+        let request = new XMLHttpRequest();
+        request.open("post", "back/file/deleteTag.php", true);
+        request.send(formData);
+        request.onload = function () {
+            if (this.responseText != "OK") {
+                alert.create({
+                    content: "Action impossible",
+                    type: "error",
+                });
+                return false;
+            } else {
+                
+                return true;
+            }
+        };
+    });
+    location.reload();
+}
+
+//download tous les fichiers selectionnés
+function downloadAll(){
+    selectedFiles.forEach(file=>{
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = "./upload/" + file.IDFichier + "." + file.Extension;;
+        a.download = file.NomFichier + "." + file.Extension;
+        a.click();
+    });
+}
+
+//déplacer tous les fichiers selectionnés dans la corbeille
+function deleteAll(){
+    if (confirm("Voulez-vous vraiment supprimer les fichiers sélectionnés ?")) {
+        selectedFiles.forEach(file=>{
+            let formData = new FormData();
+            formData.append("IDFichier", file.IDFichier);
+
+            let request = new XMLHttpRequest();
+            request.open("post", "back/file/suspendFile.php", true);
+            request.send(formData);
+            request.onload = function () {
+                if (this.responseText == "OK") {
+                    location.reload();
+                } else {
+                    alert.create({
+                        content: "Action impossible",
+                        type: "error",
+                    });
+                }
+            };
+        });
+        
+    }
+}
+
 $("#menuToggle").click(() => {
     $("#barre").toggleClass("visible");
     masonry();
