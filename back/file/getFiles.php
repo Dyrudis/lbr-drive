@@ -14,7 +14,7 @@ $tri = true;
 //string qui retient quel type de fichier à afficher (image, video, les deux)
 $type = "";
 //string qui retient si on affiche la corbeille ou non
-$corbeille = "AND fichier.corbeille IS NULL ";
+$corbeille = "AND fichier.Corbeille IS NULL ";
 
 //récupération du role et de l'id du compte actuellement connecté
 $role = $_SESSION['role'];
@@ -40,8 +40,22 @@ if (isset($_POST['typeTriTag'])) {
 //Get incoming bool from post
 if (isset($_POST['corbeille'])) {
     if ($_POST['corbeille'] == "true") {
-        $corbeille = "AND fichier.corbeille IS NOT NULL ";
+        $corbeille = "AND fichier.Corbeille IS NOT NULL ";
+
+        //Suppression des outdated dans fichiers + db
+        $sql = "SELECT IDFichier, Extension FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille <= NOW() - INTERVAL 30 DAY";
+        $result = query($sql, $typeToBind, $argsToBind);
+
+        foreach ($result as $row) {
+            $IDFichier = $row['IDFichier'];
+            $filePath = "../../upload/" . $IDFichier . "." . $row['Extension'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
+                query("DELETE FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille < NOW()");
+            }
+        }
     }
+    
 }
 
 
