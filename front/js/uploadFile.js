@@ -1,17 +1,20 @@
 // Importation des tags de la bdd
 allTags = [];
-let request = new XMLHttpRequest();
-request.open("get", "back/tag/getTags.php", true);
-request.send();
-request.onload = function () {
-    allTags = JSON.parse(this.responseText);
-};
+$.ajax({
+    url: "back/tag/getTags.php",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+        allTags = data;
+    },
+});
 
 upload = [
     /*{
     'file' : ...,
     'name' : ...,
     'tags' : [...],
+    'dom' : ...
     },*/
 ];
 
@@ -99,11 +102,8 @@ function animate() {
                     setTimeout(() => {
                         if (!dropContainer.hasClass("dropped")) {
                             dropContainer.addClass("dropped");
-                            $("#uploadButton").css({ display: "block", opacity: "0" });
+                            $("#uploadButton").fadeIn().css("display", "block");
                         }
-                        setTimeout(() => {
-                            $("#uploadButton").css({ opacity: "1" });
-                        }, 500);
                     }, 800);
                 }, 400);
             }, 200);
@@ -149,12 +149,14 @@ function addFile(file) {
     let addTag = $("<select />").addClass("addTag").css("width", "70px");
     addTag.append($("<option />").attr("value", "").text("+ Tag").attr("selected", "selected").attr("disabled", "disabled"));
     allTags.forEach((tag) => {
-        addTag.append(
-            $("<option />")
-                .attr("value", tag.IDTag)
-                .text(tag.NomTag)
-                .css("background-color", "#" + tag.Couleur)
-        );
+        if (tag.IDTag != 0) {
+            addTag.append(
+                $("<option />")
+                    .attr("value", tag.IDTag)
+                    .text(tag.NomTag)
+                    .css("background-color", "#" + tag.Couleur)
+            );
+        }
     });
     let progressBar = $("<div />").addClass("progressBar");
     let progress = $("<div />").addClass("progress");
@@ -206,10 +208,6 @@ function removeTag(IDTag, file) {
     upload.find((e) => e.file == file).tags = upload.find((e) => e.file == file).tags.filter((e) => e != IDTag);
 }
 
-function linear(n) {
-    return n;
-}
-
 function startAnimation(from, to, duration, callback) {
     let stop = false,
         dur = duration || 200,
@@ -233,7 +231,7 @@ function startAnimation(from, to, duration, callback) {
             stop = true;
         }
         let p = (now - start) / dur;
-        val = linear(p);
+        val = p;
         let x = from + (to - from) * val;
         setPathData(x);
         requestAnimationFrame(draw);
@@ -277,11 +275,7 @@ function calculateDistance(elem, parent, mX, mY) {
 }
 
 function calculateRotate(elem, mX, mY) {
-    let from = {
-            x: mX,
-            y: mY,
-        },
-        offset = elem.offset(),
+    let offset = elem.offset(),
         center = {
             x: offset.left + elem.width() / 2,
             y: offset.top + elem.height() / 2,
@@ -305,25 +299,53 @@ function bytesToSize(bytes) {
 \*--------------------------------*/
 
 $("#uploadButton").on("click", () => {
-    uploadEverything(upload);
-    // For each element in the list
-    $(".list")
-        .find("li")
-        .each(function () {
-            // Add the "pending" class
-            $(this).addClass("pending");
-        });
+    upload.forEach((e) => {
+        let dom = e.dom;
+        // Disable the title input
+        dom.find(".text input").attr("disabled", "disabled");
+
+        // Disable the add tag select
+        dom.find(".addTag").hide();
+
+        // Disable the cross on tags
+        dom.find(".tag").find(".close").hide();
+        dom.find(".tag").off("click");
+
+        // If there is not tag, add the default tag
+        if (e.tags.length == 0) {
+            noTag = $("<div />")
+                .addClass("tag")
+                .css("background-color", "#" + allTags.find((e) => e.IDTag == 0).Couleur);
+            noTag.append($("<p />").text(allTags.find((e) => e.IDTag == 0).NomTag));
+            dom.find(".tags").append(noTag);
+        }
+    });
+    uploadFiles();
+
     // Hide the button
-    $("#uploadButton").hide();
+    $("#uploadButton").fadeOut();
 });
 
-function uploadEverything(upload) {
-    upload.forEach((e) => {
-        uploadFile(e.file, e.name, e.tags, e.dom);
-    });
-}
+async function uploadFiles() {
+    if (upload.length == 0) {
+        // All files are uploaded
 
-async function uploadFile(file, name, tags, dom) {
+        $("#uploadButton")
+            .text("Retour à la galerie")
+            .fadeIn()
+            .click(() => {
+                window.location.href = "index.php";
+            });
+        return;
+    }
+
+    // Upload the first file and remove it from the list
+    let nextFile = upload.shift();
+    let file = nextFile.file,
+        name = nextFile.name,
+        tags = nextFile.tags,
+        dom = nextFile.dom;
+
     let duration = await getDuration(file);
     let uploaded = 0;
     let total = file.size;
@@ -354,17 +376,19 @@ async function uploadFile(file, name, tags, dom) {
             }
 
             uploaded += chunkSize;
-            let progress = (uploaded / total) * 100;
             if (uploaded < total) {
+                // Send next chunk
                 blob = file.slice(uploaded, uploaded + chunkSize);
                 sendChunk();
-                dom.find(".progressBar .progress").css("width", progress + "%");
             } else {
+                // Upload finished
                 uploaded = total;
-                console.log("Done");
-                dom.find(".progressBar .progress").css("width", progress + "%");
                 dom.find(".progressBar .progress").css("background-color", "green");
+
+                // Upload the next file
+                uploadFiles();
             }
+            dom.find(".progressBar .progress").css("width", (uploaded / total) * 100 + "%");
         };
     }
 }

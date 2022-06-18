@@ -206,6 +206,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+    min-height: 30px;
 }
 .drop ul.list li .text .tags .addTag {
     transition: background-color 0.2s ease;
@@ -330,7 +331,6 @@
 
 #uploadButton {
     display: none;
-    transition: 1s ease opacity;
     border: none;
     outline: none;
     background-color: var(--primary);
@@ -378,7 +378,7 @@
     opacity: 0;
 }
 .progressBar {
-    height: 15px;
+    height: 10px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 40px;
     opacity: 0;
