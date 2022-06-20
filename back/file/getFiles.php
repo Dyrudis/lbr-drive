@@ -77,7 +77,8 @@ try {
     as 'CouleurTags', fichier.Date, fichier.Taille, fichier.Type, fichier.Extension, fichier.Duree, utilisateur.Nom, utilisateur.Prenom, utilisateur.IDUtilisateur, fichier.IDFichier, fichier.Corbeille
     FROM classifier, fichier, utilisateur, tag, categorie
     WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . $type . $corbeille .
-        "GROUP BY fichier.IDFichier";
+        "GROUP BY fichier.IDFichier
+        ORDER BY fichier.Date";
 
     $result = query($sql, $typeToBind, ...$argsToBind);
 
@@ -140,6 +141,5 @@ foreach ($filteredResult as $index => $value) {
         $filteredResult[$index]['isEditable'] = false;
     }
 }
-
 
 echo json_encode($filteredResult);

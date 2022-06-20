@@ -93,17 +93,17 @@ $role = $result[0]["Role"];
         <div class="form-popup" id="popupForm">
             <form class="form-container">
                 <label for="ancienMdp">
-                    <strong> Votre ancien mot de passe :</strong>
+                    <strong> Ancien mot de passe :</strong>
                 </label>
                 <input class='inputNouveauMdp' type="password" id="ancienMdp" placeholder="Ancien mot de passe" name="ancienMdp" required />
 
-                <label for="nouveauMdp" id="labelNouveauMdp">
+                <strong for="nouveauMdp" id="labelNouveauMdp">
                     Nouveau mot de passe :
-                </label>
+                </strong>
                 <input class='inputNouveauMdp' type="password" id="nouveauMdp" placeholder="1 maj/1 min/1 chiffre/1 caractère" name="nouveauMdp" onchange="VerifChampMdp()" required />
-                <label for="verifNouveauMdp" id="labelVerifNouveauMdp">
-                    Confirmez le :
-                </label>
+                <strong for="verifNouveauMdp" id="labelVerifNouveauMdp">
+                    Confirmez mot de passe :
+                </strong>
                 <input class='inputNouveauMdp' type="password" id="verifNouveauMdp" placeholder="" name="verifNouveauMdp" onchange="idemMdp()" required />
                 <button id="bouton" type="button" class="btn" onclick="submitNouveauMdp()">Modifier</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
