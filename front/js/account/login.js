@@ -33,3 +33,11 @@ function submitLogin() {
         });
     }
 }
+
+document.getElementById("motdepasse").onkeydown = function (e) {
+
+    //deprecated mais fonctionne pour le moment
+    if (e.which == 13) {
+        submitLogin();
+    }
+}
