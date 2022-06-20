@@ -6,7 +6,7 @@ body {
     font-family: "Open Sans", sans-serif;
     font-weight: 500;
     color: #fff;
-    background: #fffee6;
+    background: var(--colorBodyAdmin);
     overflow-y: auto;
 }
 .info p {
@@ -26,6 +26,7 @@ h1 {
 }
 
 h2 {
+    color: var(--colorH2Admin);
     font-size: 24px;
     font-weight: 700;
     width: 100%;
@@ -35,6 +36,7 @@ h2 {
 h3 {
     font-size: 17px;
     font-weight: 600;
+    color: var(--colorH3Admin);
 }
 
 a {
@@ -65,7 +67,7 @@ hr {
 }
 
 select {
-    background-color: #0563af;
+  background-color: rgba(5, 99, 195, .6);
     color: white;
     padding: 6px;
     width: auto;
@@ -105,8 +107,9 @@ select {
 }
 
 form {
-    background-color: #161920;
+    background-color: var(--colorFormAdmin);
     padding: 0 30px;
+    box-shadow: var(--boxShadowAdmin);
 }
 
 .contact-form {
@@ -199,7 +202,7 @@ label {
     padding: 5px 10px;
     font-size: 15px;
     font-weight: 600;
-    color: #fff;
+    color: var(--colorLabelAdmin);
 }
 
 input {
@@ -229,7 +232,7 @@ input.submit {
     font-weight: 700;
     color: #fff;
     opacity: 1;
-    background-color: #1161ee;
+    background-color: rgba(17, 97, 238, 50%);
     cursor: pointer;
     margin: 10px auto;
 }
@@ -305,6 +308,10 @@ input.submit {
     visibility: hidden;
 }
 
+#mdpCreationCompte {
+    transition: all 2s;
+}
+
 #mdpOublie {
     cursor: pointer;
     text-decoration: none;
@@ -358,7 +365,7 @@ input.submit {
 
 #boutonAddTag,
 #boutonAddTagInvite {
-    background-color: #3f4656;
+    background-color: #2a61e1;
     color: white;
     margin: 0;
     transform: none;

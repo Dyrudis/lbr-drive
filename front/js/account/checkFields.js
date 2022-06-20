@@ -42,7 +42,7 @@ function checkMdpTemporaire() {
     const checkBox = document.getElementById("mdpTemporaire").checked;
     if (checkBox === true) {
         inputMdp.disabled = true;
-        inputMdp.placeholder = "mot de passe temporaire utilisé";
+        inputMdp.placeholder = "Mot de passe temporaire utilisé";
         inputMdp.value = "";
         inputMdp.style.borderColor = "";
         inputMdp.required = false;

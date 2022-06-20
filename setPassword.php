@@ -12,9 +12,6 @@
 </head>
 
 <body id="bodylogin">
-    <?php
-    include('header.php');
-    ?>
 
     <div class="background">
         <div class="shape"></div>

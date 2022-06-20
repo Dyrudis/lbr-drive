@@ -24,7 +24,7 @@
     --r: 0rad;
     width: 100%;
     height: calc(100vh - 85px);
-    background: #fffee6;
+    background: var(--colorDrop);
     border-radius: 6px;
     position: relative;
     margin: 0 auto;

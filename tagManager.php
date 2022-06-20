@@ -14,10 +14,15 @@
     <script src="front/js/tagManager.js" defer></script>
 </head>
 
-<body>
-    <?php
+<?php
+    session_start();
+    if($_SESSION["role"] == "lecture"){
+        header("Location: index.php");
+    }
     include('header.php');
-    ?>
+?>
+
+<body id="bodytag">
     <div id="content">
         <div id="category">
             <h2>Catégories</h2>
@@ -45,5 +50,4 @@
         </div>
     </div>
 </body>
-
 </html>

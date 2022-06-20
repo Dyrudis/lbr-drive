@@ -1,3 +1,30 @@
+:root {
+    --primaryColor: ;
+    --colorText: ;
+    --colorBox: ;
+    --colorDrop: ;
+    --colorFormAdmin: ;
+    --colorBodyAdmin: ;
+    --colorH2Admin: ;
+    --colorLabelAdmin: ;
+    --colorH3Admin: ;
+    --boxShadowAdmin: ;
+    --colorH2Tags: ;
+    --colorH3Tags: ;
+    --colorContainer: ;
+    --boxShadowTags: ;
+    --colorPreviewTags: ;
+    --inputTags: ;
+    --colorH1Logs: ;
+    --colorH3Logs: ;
+    --colorLogs: ;
+    --colorPLogs: ;
+    --colorThemeButton: ;
+    --colorThemeFont: ;
+
+}
+
+
 *,
 html,
 body {
@@ -8,7 +35,9 @@ body {
 
 body {
     margin: 0;
-    background-color: #fffee6;
+    background-color: var(--primaryColor);
+  /*  background-color: #161619; */
+    color: var(--colorText);
 }
 
 .pointerOnHover {

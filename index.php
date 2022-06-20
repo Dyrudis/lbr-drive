@@ -7,6 +7,9 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['role'])) {
 }
 $id = $_SESSION['id'];
 $role = $_SESSION['role'];
+if (!isset($_SESSION['darkMode'])) {
+    $_SESSION["darkMode"] = false;
+}
 ?>
 <!DOCTYPE html>
 

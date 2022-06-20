@@ -29,6 +29,7 @@ $role = $result[0]["Role"];
     <link rel="stylesheet" href="front/css/alert.css" />
     <link rel="stylesheet" href="front/css/account.css" />
     <link rel="stylesheet" href="front/css/tag.css" />
+    <link rel="stylesheet" href="front/css/alert.css" />
     <link rel="icon" href="front/images/iconelbr.ico" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="front/js/alert.js" defer></script>
@@ -45,7 +46,7 @@ $role = $result[0]["Role"];
         <div id="title">
             <div id="avatar-container">
                 <img class='undraggable' <?php echo "src='avatars/$id'"; ?> alt="avatar" id="avatar" />
-                <p>Modifier</p>
+                <p id="popupmodif">Modifier</p>
             </div>
             <div id="title-content">
                 <div id="title-content-up">
@@ -88,8 +89,13 @@ $role = $result[0]["Role"];
         </div>
 
         <div class="open-btn">
+            <button class="open-button" id="colormod" value="Dark mode" onclick="changeMode();"><strong>Dark mode</strong></button>
+        </div>
+
+        <div class="open-btn">
             <button class="open-button" onclick="openForm()"><strong>Modifier son mot de passe</strong></button>
         </div>
+        
         <div class="form-popup" id="popupForm">
             <form class="form-container">
                 <label for="ancienMdp">
@@ -116,6 +122,41 @@ $role = $result[0]["Role"];
 
             function closeForm() {
                 document.getElementById("popupForm").style.display = "none";
+            }
+
+            function changeMode() {
+
+            $.ajax({
+            type: "POST",
+            url: "back/account/updateDarkMode.php",
+            data: {},
+            success: (data) => {
+                if(data == "theme sombre") {
+                    document.documentElement.style.setProperty('--primaryColor', '#FFFee6');
+                    document.documentElement.style.setProperty('--colorText', '#161619');
+                    document.documentElement.style.setProperty('--colorBox', '#FFFFFF');
+                    document.documentElement.style.setProperty('--colorThemeButton', 'black');
+                    document.documentElement.style.setProperty('--colorThemeFont', 'white');
+                    alert.create({
+                        content: "Theme clair appliqué",
+                        type: "success",
+                    });}
+                else{
+                    document.documentElement.style.setProperty('--primaryColor', '#161619');
+                    document.documentElement.style.setProperty('--colorText', '#FFFFFF');
+                    document.documentElement.style.setProperty('--colorBox', '#70726E');
+                    document.documentElement.style.setProperty('--colorThemeButton', 'white');
+                    document.documentElement.style.setProperty('--colorThemeFont', 'black');
+                    alert.create({
+                        content: "Theme sombre appliqué",
+                        type: "success",
+                    });
+                }
+                    
+            },
+        });
+
+    
             }
         </script>
 
