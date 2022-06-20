@@ -29,6 +29,9 @@ try {
 
     // Suppression définitive du fichier dans la base de données
     query("DELETE FROM fichier WHERE IDFichier = ?", "s", $IDFichier);
+
+    // Suppression des tags associés au fichier dans la base de données
+    query("DELETE FROM classifier WHERE IDFichier = ?", "s", $IDFichier);
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
 }
@@ -39,4 +42,8 @@ if (file_exists($filePath)) {
     unlink($filePath);
 }
 
-echo "Fichier supprimé";
+// INSERT LOG
+include '../log/registerLog.php';
+registerNewLog($mysqli, $_SESSION['id'], "Supprime définitivement le fichier : " . $fileName);
+
+echo "OK";

@@ -50,11 +50,12 @@ if (isset($_POST['corbeille'])) {
             $filePath = "../../upload/" . $IDFichier . "." . $row['Extension'];
             if (file_exists($filePath)) {
                 unlink($filePath);
+                // Suppression des tags associés au fichier dans la base de données
+                query("DELETE FROM classifier WHERE IDFichier = ?", "s", $IDFichier);
             }
         }
         query("DELETE FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille <= NOW() - INTERVAL 30 DAY");
     }
-    
 }
 
 

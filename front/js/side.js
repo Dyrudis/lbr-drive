@@ -138,11 +138,17 @@
         if (!trashToggler.classList.contains("active")) {
             trashToggler.classList.add("active");
             trashToggle = true;
+            // Cache la selection multiple
+            $("#selection-multiple-toggle").prev().hide();
+            $("#selection-multiple-toggle").hide();
         }
         //Si recherche par fichiers corbeille actif -> désactiver
         else {
             trashToggler.classList.remove("active");
             trashToggle = false;
+            // Affiche la selection multiple
+            $("#selection-multiple-toggle").prev().show();
+            $("#selection-multiple-toggle").show();
         }
         sendFormData();
     });

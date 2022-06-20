@@ -17,12 +17,13 @@ function displayGallery() {
     $("#gallery").empty();
 
     // If the response is a php error, print it
-    if (this.responseText.startsWith("<")) {
-        $("#gallery").text(this.responseText);
+    try {
+        allFiles = JSON.parse(this.responseText);
+    } catch (e) {
+        console.error(this.responseText);
         return;
     }
 
-    allFiles = JSON.parse(this.responseText);
     allFiles.forEach((file) => {
         displayFile(file);
     });
@@ -75,11 +76,16 @@ function displayFile(file) {
     });
     let title = $("<div>")
         .addClass("file-hover-title")
-        .html("<p>" + file.NomFichier + "</p>");
+        .html("<p>" + file.NomFichier + "</p>")
+        .attr("title", file.NomFichier)
     let author = $("<div>")
         .addClass("file-hover-author")
-        .text("de " + file.Prenom + " " + file.Nom + ", " + file.Date)
         .attr("title", "de " + file.Prenom + " " + file.Nom + ", " + file.Date);
+    if (file.Corbeille) {
+        author.html("<strong>" + daysUntil30Days(file.Corbeille) + "</strong>")
+    } else {
+        author.html("de " + file.Prenom + " " + file.Nom + ", " + file.Date)
+    }
     let info = $("<div>")
         .addClass("file-hover-info")
         .text(bytesToSize(file.Taille) + (file.Duree != "0" ? " - " + formatSeconds(file.Duree) : ""));
@@ -105,8 +111,10 @@ function displayFile(file) {
 
     actions.append(downloadFile); // FOR EVERYONE
     if (file.isEditable) {
-        actions.append(file.Corbeille ? restoreFile : deleteFile); // ONLY FOR AUTHOR OR ADMIN
-        actions.append(addTag); // ONLY FOR AUTHOR OR ADMIN
+        // ONLY FOR AUTHOR OR ADMIN
+        if (file.Corbeille) actions.append(restoreFile);
+        actions.append(deleteFile);
+        actions.append(addTag);
     }
 
     hover.append(hoverTags);
@@ -153,30 +161,55 @@ function displayFile(file) {
 
     // Delete button
     deleteFile.click(function () {
-        if (confirm("Voulez-vous vraiment supprimer ce fichier ?")) {
-            let formData = new FormData();
-            formData.append("IDFichier", file.IDFichier);
+        // The file is not in the trash
+        if (!file.Corbeille) {
+            if (confirm('Voulez-vous vraiment déplacer le fichier "' + file.NomFichier + '" à la corbeille ?')) {
+                let formData = new FormData();
+                formData.append("IDFichier", file.IDFichier);
 
-            let request = new XMLHttpRequest();
-            request.open("post", "back/file/suspendFile.php", true);
-            request.send(formData);
-            request.onload = function () {
-                if (this.responseText == "OK") {
-                    container.remove();
-                    masonry();
-                } else {
-                    alert.create({
-                        content: "Action impossible",
-                        type: "error",
-                    });
-                }
-            };
+                let request = new XMLHttpRequest();
+                request.open("post", "back/file/suspendFile.php", true);
+                request.send(formData);
+                request.onload = function () {
+                    if (this.responseText == "OK") {
+                        container.remove();
+                        masonry();
+                    } else {
+                        alert.create({
+                            content: "Action impossible",
+                            type: "error",
+                        });
+                    }
+                };
+            }
+        }
+        // The file is in the trash
+        else {
+            if (confirm('Voulez-vous vraiment supprimer définitivement le fichier "' + file.NomFichier + '" ?')) {
+                let formData = new FormData();
+                formData.append("IDFichier", file.IDFichier);
+
+                let request = new XMLHttpRequest();
+                request.open("post", "back/file/deleteFile.php", true);
+                request.send(formData);
+                request.onload = function () {
+                    if (this.responseText == "OK") {
+                        container.remove();
+                        masonry();
+                    } else {
+                        alert.create({
+                            content: "Action impossible",
+                            type: "error",
+                        });
+                    }
+                };
+            }
         }
     });
 
     // Restore button
     restoreFile.click(function () {
-        if (confirm("Voulez-vous vraiment restaurer ce fichier ?")) {
+        if (confirm('Voulez-vous vraiment restaurer le fichier "' + file.NomFichier + '" ?')) {
             let formData = new FormData();
             formData.append("IDFichier", file.IDFichier);
 
@@ -271,6 +304,15 @@ function formatSeconds(s) {
     } else {
         return minutes + ":" + seconds;
     }
+}
+
+function daysUntil30Days(date) {
+    if (date == null) return "";
+    let dateToday = new Date();
+    let dateAfter30Days = new Date(new Date(date).getTime() + 30 * 24 * 60 * 60 * 1000);
+    let diff = dateAfter30Days.getTime() - dateToday.getTime();
+    console.log(dateToday.getDate() + "   " + new Date("2020-06-10").getDate());
+    return Math.round(diff / (1000 * 60 * 60 * 24)) + " jour(s) avant suppression !";
 }
 
 function displayInFullscreen(event) {
@@ -479,11 +521,11 @@ function updateSize() {
 }
 
 //ajout du tag pour tous les fichiers selectionnés
-function addTagAll(){
-    selectedFiles.forEach(file=>{
+function addTagAll() {
+    selectedFiles.forEach((file) => {
         let formData = new FormData();
         formData.append("IDFichier", file.IDFichier);
-        formData.append("IDTag", document.getElementById('selection-multiple-select').value);
+        formData.append("IDTag", document.getElementById("selection-multiple-select").value);
 
         let request = new XMLHttpRequest();
         request.open("post", "back/file/addTag.php", true);
@@ -505,15 +547,14 @@ function addTagAll(){
             }
         };
     });
-    
 }
 
 //suppression du tag pour tous les fichiers selectionnés
-function deleteTagAll(){
-    selectedFiles.forEach(file=>{
+function deleteTagAll() {
+    selectedFiles.forEach((file) => {
         let formData = new FormData();
         formData.append("IDFichier", file.IDFichier);
-        formData.append("IDTag", document.getElementById('selection-multiple-select').value);
+        formData.append("IDTag", document.getElementById("selection-multiple-select").value);
 
         let request = new XMLHttpRequest();
         request.open("post", "back/file/deleteTag.php", true);
@@ -535,24 +576,23 @@ function deleteTagAll(){
             }
         };
     });
-    
 }
 
 //download tous les fichiers selectionnés
-function downloadAll(){
-    selectedFiles.forEach(file=>{
+function downloadAll() {
+    selectedFiles.forEach((file) => {
         const a = document.createElement("a");
         a.style.display = "none";
-        a.href = "./upload/" + file.IDFichier + "." + file.Extension;;
+        a.href = "./upload/" + file.IDFichier + "." + file.Extension;
         a.download = file.NomFichier + "." + file.Extension;
         a.click();
     });
 }
 
 //déplacer tous les fichiers selectionnés dans la corbeille
-function deleteAll(){
+function deleteAll() {
     if (confirm("Voulez-vous vraiment supprimer les fichiers sélectionnés ?")) {
-        selectedFiles.forEach(file=>{
+        selectedFiles.forEach((file) => {
             let formData = new FormData();
             formData.append("IDFichier", file.IDFichier);
 
@@ -570,7 +610,6 @@ function deleteAll(){
                 }
             };
         });
-        
     }
 }
 
