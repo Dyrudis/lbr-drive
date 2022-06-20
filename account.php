@@ -21,15 +21,17 @@ $role = $result[0]["Role"];
 
 <!DOCTYPE html>
 <html lang="fr">
-    
-    <head>
-        <title>Mon compte</title>
-        <meta charset="utf-8" />
+
+<head>
+    <title>Mon compte</title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="front/css/alert.css" />
     <link rel="stylesheet" href="front/css/account.css" />
     <link rel="stylesheet" href="front/css/tag.css" />
     <link rel="icon" href="front/images/iconelbr.ico" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="front/js/alert.js" defer></script>
     <script src="front/js/account/updateAvatar.js" defer></script>
     <script src="front/js/account/updatePassword.js" defer></script>
 </head>

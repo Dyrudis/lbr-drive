@@ -13,6 +13,14 @@ function readURL(fileInput) {
     // Get the file
     let file = fileInput.files[0];
 
+    if (file.size > 2000000) {
+        alert.create({
+            content: "Cette image fait plus de 2 Mo",
+            type: "error",
+        });
+        return;
+    }
+
     let formData = new FormData();
     formData.append("avatar", file);
 
@@ -24,6 +32,11 @@ function readURL(fileInput) {
             alert.create({
                 content: this.responseText,
                 type: "error",
+            });
+        } else {
+            alert.create({
+                content: "Avatar modifié avec succès",
+                type: "success",
             });
         }
     };

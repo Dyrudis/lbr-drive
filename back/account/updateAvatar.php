@@ -1,13 +1,8 @@
 <?php
 session_start();
 
-// Get the informations
 $avatar = $_FILES['avatar'];
 $IDUtilisateur = $_SESSION['id'];
-
-/*------------------------------------*\
-|   Put the file in the upload folder  |
-\*------------------------------------*/
 
 $tmpAvatarPath = $avatar['tmp_name'];
 
@@ -15,10 +10,18 @@ if ($tmpAvatarPath == "") {
     die('Aucun fichier envoyé.');
 }
 
+// Vérification que le fichier est une image
+$allowed = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+$avatarMime = $avatar['type'];
+if (!in_array($avatarMime, $allowed)) {
+    die('Format de fichier invalide.');
+}
+
 $newAvatarPath = "../../avatars/" . $IDUtilisateur;
 
 if (move_uploaded_file($tmpAvatarPath, $newAvatarPath)) {
 
+    include("../database.php");
     // INSERT LOG
     include '../log/registerLog.php';
     registerNewLog($mysqli, $IDUtilisateur, "Modifie son avatar");
