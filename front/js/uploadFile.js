@@ -361,10 +361,10 @@ async function uploadFiles() {
         data.append("name", name);
         data.append("tags", JSON.stringify(tags));
         data.append("duration", duration);
-        data.append("currentChunkNumber", 1 + uploaded / chunkSize);
-        data.append("totalChunkNumber", Math.ceil(total / chunkSize));
         data.append("id", id);
         data.append("extension", file.name.split(".").pop());
+        data.append("currentChunkNumber", 1 + uploaded / chunkSize);
+        data.append("totalChunkNumber", Math.ceil(total / chunkSize));
 
         let request = new XMLHttpRequest();
         request.open("post", "./back/file/uploadFile.php", true);

@@ -1,32 +1,56 @@
 <?php
 session_start();
-
-$avatar = $_FILES['avatar'];
-$IDUtilisateur = $_SESSION['id'];
-
-$tmpAvatarPath = $avatar['tmp_name'];
-
-if ($tmpAvatarPath == "") {
-    die('Aucun fichier envoyé.');
+if (!isset($_SESSION['id'])) {
+    die("Vous devez être connecté pour modifier votre avatar");
 }
 
-// Vérification que le fichier est une image
-$allowed = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
-$avatarMime = $avatar['type'];
-if (!in_array($avatarMime, $allowed)) {
+$chunk = $_FILES['chunk']['tmp_name'];
+$extension = $_POST['extension'];
+$id = $_POST['id'];
+$currentChunkNumber = $_POST['currentChunkNumber'];
+$totalChunkNumber = $_POST['totalChunkNumber'];
+$IDUtilisateur = $_SESSION['id'];
+$chunksPath = "../../avatars/chunks/";
+$avatarPath = "../../avatars/";
+
+// Si le fichier existe déjà, on le supprime
+if (file_exists($avatarPath . $IDUtilisateur)) {
+    unlink($avatarPath . $IDUtilisateur);
+}
+
+// Vérification du format du fichier
+$authImg = array('jpeg', 'jpg', 'png', 'gif');
+
+if (!in_array($extension, $authImg)) {
     die('Format de fichier invalide.');
 }
 
-$newAvatarPath = "../../avatars/" . $IDUtilisateur;
+// Upload du chunk
+move_uploaded_file($chunk, $chunksPath . $id . "-" . $currentChunkNumber);
 
-if (move_uploaded_file($tmpAvatarPath, $newAvatarPath)) {
-
-    include("../database.php");
-    // INSERT LOG
-    include '../log/registerLog.php';
-    registerNewLog($mysqli, $IDUtilisateur, "Modifie son avatar");
-
-    echo "OK";
-} else {
-    echo "Erreur lors de la modification de la photo de profile.";
+if ($currentChunkNumber < $totalChunkNumber) {
+    die("Chunk received");
 }
+
+// Recomposition du fichier à partir des chunks
+for ($i = 1; $i <= $totalChunkNumber; $i++) {
+    // Récupération du chunk
+    $file = fopen($chunksPath . $id . '-' . $i, 'r');
+    $buffer = fread($file, filesize($chunksPath . $id . '-' . $i));
+    fclose($file);
+
+    // Ajout du chunk dans le fichier
+    $final = fopen($avatarPath . $IDUtilisateur, 'a');
+    fwrite($final, $buffer);
+    fclose($final);
+
+    // Suppression du chunk
+    unlink($chunksPath . $id . '-' . $i);
+}
+
+// INSERT LOG
+include("../database.php");
+include '../log/registerLog.php';
+registerNewLog($mysqli, $IDUtilisateur, "Modifie son avatar");
+
+echo "OK";
