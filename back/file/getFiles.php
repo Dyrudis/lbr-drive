@@ -43,8 +43,7 @@ if (isset($_POST['corbeille'])) {
         $corbeille = "AND fichier.Corbeille IS NOT NULL ";
 
         //Suppression des outdated dans fichiers + db
-        $sql = "SELECT IDFichier, Extension FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille <= NOW() - INTERVAL 30 DAY";
-        $result = query($sql, $typeToBind, $argsToBind);
+        $result = query("SELECT IDFichier, Extension FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille <= NOW() - INTERVAL 30 DAY");
 
         foreach ($result as $row) {
             $IDFichier = $row['IDFichier'];
@@ -53,7 +52,7 @@ if (isset($_POST['corbeille'])) {
                 unlink($filePath);
             }
         }
-        query("DELETE FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille < NOW() - INTERVAL 30 DAY");
+        query("DELETE FROM fichier WHERE Corbeille IS NOT NULL AND Corbeille <= NOW() - INTERVAL 30 DAY");
     }
     
 }
