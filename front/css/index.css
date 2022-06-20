@@ -154,14 +154,6 @@ body {
     background-color: rgb(17, 150, 208) !important;
 }
 
-.Intersection {
-    background-color: #ff890a;
-}
-
-.Union {
-    background-color: #3671b3;
-}
-
 #liste-categories {
     flex-grow: 1;
     margin: 0 15px;
