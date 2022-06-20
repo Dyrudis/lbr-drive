@@ -56,10 +56,7 @@ h2 {
 }
 
 .formModif > input {
-    width: 160px !important;
-    border-radius: 10px;
-    margin-top: 5px;
-    padding: 0px 5px 0px 5px;
+    width: 150px !important;
     background-color: var(--inputTags);
 }
 
@@ -70,7 +67,6 @@ h3 {
 
 #categorySelected {
     width: 150px ;
-    margin-top: 3px;
     background-color: var(--inputTags);
 }
 
@@ -110,9 +106,6 @@ h3 {
 .colorInput,
 .selectInput {
     width: 100%;
-    border-radius: 10px;
-    margin-top: 5px;
-    padding: 0px 5px 0px 5px;
     background-color: var(--inputTags);
 }
 
@@ -120,8 +113,6 @@ h3 {
 .removeInput {
     width: 50%;
     cursor: pointer;
-    border-radius: 10px;
-    margin-top: 5px;
     background-color: var(--inputTags);
 }
 

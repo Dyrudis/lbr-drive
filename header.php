@@ -88,7 +88,7 @@ document.documentElement.style.setProperty('--inputTags', 'rgb(192,192,192)');
 
 // LOGS
 
-document.documentElement.style.setProperty('--colorH1Logs', '#919191');
+document.documentElement.style.setProperty('--colorH1Logs', '#white');
 document.documentElement.style.setProperty('--colorH3Logs', 'white');
 document.documentElement.style.setProperty('--colorLogs', '#393939');
 document.documentElement.style.setProperty('--colorPLogs', 'white');
