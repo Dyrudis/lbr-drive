@@ -71,22 +71,21 @@ function checkMdp() {
 }
 
 function tagVisible() {
-    if (document.getElementById("selectRole").value == "invite") {
-        document.getElementById("tagInvite").style.visibility = "visible";
+    if (document.getElementById("selectModifRole").value == "invite") {
+
         document.getElementById("tagInvite").style.display = "flex";
+
     } else {
-        document.getElementById("tagInvite").style.visibility = "hidden";
         document.getElementById("tagInvite").style.display = "none";
+
     }
 }
 
 function modifTagInvite() {
     if (document.getElementById("selectChamp").value == "tag") {
-        document.getElementById("nouvelleValeur").style.visibility = "hidden";
         document.getElementById("nouvelleValeur").style.display = "none";
-        document.getElementById("labelNouvelleValeur").style.visibility = "hidden";
         document.getElementById("labelNouvelleValeur").style.display = "none";
-        document.getElementById("tagInvite2").style.visibility = "visible";
+        document.getElementById("selectModifRole").style.display = "none";
         document.getElementById("tagInvite2").style.display = "flex";
         var selectTag2 = $("#boutonAddTagInvite");
         var request = new XMLHttpRequest();
@@ -123,13 +122,17 @@ function modifTagInvite() {
                 selectTag2.val("");
             });
         };
-    } else {
-        document.getElementById("nouvelleValeur").style.visibility = "visible";
-        document.getElementById("nouvelleValeur").style.display = "flex";
-        document.getElementById("labelNouvelleValeur").style.visibility = "visible";
-        document.getElementById("labelNouvelleValeur").style.display = "flex";
-        document.getElementById("tagInvite2").style.visibility = "hidden";
+    } else if (document.getElementById("selectChamp").value == "Role") {
+        document.getElementById("nouvelleValeur").style.display = "none";
+        document.getElementById("labelNouvelleValeur").style.display = "none";
         document.getElementById("tagInvite2").style.display = "none";
+        document.getElementById("selectModifRole").style.display = "flex";
+    }else{
+        
+        document.getElementById("nouvelleValeur").style.display = "flex";
+        document.getElementById("labelNouvelleValeur").style.display = "flex";
+        document.getElementById("tagInvite2").style.display = "none";
+        document.getElementById("selectModifRole").style.display = "none";
     }
 }
 
@@ -138,7 +141,7 @@ function submitModifCompte() {
         $.ajax({
             type: "POST",
             url: "back/account/updateAccount.php",
-            data: { email: document.getElementById("emailModifCompte").value, champ: document.getElementById("selectChamp").value, valeur: document.getElementById("nouvelleValeur").value, tags: JSON.stringify(allTag2) },
+            data: { email: document.getElementById("emailModifCompte").value, champ: document.getElementById("selectChamp").value, nouveauRole: document.getElementById("addRole").value, valeur: document.getElementById("nouvelleValeur").value, tags: JSON.stringify(allTag2) },
             success: (data) => {
                 console.log(data);
                 if (data == "Succes") {
@@ -158,15 +161,20 @@ function submitModifCompte() {
                     });
                 }
                 $(".inputModifCompte").val("");
+                document.getElementById("nouvelleValeur").style.display = "flex";
+                document.getElementById("labelNouvelleValeur").style.display = "flex";
+                document.getElementById("tagInvite2").style.display = "none";
+                document.getElementById("selectModifRole").style.display = "none";
+                
             },
         });
     }
-    document.getElementById("nouvelleValeur").style.visibility = "visible";
-    document.getElementById("nouvelleValeur").style.display = "flex";
-    document.getElementById("labelNouvelleValeur").style.visibility = "visible";
-    document.getElementById("labelNouvelleValeur").style.display = "flex";
-    document.getElementById("tagInvite2").style.visibility = "hidden";
-    document.getElementById("tagInvite2").style.display = "none";
+    else{
+        alert.create({
+            content: "l'un des champs n'est pas respecté",
+            type: "error",
+        });
+    }
 }
 
 function submitInfoCompte() {

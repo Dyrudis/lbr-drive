@@ -67,7 +67,7 @@ if ($role != 'admin') {
 
             <select class="inputCreationCompte" id='selectRole' name="role" onchange="tagVisible()" required>
                 <option value="" disabled selected> Choix d'un role</option>
-                <option value="lecture">Lecture</option>
+                <option value="lecture">Lecteur</option>
                 <option value="ecriture">Ecriture</option>
                 <option value="admin">Admin</option>
                 <option value="invite">Invité</option>
@@ -102,6 +102,16 @@ if ($role != 'admin') {
             <div id='tagInvite2'>
                 <select id='boutonAddTagInvite'>
                     <option value="">+ Tag</option>
+                </select>
+            </div>
+
+            <div id='selectModifRole'>
+                <select id='addRole'>
+                    <option value="" disabled selected> Choix d'un role</option>
+                    <option value="lecture">Lecteur</option>
+                    <option value="ecriture">Ecriture</option>
+                    <option value="admin">Admin</option>
+                    <option value="invite">Invité</option>
                 </select>
             </div>
 

@@ -313,7 +313,6 @@ input.submit {
 
 #tagInvite,
 #tagInvite2 {
-    visibility: hidden;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
@@ -321,13 +320,13 @@ input.submit {
     padding: 5px 15px 10px 15px;
 }
 
-#tagInvite2 {
-    visibility: hidden;
+#tagInvite2, #selectModifRole {
     display: none;
     flex-wrap: wrap;
     margin-top: 10px;
     gap: 12px;
 }
+
 
 .tag {
     background-color: rgb(118, 118, 118);

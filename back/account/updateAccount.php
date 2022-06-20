@@ -6,6 +6,10 @@ include '../log/registerLog.php';
 $email = $_POST['email'];
 $champ = $_POST['champ'];
 $valeur = $_POST['valeur'];
+if($champ == 'Role'){
+    $valeur = $_POST['nouveauRole'];
+}
+
 
 $authorized = ['admin'];
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
@@ -42,7 +46,8 @@ try{
         if ($champ == 'MotDePasse'){
             $valeur = password_hash($valeur, PASSWORD_DEFAULT);
         } 
-        if($champ == 'Email'){
+        //verification si l'email existe déjà
+        else if($champ == 'Email'){
             $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s" , $valeur);
             if($result){
                 die("email incorrect");
