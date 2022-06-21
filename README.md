@@ -1,4 +1,7 @@
+
 # Drive - Les briques rouges
+
+<center><img src="front\images\logoLONGUEURBlanc.png" alt="Logo - Les briques rouges" width="600" /></center>
 
 Ce projet est un drive privé hébergé par un site internet en ligne et dédié au festival "Les briques rouges". Il a été développé par 4 étudiants en CIR3 à l'ISEN Lille.
 
@@ -30,7 +33,7 @@ La galerie, page centrale du site, centralise tous les fichiers, leur affichage 
 
 On y retrouve deux parties :
 
-- ### La sidebar d'action et de tri :
+- ### La sidebar d'action et de tri
 
   Située sur la gauche, elle permet plusieurs actions :
   - La **Sélection multiple** permet, après activation, de sélectionner plusieurs fichiers par un simple clic gauche dans la gallerie.
@@ -87,31 +90,25 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
   - Ajouter des tags :  
     Le tag spécial "+ Tag" permet d'ouvrir un menu déroulant via lequel il est possible d'ajouter au fichier les tags souhaités.
 
-
 ## Ajouter vos fichiers
 
 **TODO** : Compléter cette section
-
 
 ## Modifier des fichiers
 
 **TODO** : Compléter cette section
 
-
 ## Modifier des tags et catégories
 
 **TODO** : Compléter cette section
-
 
 ## Créer, modifier et supprimer des comptes
 
 **TODO** : Compléter cette section
 
-
 ## Parcourir les logs
 
 **TODO** : Compléter cette section
-
 
 ## Modifier son mot de passe et son avatar
 
@@ -119,7 +116,7 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
 
 # Documentation
 
-### Back
+## Back
 
 - Dossier `back/file` :  
   Ce dossier comporte 8 fichiers qui permettent d'ajouter, de modifier et de supprimer des fichiers sur le drive :
@@ -177,6 +174,6 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
       });
       ```
 
-### Front
+## Front
 
 **TODO** : Compléter cette section
