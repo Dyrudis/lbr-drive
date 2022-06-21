@@ -1,7 +1,9 @@
 
 # Drive - Les briques rouges
 
-<center><img src="front\images\logoLONGUEURBlanc.png" alt="Logo - Les briques rouges" width="600" /></center>
+<p align="center">
+  <img src="front\images\logoLONGUEURBlanc.png" alt="Logo - Les briques rouges" width="600" />
+</p>
 
 Ce projet est un drive privé hébergé par un site internet en ligne et dédié au festival "Les briques rouges". Il a été développé par 4 étudiants en CIR3 à l'ISEN Lille.
 
