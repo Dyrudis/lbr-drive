@@ -58,10 +58,10 @@ function displayFile(file) {
     } else {
         preview = $("<video />");
         preview.on("loadeddata", masonry);
+        preview[0].currentTime = file.Miniature;
         let source = $("<source />")
             .attr("src", path)
             .attr("type", file.Type + "/" + file.Extension);
-        preview[0].currentTime = file.Miniature;
         preview.append(source);
     }
     preview.addClass("file-preview");

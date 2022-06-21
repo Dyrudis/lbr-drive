@@ -87,24 +87,20 @@ $role = $result[0]["Role"];
             </div>
 
         </div>
-        <div class="open-btn">
-            <?php
-                if($_SESSION['darkMode']==true){
-            ?>
-                <button class="open-button" id="colormod" onclick="changeMode();">Thème clair</button>
-            <?php
-                }else{
-            ?>
-                <button class="open-button" id="colormod" onclick="changeMode();">Thème sombre</button>
-            <?php
-                }
-            ?>
-        </div>
 
-        <div class="open-btn">
-            <button class="open-button" onclick="openForm()"><strong>Modifier son mot de passe</strong></button>
-        </div>
-        
+        <button class="open-button" onclick="openForm()"><strong>Modifier son mot de passe</strong></button>
+        <?php
+        if ($_SESSION['darkMode'] == true) {
+        ?>
+            <button class="open-button" id="colormod" onclick="changeMode();">Thème clair</button>
+        <?php
+        } else {
+        ?>
+            <button class="open-button" id="colormod" onclick="changeMode();">Thème sombre</button>
+        <?php
+        }
+        ?>
+
         <div class="form-popup" id="popupForm">
             <form class="form-container">
                 <label for="ancienMdp">
@@ -135,39 +131,39 @@ $role = $result[0]["Role"];
 
             function changeMode() {
 
-            $.ajax({
-            type: "POST",
-            url: "back/account/updateDarkMode.php",
-            data: {},
-            success: (data) => {
-                if(data == "theme sombre") {
-                    document.documentElement.style.setProperty('--colorBackground', '#161619');
-                    document.documentElement.style.setProperty('--colorText', '#FFFFFF');
-                    document.documentElement.style.setProperty('--colorBox', 'rgb(16, 0, 16)');
-                    document.documentElement.style.setProperty('--colorInput', 'white');
-                    document.documentElement.style.setProperty('--colorLabelInput', 'black');
-                    document.getElementById('colormod').textContent = "Thème clair";
-                    alert.create({
-                        content: "Theme sombre appliqué",
-                        type: "success",
-                    });}
-                else{
-                    document.documentElement.style.setProperty('--colorBackground', '#FFFee6');
-                    document.documentElement.style.setProperty('--colorText', '#161619');
-                    document.documentElement.style.setProperty('--colorBox', 'rgba(222, 222, 222, 1)');
-                    document.documentElement.style.setProperty('--colorInput', 'black');
-                    document.documentElement.style.setProperty('--colorLabelInput', 'white');
-                    document.getElementById('colormod').textContent = "Thème sombre";
-                    alert.create({
-                        content: "Theme clair appliqué",
-                        type: "success",
-                    });
-                }
-                    
-            },
-        });
+                $.ajax({
+                    type: "POST",
+                    url: "back/account/updateDarkMode.php",
+                    data: {},
+                    success: (data) => {
+                        if (data == "theme sombre") {
+                            document.documentElement.style.setProperty('--colorBackground', '#161619');
+                            document.documentElement.style.setProperty('--colorText', '#FFFFFF');
+                            document.documentElement.style.setProperty('--colorBox', 'rgb(16, 0, 16)');
+                            document.documentElement.style.setProperty('--colorInput', 'white');
+                            document.documentElement.style.setProperty('--colorLabelInput', 'black');
+                            document.getElementById('colormod').textContent = "Thème clair";
+                            alert.create({
+                                content: "Theme sombre appliqué",
+                                type: "success",
+                            });
+                        } else {
+                            document.documentElement.style.setProperty('--colorBackground', '#FFFee6');
+                            document.documentElement.style.setProperty('--colorText', '#161619');
+                            document.documentElement.style.setProperty('--colorBox', 'rgba(222, 222, 222, 1)');
+                            document.documentElement.style.setProperty('--colorInput', 'black');
+                            document.documentElement.style.setProperty('--colorLabelInput', 'white');
+                            document.getElementById('colormod').textContent = "Thème sombre";
+                            alert.create({
+                                content: "Theme clair appliqué",
+                                type: "success",
+                            });
+                        }
 
-    
+                    },
+                });
+
+
             }
         </script>
 

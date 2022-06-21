@@ -20,6 +20,7 @@
         <div class="shape"></div>
     </div>
     <form>
+        <img src="front/images/logo.png" alt="">
         <h1>Se connecter</h1>
 
         <label for="username">Email :</label>

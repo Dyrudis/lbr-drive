@@ -75,7 +75,7 @@
 
 #info {
     margin-top: 25px;
-   /* color: black; */
+    /* color: black; */
 }
 
 #info > div {
@@ -104,23 +104,23 @@
 }
 /* Stylez et fixez le bouton sur la page */
 .open-button {
-    background-color: #525252;
-    color: white;
+    background-color: var(--colorText);
+    color: var(--colorLabelInput);
     padding: 12px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     opacity: 0.8;
-    position: fixed;
+    display: block;
     margin-top: 15px;
 }
 
 #colormod {
-    position: relative;
-    left:7%;
-    background-color: var(--colorText); 
+    background-color: var(--colorText);
     color: var(--colorLabelInput);
     font-weight: bold;
+    display: block;
+    margin-top: 15px;
 }
 
 /* Positionnez la forme Popup */

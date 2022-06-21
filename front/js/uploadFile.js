@@ -127,9 +127,12 @@ function addFile(file) {
         preview = $("<img />").attr("src", URL.createObjectURL(file));
     } else {
         preview = $("<video />");
+        let info = $("<p>").text("?").addClass("info");
+        let infoHover = $("<p>").text("Choisissez un endroit de la vidéo qui sera utilisé pour la miniature dans la galerie.").addClass("infoHover");
+        li.append(info);
+        li.append(infoHover);
         let source = $("<source />").attr("src", URL.createObjectURL(file)).attr("type", file.type);
         preview.append(source);
-
         preview.hover(function toggleControls() {
             if (this.hasAttribute("controls")) {
                 this.removeAttribute("controls");
@@ -374,7 +377,7 @@ async function uploadFiles() {
         data.append("duration", duration);
         data.append("id", id);
         data.append("extension", file.name.split(".").pop());
-        data.append("timestamp", timestamp)
+        data.append("timestamp", timestamp);
         data.append("currentChunkNumber", 1 + uploaded / chunkSize);
         data.append("totalChunkNumber", Math.ceil(total / chunkSize));
 
