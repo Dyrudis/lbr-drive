@@ -54,8 +54,6 @@ Et voilà, c'est prêt ! Il ne vous reste plus qu'à vous rendre sur votre navig
 
 ## Documentation
 
-**TODO** : Compléter cette section
-
 ### Back
 
 - Dossier `back/file` :  
