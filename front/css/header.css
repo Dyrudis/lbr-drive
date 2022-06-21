@@ -1,5 +1,5 @@
 :root {
-    --primaryColor: ;
+    --colorBackground: ;
     --colorText: ;
     --colorBox: ;
     --colorDrop: ;
@@ -35,7 +35,7 @@ body {
 
 body {
     margin: 0;
-    background-color: var(--primaryColor);
+    background-color: var(--colorBackground);
   /*  background-color: #161619; */
     color: var(--colorText);
 }

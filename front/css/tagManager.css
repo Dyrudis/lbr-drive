@@ -28,7 +28,7 @@ h2 {
     text-align: center;  
     font-size: 1.5rem;  
     font-weight: 800;
-    color: var(--colorH2Tags);
+    color: var(--colorText);
 }
 
 .title {
@@ -57,17 +57,17 @@ h2 {
 
 .formModif > input {
     width: 150px !important;
-    background-color: var(--inputTags);
+    background-color: var(--colorInputTags);
 }
 
 h3 {
      margin-right: 15px;
-     color: var(--colorH3Tags);
+     color: var(--colorText);
 }
 
 #categorySelected {
     width: 150px ;
-    background-color: var(--inputTags);
+    background-color: var(--colorInputTags);
 }
 
 #categoryColor {
@@ -83,15 +83,15 @@ h3 {
     align-items: center;
     gap: 15px;
     margin-bottom: 30px;
-    background-color: var(--colorContainer);
-    box-shadow: var(--boxShadowTags);
+    background-color: var(--colorBox);
+    box-shadow: var(--colorBoxShadow);
     padding: 10px;
     border-radius: 5px;
 }
 
 .preview {
     width: 200px;
-    background-color: var(--colorPreviewTags);
+    background-color: var(--colorInput);
     color: white;
     border-radius: 5px;
     padding: 10px;
@@ -106,14 +106,19 @@ h3 {
 .colorInput,
 .selectInput {
     width: 100%;
-    background-color: var(--inputTags);
+    background-color: var(--colorInputTags);
 }
 
 .confirmInput,
 .removeInput {
     width: 50%;
     cursor: pointer;
-    background-color: var(--inputTags);
+    background-color: var(--colorInputTags);
+    
+}
+
+input,select{
+    border: solid 2px var(--colorBorder);
 }
 
 

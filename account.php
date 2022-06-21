@@ -87,9 +87,18 @@ $role = $result[0]["Role"];
             </div>
 
         </div>
-
         <div class="open-btn">
-            <button class="open-button" id="colormod" value="Dark mode" onclick="changeMode();"><strong>Dark mode</strong></button>
+            <?php
+                if($_SESSION['darkMode']==true){
+            ?>
+                <button class="open-button" id="colormod" onclick="changeMode();">Thème clair</button>
+            <?php
+                }else{
+            ?>
+                <button class="open-button" id="colormod" onclick="changeMode();">Thème sombre</button>
+            <?php
+                }
+            ?>
         </div>
 
         <div class="open-btn">
@@ -132,23 +141,25 @@ $role = $result[0]["Role"];
             data: {},
             success: (data) => {
                 if(data == "theme sombre") {
-                    document.documentElement.style.setProperty('--primaryColor', '#FFFee6');
-                    document.documentElement.style.setProperty('--colorText', '#161619');
-                    document.documentElement.style.setProperty('--colorBox', '#FFFFFF');
-                    document.documentElement.style.setProperty('--colorThemeButton', 'black');
-                    document.documentElement.style.setProperty('--colorThemeFont', 'white');
+                    document.documentElement.style.setProperty('--colorBackground', '#161619');
+                    document.documentElement.style.setProperty('--colorText', '#FFFFFF');
+                    document.documentElement.style.setProperty('--colorBox', 'rgb(16, 0, 16)');
+                    document.documentElement.style.setProperty('--colorInput', 'white');
+                    document.documentElement.style.setProperty('--colorLabelInput', 'black');
+                    document.getElementById('colormod').textContent = "Thème clair";
                     alert.create({
-                        content: "Theme clair appliqué",
+                        content: "Theme sombre appliqué",
                         type: "success",
                     });}
                 else{
-                    document.documentElement.style.setProperty('--primaryColor', '#161619');
-                    document.documentElement.style.setProperty('--colorText', '#FFFFFF');
-                    document.documentElement.style.setProperty('--colorBox', '#70726E');
-                    document.documentElement.style.setProperty('--colorThemeButton', 'white');
-                    document.documentElement.style.setProperty('--colorThemeFont', 'black');
+                    document.documentElement.style.setProperty('--colorBackground', '#FFFee6');
+                    document.documentElement.style.setProperty('--colorText', '#161619');
+                    document.documentElement.style.setProperty('--colorBox', 'rgba(222, 222, 222, 1)');
+                    document.documentElement.style.setProperty('--colorInput', 'black');
+                    document.documentElement.style.setProperty('--colorLabelInput', 'white');
+                    document.getElementById('colormod').textContent = "Thème sombre";
                     alert.create({
-                        content: "Theme sombre appliqué",
+                        content: "Theme clair appliqué",
                         type: "success",
                     });
                 }

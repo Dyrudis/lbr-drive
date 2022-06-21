@@ -6,6 +6,7 @@ $currentChunkNumber = $_POST['currentChunkNumber'];
 $totalChunkNumber = $_POST['totalChunkNumber'];
 $id = $_POST['id'];
 $extension = $_POST['extension'];
+$timestamp = $_POST['timestamp'];
 $type = "invalid";
 $name = $_POST['name'];
 $duration = $_POST['duration'];
@@ -79,15 +80,16 @@ for ($i = 1; $i <= $totalChunkNumber; $i++) {
 try {
     // Ajout du fichier dans la base de données
     query(
-        "INSERT INTO fichier (IDFichier, Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree)VALUES (?, ?, ?, CURRENT_DATE, ?, ?, ?, ?)",
-        "ssiissi",
+        "INSERT INTO fichier (IDFichier, Nom, IDUtilisateur, Date, Taille, Type, Extension, Duree, Miniature) VALUES (?, ?, ?, CURRENT_DATE, ?, ?, ?, ?, ?)",
+        "ssiissid",
         $id,
         $name,
         $_SESSION['id'],
         filesize($filePath . $id . "." . $extension),
         $type,
         $extension,
-        $duration
+        $duration,
+        $timestamp
     );
 
     // Si le tableau des tags est vide, on ajoute le tag "Sans tag"

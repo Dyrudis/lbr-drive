@@ -14,6 +14,7 @@ upload = [
     'file' : ...,
     'name' : ...,
     'tags' : [...],
+    'timestamp' : ...,
     'dom' : ...
     },*/
 ];
@@ -136,6 +137,10 @@ function addFile(file) {
                 this.setAttribute("controls", "controls");
             }
         });
+        preview.on("timeupdate", function () {
+            updateTimestamp(this.currentTime, file);
+            console.log(upload);
+        });
     }
     let text = $("<div />").addClass("text");
     let input = $("<input />")
@@ -192,6 +197,7 @@ function addFile(file) {
         file: file,
         name: name,
         tags: [],
+        timestamp: 0,
         dom: li,
     });
 }
@@ -206,6 +212,10 @@ function insertTag(IDTag, file) {
 
 function removeTag(IDTag, file) {
     upload.find((e) => e.file == file).tags = upload.find((e) => e.file == file).tags.filter((e) => e != IDTag);
+}
+
+function updateTimestamp(timestamp, file) {
+    upload.find((e) => e.file == file).timestamp = timestamp;
 }
 
 function startAnimation(from, to, duration, callback) {
@@ -344,6 +354,7 @@ async function uploadFiles() {
     let file = nextFile.file,
         name = nextFile.name,
         tags = nextFile.tags,
+        timestamp = nextFile.timestamp,
         dom = nextFile.dom;
 
     let duration = await getDuration(file);
@@ -363,6 +374,7 @@ async function uploadFiles() {
         data.append("duration", duration);
         data.append("id", id);
         data.append("extension", file.name.split(".").pop());
+        data.append("timestamp", timestamp)
         data.append("currentChunkNumber", 1 + uploaded / chunkSize);
         data.append("totalChunkNumber", Math.ceil(total / chunkSize));
 

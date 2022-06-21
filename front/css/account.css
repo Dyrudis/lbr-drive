@@ -118,8 +118,9 @@
 #colormod {
     position: relative;
     left:7%;
-    background-color: var(--colorThemeButton); 
-    color: var(--colorThemeFont);
+    background-color: var(--colorText); 
+    color: var(--colorLabelInput);
+    font-weight: bold;
 }
 
 /* Positionnez la forme Popup */

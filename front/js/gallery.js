@@ -61,6 +61,7 @@ function displayFile(file) {
         let source = $("<source />")
             .attr("src", path)
             .attr("type", file.Type + "/" + file.Extension);
+        preview[0].currentTime = file.Miniature;
         preview.append(source);
     }
     preview.addClass("file-preview");
@@ -77,14 +78,14 @@ function displayFile(file) {
     let title = $("<div>")
         .addClass("file-hover-title")
         .html("<p>" + file.NomFichier + "</p>")
-        .attr("title", file.NomFichier)
+        .attr("title", file.NomFichier);
     let author = $("<div>")
         .addClass("file-hover-author")
         .attr("title", "de " + file.Prenom + " " + file.Nom + ", " + file.Date);
     if (file.Corbeille) {
-        author.html("<strong>" + daysUntil30Days(file.Corbeille) + "</strong>")
+        author.html("<strong>" + daysUntil30Days(file.Corbeille) + "</strong>");
     } else {
-        author.html("de " + file.Prenom + " " + file.Nom + ", " + file.Date)
+        author.html("de " + file.Prenom + " " + file.Nom + ", " + file.Date);
     }
     let info = $("<div>")
         .addClass("file-hover-info")

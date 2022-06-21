@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `fichier` (
   `Extension` varchar(4) NOT NULL,
   `Duree` int(11) NOT NULL COMMENT 'En secondes',
   `Corbeille` date,
+  `Miniature` float,
   PRIMARY KEY (`IDFichier`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
