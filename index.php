@@ -82,7 +82,7 @@ if (!isset($_SESSION['darkMode'])) {
                     </div>
                 </div>
 
-                <h1 class="barre-title">Trier par tags</h1>
+                <h1 class="barre-title">Tri par tags</h1>
                 <div id="liste-categories">
                     <!-- Ici s'appenderont les categories -->
                 </div>

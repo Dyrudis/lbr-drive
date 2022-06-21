@@ -24,7 +24,7 @@
     --r: 0rad;
     width: 100%;
     height: calc(100vh - 85px);
-    background: var(--colorDrop);
+    background: var(--colorBackground);
     border-radius: 6px;
     position: relative;
     margin: 0 auto;
@@ -92,7 +92,7 @@
 .drop .intro,
 .drop .hint {
     --y: -76px;
-    color: var(--grey);
+    color: var(--colorText);
     font-size: 14px;
     line-height: 23px;
     text-align: center;
@@ -108,7 +108,7 @@
 .drop .intro h4,
 .drop .hint h4 {
     margin-bottom: 8px;
-    color: var(--grey-dark);
+    color: var(--colorText);
     font-family: inherit;
     font-weight: 500;
     font-size: 20px;

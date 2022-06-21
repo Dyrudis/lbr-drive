@@ -16,16 +16,16 @@ h1 {
     font-size: 26px;
     font-weight: bold;
     margin: 20px 0;
-    color: var(--colorH1Logs);
+    color: var(--colorText);
     text-align: center;
 }
 
 h3 {
-    color: var(--colorH3Logs);
+    color: var(--colorText);
 }
 
 p {
-    color: var(--colorPLogs);
+    color: var(--colorText);
 }
 
 #triHolder {
@@ -49,7 +49,7 @@ p {
 
 .log {
     display: flex;
-    background-color: var(--colorLogs);
+    background-color: var(--colorBox);
     border-radius: 3px;
     max-width: 900px;
     color: white;

@@ -6,7 +6,7 @@ body {
     font-family: "Open Sans", sans-serif;
     font-weight: 500;
     color: #fff;
-    background: var(--colorBodyAdmin);
+    background: var(--colorBackground);
     overflow-y: auto;
 }
 .info p {
@@ -26,7 +26,7 @@ h1 {
 }
 
 h2 {
-    color: var(--colorH2Admin);
+    color: var(--colorText);
     font-size: 24px;
     font-weight: 700;
     width: 100%;
@@ -36,7 +36,7 @@ h2 {
 h3 {
     font-size: 17px;
     font-weight: 600;
-    color: var(--colorH3Admin);
+    color: var(--colorText);
 }
 
 a {
@@ -107,9 +107,9 @@ select {
 }
 
 form {
-    background-color: var(--colorFormAdmin);
+    background-color: var(--colorBox);
     padding: 0 30px;
-    box-shadow: var(--boxShadowAdmin);
+    box-shadow: var(--colorBoxShadow);
 }
 
 .contact-form {
@@ -202,7 +202,7 @@ label {
     padding: 5px 10px;
     font-size: 15px;
     font-weight: 600;
-    color: var(--colorLabelAdmin);
+    color: var(--colorText);
 }
 
 input {
