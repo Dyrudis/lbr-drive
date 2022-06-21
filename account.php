@@ -137,7 +137,6 @@ $role = $result[0]["Role"];
                     document.documentElement.style.setProperty('--colorBox', '#FFFFFF');
                     document.documentElement.style.setProperty('--colorThemeButton', 'black');
                     document.documentElement.style.setProperty('--colorThemeFont', 'white');
-                    document.querySelector('#colormod').textContent = 'Dark mode' 
                     alert.create({
                         content: "Theme clair appliqué",
                         type: "success",
@@ -148,7 +147,6 @@ $role = $result[0]["Role"];
                     document.documentElement.style.setProperty('--colorBox', '#70726E');
                     document.documentElement.style.setProperty('--colorThemeButton', 'white');
                     document.documentElement.style.setProperty('--colorThemeFont', 'black');
-                    document.querySelector('#colormod').textContent = 'Light mode'
                     alert.create({
                         content: "Theme sombre appliqué",
                         type: "success",
