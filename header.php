@@ -71,11 +71,11 @@ document.documentElement.style.setProperty('--colorDrop', '#161619');
 // ADMIN
 
 document.documentElement.style.setProperty('--colorFormAdmin', 'rgb(16, 0, 16)');
-document.documentElement.style.setProperty('--colorBodyAdmin', '#161920');
+document.documentElement.style.setProperty('--colorBodyAdmin', '#161619');
 document.documentElement.style.setProperty('--colorH2Admin', 'rgb(255 255 255)');
 document.documentElement.style.setProperty('--colorH3Admin', 'rgb(255 255 255)');
 document.documentElement.style.setProperty('--colorLabelAdmin', 'rgb(255 255 255)');
-document.documentElement.style.setProperty('--boxShadowAdmin', '0px 0px 10px 6px rgb(142, 139, 139)');
+document.documentElement.style.setProperty('--boxShadowAdmin', '0px 0px 5px 3px rgb(142, 139, 139)');
 
 // TAGS
 
