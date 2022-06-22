@@ -30,9 +30,9 @@ Et voilà, c'est prêt ! Il ne vous reste plus qu'à vous rendre sur votre navig
 Comme il est possible de le voir ci-dessus : il existe plusieurs "roles".  
 Chacun d'entre eux à ses particularités :  
   
-- **Administrateur** : Peut tout faire, jusqu'à créer les comptes d'autres utilisateurs, les modifier ou supprimer, voir les logs etc...  
+- **Administrateur** : Peut tout faire, jusqu'à créer les comptes d'autres utilisateurs, les modifier ou supprimer, voir les logs etc.  
 
-- **Ecriture** : Peut, tout comme un administrateur, uploader des fichiers, modifier tout fichier existant ou le supprimer. Créer des tags et catégories etc...  
+- **Ecriture** : Peut, tout comme un administrateur, uploader des fichiers, modifier tout fichier existant ou le supprimer. Créer des tags et catégories etc.  
 
 - **Lecture** : N'a accès qu'à la galerie et à son compte. Ne peut upload de fichiers, en modifier, supprimer. Il en va de même pour les tags ainsi que les catégories.  
 
@@ -73,9 +73,9 @@ On y retrouve deux parties :
 
     - Le *Type de filtrage par tag*, (par défaut sur Intersection), qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
 
-      - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés ( Il faut que soit associé à chaque fichier le tag *a* ET *b* etc... ).
+      - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés ( Il faut que soit associé à chaque fichier le tag *a* ET *b* etc. ).
 
-      - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tag du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc... ).  
+      - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tag du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc. ).  
 
   - Le **Tri par tags**, filtrant l'affichage des fichiers selon une sélection de tags appartenant à des catégories :
 
@@ -161,19 +161,36 @@ Une fois le début de l'upload initié il est possible de suivre l'avancement fi
 
 ## Modifier des tags et catégories
 
-Une page est allouée à la modificat...
+Une page complète est allouée à la modification des tags et catégories.  
+Elle est accessible depuis le menu déroulant en bas à droite de la galerie si le rôle du compte utilisateur le permet.  
+Une fois ouverte celle-ci permet de visualiser toutes les catégories existantes ainsi que tous les tags et les modifier à sa guise.
+
+À noter : il est impossible d'effectuer une modification qui impliquerait qu'une catégorie devienne identique à un autre ou encore qu'un tag d'une catégorie devienne identique à un autre tag de la même catégorie.
 
 ## Créer, modifier et supprimer des comptes
 
-**TODO** : Compléter cette section
+Les administrateurs, depuis le menu déroulant de la galerie, peuvent également être redirigés vers la page de gestion des comptes.  
+Cette dernière permet, à l'instar des tags et catégories, de modifier et supprimer (ce qui en réalité met en quarantaine) des comptes utilisateurs mais également de les créer.  
+Il semble pertinent de mentionner qu'il faille préciser pour les comptes invités les tags autorisés d'accès.  
+De la même façon, lors d'une modification d'un compte invité il est possible de redéfinir ces tags.
 
 ## Parcourir les logs
 
-**TODO** : Compléter cette section
+Toujours pour les administrateurs, toujours situé dans le menu déroulant de la galerie :  
+La page logs accessible en cliquant sur "Accéder aux logs".  
+  
+Sur cette dernière sont visibles les logs, complétés par toutes les actions notées, avec option de tri par nom/prénom dans un champ d'entrée texte mais également par contenu du log.
 
-## Modifier son mot de passe et son avatar
+## Espace Compte
 
-**TODO** : Compléter cette section
+Chaque utilisateur, indépendamment de son rôle, a accès à la page "Mon compte" dans le header des pages qu'il parcourt.  
+Sur cette dernière sont visibles les informations relatives à son compte tel que son adresse email, nom, prénom, photo de profil.  
+  
+Il y est également possible de :  
+
+- **Modifier sa photo de profil** : D'un simple clique sur cette dernière.  
+- **Modifier son mot de passe** : Via le bouton qui ouvre un formulaire avec aide pour effectuer le changement.  
+- **Changer le thème** : Via le bouton qui alterne le thème de l'utilisateur (Clair ou Sombre) avec souvenir des préférences de chacun.
 
 # Documentation
 
