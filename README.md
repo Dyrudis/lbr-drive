@@ -31,7 +31,7 @@ Et voilà, c'est prêt ! Il ne vous reste plus qu'à vous rendre sur votre navig
 
 ## Parcourir la galerie
 
-La galerie, page centrale du site, centralise tous les fichiers, leur affichage ainsi que leur manipulation.
+La galerie, page principale du site, centralise tous les fichiers, leur affichage ainsi que leur manipulation.
 
 On y retrouve deux parties :
 
@@ -41,18 +41,27 @@ On y retrouve deux parties :
   - La **Sélection multiple** permet, après activation, de sélectionner plusieurs fichiers par un simple clic gauche dans la gallerie.
 
     On peut alors effectuer les actions suivante :
+
     - Ajouter à la sélection un tag aux vidéos ne l'ayant pas déjà.
+
     - Supprimer un tag aux vidéos ayant le tag en question.
+
     - Télécharger les fichiers de la sélection.
+    
     - Envoyer dans la corbeille toute la sélection.
 
   - Les **Fonctions de tri**, qui permettent l'activation de 4 trieurs spécifiques :
 
     - *Mes fichiers* qui, sur la galerie, n'autorisera l'apparition que des fichiers uploadés dans la base de données par l'utilisateur en question.
+
     - *Corbeille* qui passera l'affichage des fichiers de la galerie à ceux dans la corbeille.
+
     - Le tri par *Type de fichier*, (par défaut sur Image / Vidéo), permet par modes l'affichage des Images et/ou Vidéos.
+
     - Le *Type de filtrage par tag*, (par défaut sur Intersection), qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
+    
       - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés ( Il faut que soit associé à chaque fichier le tag *a* ET *b* etc... ).
+
       - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tag du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc... ).  
 
   - Le **Tri par tags**, filtrant l'affichage des fichiers selon une sélection de tags appartenant à des catégories :
@@ -71,30 +80,71 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
   Par un simple clique gauche, qu'il s'agisse d'une image ou d'une vidéo, celle-ci passera en plein écran.  
 
 - **Affichage des tags et propriétés du fichier** :  
+
   D'un simple passage de la souris sur l'élément dérouleront les infos du fichier :  
+
   - Son titre : affiché en gras au milieu du menu déroulé.
+
   - Ses tags : sous forme de tags aux couleurs de leurs catégories.
+
   - L'utilisateur source : La personne qui a uploadé le fichier dont il est question.
+
   - La date d'upload : La date du jour où fut uploadé le fichier.
+
   - La taille du fichier : L'espace prit par ce dernier sur le disque serveur.
-  - Sa durée : s'il s'agit d'une vidéo seulement, sa durée en minute.
+
+  - Sa durée : s'il s'agit d'une vidéo seulement, sa durée en minute.  
 
 - **Action sur les fichiers** :  
   Lors d'un clique droit sur un fichier, son menu déroulant se développe de manière à laisser apparaitre quelques options :  
+
   - Supprimer des tags :  
-    A côté de chaque tag apparaitra une petite croix sur laquelle il est possible de cliquer pour supprimer du fichier le tag visé  (Pas de demande de confirmation). Il n'est cependant pas possible de supprimer *Sans tag* qui apparait dans le cas où tous les tags sont supprimés ou si le fichier n'en avait pas au préalable.
+    A côté de chaque tag apparaitra une petite croix sur laquelle il est possible de cliquer pour supprimer du fichier le tag visé. Il n'est cependant pas possible de supprimer *Sans tag* qui apparait dans le cas où tous les tags sont supprimés ou si le fichier n'en avait pas au préalable.
+
   - Editer le titre :  
     En cliquant sur le petit crayon apparaissant sur la droite du titre, il devient possible de modifier ce dernier au clavier.  
+
   - Télécharger le fichier :  
     En cliquant sur le symbole de téléchargement, le fichier est téléchargé sur votre appareil.  
+
   - Envoyer le fichier dans la corbeille :  
-    L'icone de la poubelle déplacera, une fois cliquée, le fichier correspondant dans la corbeille. Après quoi ce dernier sera définitivement supprimé au bout de 30 jours.  
+    L'icone de la poubelle déplacera, une fois la demande de confirmation validée, le fichier correspondant dans la corbeille. Après quoi ce dernier sera définitivement supprimé au bout de 30 jours.  
+
   - Ajouter des tags :  
-    Le tag spécial "+ Tag" permet d'ouvrir un menu déroulant via lequel il est possible d'ajouter au fichier les tags souhaités.
+    Le tag spécial "+ Tag" permet d'ouvrir un menu déroulant via lequel il est possible d'ajouter au fichier les tags souhaités.  
+  
+- **Corbeille** :  
+  Comme mentionné précédemment il existe une corbeille dans laquelle sont donc envoyés les fichiers souhaités.  
+  Cette corbeille fait partie elle aussi de la galerie, étant accessible depuis la sidebar dans les fonctions de tri, et comme son nom l'indique : affiche les éléments dans la corbeille.
+
+  Quant à ce qu'il est possible d'y faire :
+
+  - Voir pour chaque fichier (toujours en mettant la souris dessus) le temps restant avant suppression automatique.
+
+  - Restaurer le fichier d'un simple clique sur l'icone correspondante.
+
+  - Supprimer manuellement un fichier de manière définitive.
 
 ## Ajouter vos fichiers
 
-**TODO** : Compléter cette section
+Le menu d'upload d'images et vidéos voit sa propore page lui être allouée.  
+En effet, accessible depuis le header si l'utilisateur en a le droit, il est possible de cliquer sur l'onglet "Ajouter un fichier".  
+Une fois chose faite, l'utilisateur arrive sur une page presque vierge où, de manière intuitive, lui est décrit la marche à suivre afin de mettre en ligne les fichiers souhaités.  
+Pour ce faire il peut :  
+
+- Cliquer sur le bouton "Ajouter" qui lui ouvrira l'explorateur de fichier depuis lequel il pourra ouvrir un ou plusieurs fichiers.  
+
+- Click & Drag directement depuis un explorateur de fichier déjà ouvert les fichiers souhaités.
+
+Une fois ceci fait l'utilisateur peut alors modifier ce qu'il souhaite et préparer les fichiers pour qu'ils soient déjà complétés lors de leur envoie. Pour ce faire il peut :  
+
+- Modifier le titre du fichier.
+
+- Ajouter des tags au fichier.
+
+- Sélectionner une miniature s'il s'agit d'une vidéo en positionnant cette derniere au moment souhaité.
+
+Une fois le début de l'upload initié il est possible de suivre l'avancement fichier par fichier de l'upload via une barre de chargement retraçant en direct l'avancée pour chacun d'eux.
 
 ## Modifier des fichiers
 
