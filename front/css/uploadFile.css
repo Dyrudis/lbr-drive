@@ -182,6 +182,7 @@
     justify-content: center;
     z-index: 1;
     cursor: pointer;
+    color: white;
 }
 .drop ul.list li .infoHover {
     position: absolute;
