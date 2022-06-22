@@ -190,7 +190,8 @@ Une page est allouée à la modificat...
     // Le nombre de lignes renvoyées est donc calculé avec count($result)
     ```
 
-- Dossier `back/file` :  
+- ### Dossier `back/file`
+
   Ce dossier comporte 8 fichiers qui permettent d'ajouter, modifier et supprimer des fichiers sur le drive :
   - [`addTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/addTag.php)
     - Ajoute le tag dont l'id est `IDTag` au fichier dont l'id est `IDFichier`.
@@ -347,7 +348,8 @@ Une page est allouée à la modificat...
       registerNewLog($mysqli, $_SESSION['id'], "Ceci est un super log !");
       ```
 
-- Dossier `back/tag` :  
+- ### Dossier `back/tag`
+
   Ce dossier comporte 8 fichiers qui permettent de créer, modifier et supprimer des tags et des catégories sur le drive :
   - [`createCategory.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/createCategory.php)
     - Crée une catégorie dont le nom est `name` et la couleur est `color`.
