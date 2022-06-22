@@ -82,8 +82,10 @@ try {
                 }
                 echo "compte invité créé";
             }
-
-            echo "Création de compte réussi";
+            else{
+                echo "Création de compte réussi";
+            }
+            
         }
 
         //creation de la photo de profil par defaut

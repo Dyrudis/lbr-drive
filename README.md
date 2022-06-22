@@ -451,10 +451,10 @@ Il y est également possible de :
       $.post({
           url: "back/tag/updateCategory.php",
           data: { IDCategorie: 3, name: "Genre", color: "A48FCD" },
-          success: (res) => console.log(res),
+          success: (res) => console.log(JSON.parse(res)),
       });
       ```
-
+          
   - [`updateTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/updateTag.php)
     - Modifie le nom (`name`) et la catégorie (`IDCategorie`) du tag dont l'id est `IDTag`.
     - Retourne `"OK"` si l'opération s'est correctement déroulée.
@@ -464,6 +464,144 @@ Il y est également possible de :
       $.post({
           url: "back/tag/updateTag.php",
           data: { IDTag: 7, name: "Electro", IDCategorie: 2 },
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
+- Dossier `back/account`:
+  Ce dossier comporte 10 fichiers qui permettent de faire des requêtes au serveur du drive :
+
+  - [`login.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/login.php)
+    - Récupère un mail dont le nom de variable est `email` et le mot de passe dont le nom de variable est `motdepasse` afin de se connecter.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"firstConnect"` si c'est la première connexion du compte ou après une demande de nouveau mot de passe.
+      - Retourne `"connect"` si le compte est actif.
+      - Retourne `"suspendu"` si le compte est suspendu.
+      - Exemple d'utilisation :
+
+        ```js
+        $.ajax({
+          type: "POST",
+          url: "back/account/login.php",
+          data: { email: "no-reply@lesbriquesrouges.fr", motdepasse: "Azerty123" },
+          success: (data) => console.log(data),
+        });
+
+        ```
+  - [`logOut.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/logOut.php)
+    - Lorsque le fichier est exécuté, les variables de session `"id"` et `"role"` sont détruites.
+    - Puis relocalise l'utilisateur sur la page login.
+
+  - [`setPassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/setPassword.php)
+    - Permet de set un mot de passe dont le nom de variable est `nouveauMdp` d'un utilisateur connecté.
+    - Retourne `"Succes"` en cas de modification.
+    - Retourne `"Echec"`en cas d'échec.
+    - Exemple d'utilisation :
+
+      ```js
+        $.ajax({
+          type: "POST",
+          url: "back/account/setPassword.php",
+          data: { nouveauMdp: "Azerty123" },
+          success: (data) => console.log(data),
+        });
+
+        ```
+
+  - [`resetPassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/resetPassword.php)
+    - Permet de set un mot de passe temporaire à un compte et lui envoyer par email la demande de nouveau mot de passe.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"Succes"` si l'email a bien été envoyé.
+      - Retourne `"Echec"` si l'envoie de email a échoué.
+      - Retourne `"suspendu"` si le compte est suspendu.
+    - Exemple d'utilisation :
+
+      ```js
+          $.ajax({
+            type: "POST",
+            url: "back/account/resetPassword.php",
+            data: { email: "no-reply@lesbriquesrouges" },
+            success: (data) => console.log(data),
+          });
+      ```
+  - [`updatePassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updatePassword.php)
+    - Permet de modifier le mot de passe de l'utilisateur. Le fichier récupère l'ancien mot de passe dont le nom de la variable est `"ancienMdp"` et le nouveau mot de passe dont le nom de la variable est `"nouveauMdp"`.
+    - Retourne `"Succes"` en cas de modification.
+    - Retourne `"Echec"`en cas d'échec.
+    - Exemple d'utilisation :
+
+      ```js
+          $.ajax({
+            type: "POST",
+            url: "back/account/updatePassword.php",
+            data: { ancienMdp : "motDePasse", nouveauMdp: "Azerty123" },
+            success: (data) => console.log(data),
+          });
+      ```
+
+
+  - [`updateDarkMode.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateDarkMode.php)
+    - Lorsque le fichier est exécuté, la variable de session `"DarkMode"` change de valeur (soit `true` soit `false`).
+
+  - [`updateAvatar.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateAvatar.php)
+    - Permet de modifier la photo de profil d'un utilisateur connecté.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/account/updateAvatar.php",
+          data: { },
+          success: (res) => console.log(res),
+      });
+      ```
+      
+  - [`signUp.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/signUp.php)
+    - Crée un utilisateur dont le nom est `"nom"`, prenom est `"prenom"`, email est `"email"`, description est `"description"`, role est `"role"`. Si le compte créé est un compte invité alors un tableau de tags autorisés lui est attribué dont le nom de variable est `"tags"` et si la création de compte est créé sans mot de passe temporaire alors le mot de passe est récupéré dont le nom est `"motDePasse"`.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"compte invité créé"` s'il sagit d'un compte invité.
+      - Retourne `"Email envoyé avec succès"` si le compte avec un mot de passe temporaire est bien créé.
+      - Retourne `"Création de compte réussi"` si le compte est bien créé sans mot de passe temporaire.
+    - Exemple d'utilisation :
+
+      ```js
+      $.ajax({
+          type: "POST",
+          url: "back/account/signUp.php",
+          data: {nom : "Dupond", prenom : "François", email : "françois.dupond@lesbriquesrouges.fr", description : "passionné de photographie", role : "lecture", motDePasse : "Azerty123"},
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`updateAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateAccount.php)
+    - Permet de modifier un champ d'un compte utilisateur. le fichier récupère le compte utilisateur via son eamil dont le nom est `"Email"`, le champ dont le nom est `"champ"` ainsi que ça valeur dont le nom est `"valeur"`. Le fichier permet aussi de modifier l'ensemble des tags autorisé d'un compte invité, les tags sont représentés par un tableau qui comporte les différents id des tags.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"succes invite"` si la modification des tags autorisés a réussi
+      - Retourne `"echec invite"` si la modification des tags autorisés a échoué
+      - Retourne `"email incorrect"` si le mail entré est déjà utilisé
+      - Retourne `"Succes"` si la modification a réussi
+    - Exemple d'utilisation :
+
+      ```js
+      $.ajax({
+          type: "POST",
+          url: "back/account/updateAccount.php",
+          data: {email : "no-reply@lesbriquesrouges", champ : "nom", valeur : "Dupond"},
+          success: (res) => console.log(res),
+      });
+      ```
+      
+  - [`deleteAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/deleteAccount.php)
+    - Permet de suspendre un compte utilisateur. Le fichier récupère l'email du compte à suspendre dont le nom de la variable est `"emailSuppr"` ainsi que le mot de passe du compte admin qui supprime le compte dont le nom de la variable est `"mdpCompte"`.
+    - Retourne `"Succes"` en cas de réussite.
+    - Retourne `"echec mdp"` si le mot de passe du compte admin est incorrect.
+  - Exemple d'utilisation :
+
+      ```js
+      $.ajax({
+          type: "POST",
+          url: "back/account/deleteAccount.php",
+          data: {emailSuppr : "no-reply@lesbriquesrouges.fr", mdpCompte : "Azerty123"},
           success: (res) => console.log(res),
       });
       ```

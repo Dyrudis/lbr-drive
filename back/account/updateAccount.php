@@ -17,14 +17,18 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
 }
 
 try{
+    
     //changement du champ tag pour l'invité
     if ($champ == 'tag') {
+
         //requete pour avoir l'id et le role du compte invité à modifier
         $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s", $email);
         $idCompte = $result[0]['IDUtilisateur'];
         $roleCompte = $result[0]['Role'];
+
         //vérification que c'est un invité
         if($roleCompte=='invite'){
+
             //retire tous ses tag de restriction existant
             query("DELETE FROM restreindre WHERE IDUtilisateur = ?", "i", $idCompte);
 
@@ -42,10 +46,12 @@ try{
             echo "Echec invite";
         }
     } else {
+
         //vérification si c'est un mot de passe a modifier afin de le hasher
         if ($champ == 'MotDePasse'){
             $valeur = password_hash($valeur, PASSWORD_DEFAULT);
         } 
+
         //verification si l'email existe déjà
         else if($champ == 'Email'){
             $result = query("SELECT * FROM utilisateur WHERE Email = ?", "s" , $valeur);
@@ -54,6 +60,7 @@ try{
             }
         }
 
+        //requete update du champ
         query("UPDATE utilisateur SET $champ = ? WHERE Email = ?", "ss" ,$valeur, $email);
 
         echo"Succes"; 
