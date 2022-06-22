@@ -60,7 +60,7 @@ On y retrouve deux parties :
     - Supprimer un tag aux vidéos ayant le tag en question.
 
     - Télécharger les fichiers de la sélection.
-    
+
     - Envoyer dans la corbeille toute la sélection.
 
   - Les **Fonctions de tri**, qui permettent l'activation de 4 trieurs spécifiques :
@@ -72,7 +72,7 @@ On y retrouve deux parties :
     - Le tri par *Type de fichier*, (par défaut sur Image / Vidéo), permet par modes l'affichage des Images et/ou Vidéos.
 
     - Le *Type de filtrage par tag*, (par défaut sur Intersection), qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
-    
+
       - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés ( Il faut que soit associé à chaque fichier le tag *a* ET *b* etc... ).
 
       - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tag du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc... ).  
@@ -179,8 +179,19 @@ Une page est allouée à la modificat...
 
 ## Back
 
+- [`database.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/database.php)
+  - Contient les informations de connexion à la base de donnée, ainsi qu'une fonction `query` qui permet d'effectuer des requêtes SQL sécurisées (prepared statement). Ce fichier est donc importé dans la plupart des fichiers du back.
+  - Exemple d'utilisation :
+  
+    ```php
+    $result = query("SELECT * FROM x WHERE y = ?", "i", $var);
+
+    // $result est de la forme [{"a": 0, "b": 1}, {"a": 2, "b": 3}, ...]
+    // Le nombre de lignes renvoyées est donc calculé avec count($result)
+    ```
+
 - Dossier `back/file` :  
-  Ce dossier comporte 8 fichiers qui permettent d'ajouter, de modifier et de supprimer des fichiers sur le drive :
+  Ce dossier comporte 8 fichiers qui permettent d'ajouter, modifier et supprimer des fichiers sur le drive :
   - [`addTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/addTag.php)
     - Ajoute le tag dont l'id est `IDTag` au fichier dont l'id est `IDFichier`.
     - Retourne `"OK"` si l'opération s'est correctement déroulée.
@@ -188,9 +199,9 @@ Une page est allouée à la modificat...
 
       ```js
       $.post({
-        url: "back/file/addTag.php",
-        data: { IDTag: 2, IDFichier: "QnzwFjvw5z" },
-        success: (res) => console.log(res),
+          url: "back/file/addTag.php",
+          data: { IDFichier: "QnzwFjvw5z", IDTag: 2 },
+          success: (res) => console.log(res),
       });
       ```
 
@@ -203,8 +214,137 @@ Une page est allouée à la modificat...
       $.post({
           url: "back/file/deleteFile.php",
           data: { IDFichier: "QnzwFjvw5z" },
-          success: (res) => console.log(res), 
+          success: (res) => console.log(res),
       });
+      ```
+
+  - [`deleteTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/deleteTag.php)
+    - Supprime le tag dont l'id est `IDTag` du fichier dont l'id est `IDFichier`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/deleteTag.php",
+          data: { IDFichier: "QnzwFjvw5z", IDTag: 2 },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`getFiles.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/getFiles.php)
+    - Permet de récupérer la liste des fichiers qui correspondent aux critères de selections envoyés en paramètre :
+      - `user` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui appartiennent à la personne qui fait la requête.
+      - `tags` : un tableau d'id de tags pour trier les fichiers retournés.
+      - `typeTriTag` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui possèdent tous les tags présents dans le tableau `tags` (intersection). Sinon, tous les fichiers qui possèdent au moins l'un des tags présents dans le tableau `tags` seront retournés (union).
+      - `corbeille` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui sont dans la corbeille.
+      - `fileType` : une chaine de caractères qui permet de ne retourner que les fichiers qui sont du type demandé ("image", "video", sinon les deux).
+    - Retourne la liste des fichiers qui correspondent aux critères de selections sous forme de chaine de caractères JSON.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/getFiles.php",
+          data: {
+              user: true,
+              tags: JSON.stringify([2, 6, 7]),
+              typeTriTag: true,
+              corbeille: false,
+              fileType: "image/video",
+          },
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
+  - [`restoreFile.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/restoreFile.php)
+    - Restaure de la corbeille le fichier dont l'id est `IDFichier`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/restoreFile.php",
+          data: { IDFichier: "QnzwFjvw5z" },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`suspendFile.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/suspendFile.php)
+    - Met à la corbeille le fichier dont l'id est `IDFichier`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/suspendFile.php",
+          data: { IDFichier: "QnzwFjvw5z" },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`updateTitle.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/updateTitle.php)
+    - Mofifie le nom du fichier dont l'id est `IDFichier` en `NomFichier`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/updateTitle.php",
+          data: { IDFichier: "QnzwFjvw5z", NomFichier: "Nouveau nom" },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`uploadFile.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/file/uploadFile.php)
+    - Ajoute le chunk (une partie du fichier) envoyé dans le dossier `upload/chunks`. Si tous les chunks ont été envoyés, le fichier est fusionné et déplacé dans le dossier `upload` :
+      - `file` : le chunk du fichier.
+      - `currentChunkNumber` : le numéro du chunk.
+      - `totalChunkNumber` : le nombre total de chunks.
+      - `extension` : l'extension du fichier.
+      - `timestamp` : le timestamp en secondes de la miniature affichée dans la galerie de la vidéo (si c'est une vidéo).
+      - `name` : le nom du fichier.
+      - `duration` : la durée de la vidéo en secondes (si c'est une vidéo).
+      - `tags` : le tableau des tags associés au fichier.
+    - Retourne `"Chunk received"` si le chunk à bien été reçu, ou `"OK"` si tous les chunks ont été fusionnés et le fichier à été correctement ajouté à la galerie.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/file/uploadFile.php",
+          data: {
+              file: chunk,
+              currentChunkNumber: 13,
+              totalChunkNumber: 28,
+              extension: "mp4",
+              timestamp: "24.4",
+              name: "Une super vidéo !",
+              duration: "172",
+              tags: JSON.stringify([2, 6, 7]),
+          },
+          success: (res) => console.log(res),
+      });
+      ```
+
+- ### Dossier `back/log`
+
+  Ce dossier comporte 2 fichiers qui permettent de ajouter et de récupérer les logs du site :
+  - [`getLogs.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/log/getLogs.php)
+    - Retourne un tableau contenant tous les logs du site.
+    - Exemple d'utilisation :
+
+      ```js
+      $.get({
+          url: "back/log/getLogs.php",
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
+  - [`registerLog.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/log/registerLog.php)
+    - Contient une fonction qui ajoute un log dans la base de données. Ce fichier est importé dans la plupart des fichiers back pour permettre de tracker toutes les actions effectuées sur le site.
+    - Exemple d'utilisation :
+
+      ```php
+      include '../log/registerLog.php';
+      registerNewLog($mysqli, $_SESSION['id'], "Ceci est un super log !");
       ```
 
 - Dossier `back/tag` :  
@@ -231,6 +371,80 @@ Une page est allouée à la modificat...
       $.post({
           url: "back/tag/createTag.php",
           data: { name: "Rock", IDCategorie: 3 },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`deleteCategory.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/deleteCategory.php)
+    - Supprime une catégorie dont l'id est `IDCategorie`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/tag/deleteCategory.php",
+          data: { IDCategorie: 3 },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`deleteTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/deleteTag.php)
+    - Supprime un tag dont l'id est `IDTag`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/tag/deleteTag.php",
+          data: { IDTag: 3 },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`getCategories.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/getCategories.php)
+    - Retourne la liste de toutes les catégories existantes.
+    - Exemple d'utilisation :
+
+      ```js
+      $.get({
+          url: "back/tag/getCategories.php",
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
+  - [`getTags.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/getTags.php)
+    - Retourne la liste de tous les tags auxquels à accès l'utilisateur qui fait la requête (par exemple, un invité n'a accès qu'à une partie des tags existants).
+    - Exemple d'utilisation :
+
+      ```js
+      $.get({
+          url: "back/tag/getTags.php",
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
+  - [`updateCategory.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/updateCategory.php)
+    - Modifie le nom (`name`) et la couleur (`color`) de la catégorie dont l'id est `IDCategorie`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/tag/updateCategory.php",
+          data: { IDCategorie: 3, name: "Genre", color: "A48FCD" },
+          success: (res) => console.log(res),
+      });
+      ```
+
+  - [`updateTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/updateTag.php)
+    - Modifie le nom (`name`) et la catégorie (`IDCategorie`) du tag dont l'id est `IDTag`.
+    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Exemple d'utilisation :
+
+      ```js
+      $.post({
+          url: "back/tag/updateTag.php",
+          data: { IDTag: 7, name: "Electro", IDCategorie: 2 },
           success: (res) => console.log(res),
       });
       ```
