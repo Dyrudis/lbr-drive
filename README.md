@@ -27,6 +27,19 @@ Et voilà, c'est prêt ! Il ne vous reste plus qu'à vous rendre sur votre navig
 |Invité|i@i|test|
 |Lecture|l@l|test|
 
+Comme il est possible de le voir ci-dessus : il existe plusieurs "roles".  
+Chacun d'entre eux à ses particularités :  
+  
+- **Administrateur** : Peut tout faire, jusqu'à créer les comptes d'autres utilisateurs, les modifier ou supprimer, voir les logs etc...  
+
+- **Ecriture** : Peut, tout comme un administrateur, uploader des fichiers, modifier tout fichier existant ou le supprimer. Créer des tags et catégories etc...  
+
+- **Lecture** : N'a accès qu'à la galerie et à son compte. Ne peut upload de fichiers, en modifier, supprimer. Il en va de même pour les tags ainsi que les catégories.  
+
+- **Invité** : Est un lecteur qui a les droits d'écriture pour des tags/catégories prédéfinies par un administrateur lors de la création de son compte.
+
+Concernant la création d'un compte, le champ email entré par l'administrateur est utilisé pour que la personne concernée recoive un email contenant son mot de passe temporaire. Il permettra également d'ouvrir directement la page de login du site puis suggérera à ce dernier de changer son mot de passe tout en respectant les normes de solidité pour plus de sécurité.
+
 # Utilisation
 
 ## Parcourir la galerie
@@ -146,13 +159,9 @@ Une fois ceci fait l'utilisateur peut alors modifier ce qu'il souhaite et prépa
 
 Une fois le début de l'upload initié il est possible de suivre l'avancement fichier par fichier de l'upload via une barre de chargement retraçant en direct l'avancée pour chacun d'eux.
 
-## Modifier des fichiers
-
-**TODO** : Compléter cette section
-
 ## Modifier des tags et catégories
 
-**TODO** : Compléter cette section
+Une page est allouée à la modificat...
 
 ## Créer, modifier et supprimer des comptes
 
