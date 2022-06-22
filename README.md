@@ -469,7 +469,7 @@ Il y est également possible de :
       ```
 
 - Dossier `back/account`:
-  Ce dossier comporte 10 fichiers qui permettent de faire des requêtes au serveur du drive :
+  - Ce dossier comporte 10 fichiers qui permettent de faire des requêtes au serveur du drive :
 
   - [`login.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/login.php)
     - Récupère un mail dont le nom de variable est `email` et le mot de passe dont le nom de variable est `motdepasse` afin de se connecter.
