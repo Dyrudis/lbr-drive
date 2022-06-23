@@ -38,7 +38,7 @@ Chacun d'entre eux à ses particularités :
 
 - **Invité** : Est un lecteur qui a les droits d'écriture pour des tags/catégories prédéfinies par un administrateur lors de la création de son compte.
 
-Concernant la création d'un compte, le champ email entré par l'administrateur est utilisé pour que la personne concernée recoive un email contenant son mot de passe temporaire. Il permettra également d'ouvrir directement la page de login du site puis suggérera à ce dernier de changer son mot de passe tout en respectant les normes de solidité pour plus de sécurité.
+Concernant la création d'un compte, le champ email entré par l'administrateur est utilisé pour que la personne concernée reçoive un email contenant son mot de passe temporaire. Il permettra également d'ouvrir directement la page de login du site puis suggérera à ce dernier de changer son mot de passe tout en respectant les normes de solidité pour plus de sécurité.
 
 # Utilisation
 
@@ -51,9 +51,9 @@ On y retrouve deux parties :
 - ### La sidebar d'action et de tri
 
   Située sur la gauche, elle permet plusieurs actions :
-  - La **Sélection multiple** permet, après activation, de sélectionner plusieurs fichiers par un simple clic gauche dans la gallerie.
+  - La **Sélection multiple** permet, après activation, de sélectionner plusieurs fichiers par un simple clic gauche dans la galerie.
 
-    On peut alors effectuer les actions suivante :
+    On peut alors effectuer les actions suivantes :
 
     - Ajouter à la sélection un tag aux vidéos ne l'ayant pas déjà.
 
@@ -69,28 +69,28 @@ On y retrouve deux parties :
 
     - *Corbeille* qui passera l'affichage des fichiers de la galerie à ceux dans la corbeille.
 
-    - Le tri par *Type de fichier*, (par défaut sur Image / Vidéo), permet par modes l'affichage des Images et/ou Vidéos.
+    - Le tri par *Type de fichier*, par défaut sur Image / Vidéo, permet l'affichage des Images et/ou Vidéos.
 
-    - Le *Type de filtrage par tag*, (par défaut sur Intersection), qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
+    - Le *Type de filtrage par tag*, par défaut sur Intersection, qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
 
-      - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés ( Il faut que soit associé à chaque fichier le tag *a* ET *b* etc. ).
+      - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés (Il faut que soit associé à chaque fichier le tag *a* ET *b* etc.).
 
-      - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tag du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc. ).  
+      - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tags du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc.).  
 
   - Le **Tri par tags**, filtrant l'affichage des fichiers selon une sélection de tags appartenant à des catégories :
 
-    Ce mode de tri principal permet à l'utilisateur de ne laisser apparaître que le fichiers en concordance avec son *Type de filtrage par tag* ainsi que sa sélection de tags, eux-mêmes triés par catégories :
+    Ce mode de tri principal permet à l'utilisateur de ne laisser apparaître que les fichiers en concordance avec son *Type de filtrage par tag* ainsi que sa sélection de tags, eux-mêmes triés par catégories :
 
-    Chaque tag appartient à une catégorie créée au préalable. Qu'il s'agisse de la catégorie "Autres" par défaut ou "Edition" si elle est créée, ces catégories contiennent des tags qui, si ils sont sélectionnés, affecteront les fichiers apparant.
+    Chaque tag appartient à une catégorie créée au préalable. Qu'il s'agisse de la catégorie "Autres" par défaut ou "Edition" si elle est créée, ces catégories contiennent des tags qui, s'ils sont sélectionnés, affecteront les fichiers apparents.
 
 - ### La galerie elle-même
 
-Comme vu précedemment, la galerie contient les fichiers qui concordent avec le tri effectué.  
+Comme vu précédemment, la galerie contient les fichiers qui concordent avec le tri effectué.  
 Selon la taille de l'appareil utilisé, le nombre de fichiers visibles ainsi que leurs tailles variera pour le meilleur.  
-Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple menu d'affichage puisqu'elle permet bien des actions :
+Ça n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple menu d'affichage puisqu'elle permet bien des actions :
 
 - **Affichage en plein écran** :  
-  Par un simple clique gauche, qu'il s'agisse d'une image ou d'une vidéo, celle-ci passera en plein écran.  
+  Par un simple clic  gauche, qu'il s'agisse d'une image ou d'une vidéo, celle-ci passera en plein écran.  
 
 - **Affichage des tags et propriétés du fichier** :  
 
@@ -109,7 +109,7 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
   - Sa durée : s'il s'agit d'une vidéo seulement, sa durée en minute.  
 
 - **Action sur les fichiers** :  
-  Lors d'un clique droit sur un fichier, son menu déroulant se développe de manière à laisser apparaitre quelques options :  
+  Lors d'un clic droit sur un fichier, son menu déroulant se développe de manière à laisser apparaitre quelques options :  
 
   - Supprimer des tags :  
     A côté de chaque tag apparaitra une petite croix sur laquelle il est possible de cliquer pour supprimer du fichier le tag visé. Il n'est cependant pas possible de supprimer *Sans tag* qui apparait dans le cas où tous les tags sont supprimés ou si le fichier n'en avait pas au préalable.
@@ -121,7 +121,7 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
     En cliquant sur le symbole de téléchargement, le fichier est téléchargé sur votre appareil.  
 
   - Envoyer le fichier dans la corbeille :  
-    L'icone de la poubelle déplacera, une fois la demande de confirmation validée, le fichier correspondant dans la corbeille. Après quoi ce dernier sera définitivement supprimé au bout de 30 jours.  
+    L'icône de la poubelle déplacera, une fois la demande de confirmation validée, le fichier correspondant dans la corbeille. Après quoi ce dernier sera définitivement supprimé au bout de 30 jours.  
 
   - Ajouter des tags :  
     Le tag spécial "+ Tag" permet d'ouvrir un menu déroulant via lequel il est possible d'ajouter au fichier les tags souhaités.  
@@ -134,13 +134,13 @@ Ca n'est cependant pas tout, la galerie est en réalité bien plus qu'un simple 
 
   - Voir pour chaque fichier (toujours en mettant la souris dessus) le temps restant avant suppression automatique.
 
-  - Restaurer le fichier d'un simple clique sur l'icone correspondante.
+  - Restaurer le fichier d'un simple clic sur l'icône correspondante.
 
   - Supprimer manuellement un fichier de manière définitive.
 
 ## Ajouter vos fichiers
 
-Le menu d'upload d'images et vidéos voit sa propore page lui être allouée.  
+Le menu d'upload d'images et vidéos voit sa propre page lui être allouée.  
 En effet, accessible depuis le header si l'utilisateur en a le droit, il est possible de cliquer sur l'onglet "Ajouter un fichier".  
 Une fois chose faite, l'utilisateur arrive sur une page presque vierge où, de manière intuitive, lui est décrit la marche à suivre afin de mettre en ligne les fichiers souhaités.  
 Pour ce faire il peut :  
@@ -155,14 +155,14 @@ Une fois ceci fait l'utilisateur peut alors modifier ce qu'il souhaite et prépa
 
 - Ajouter des tags au fichier.
 
-- Sélectionner une miniature s'il s'agit d'une vidéo en positionnant cette derniere au moment souhaité.
+- Sélectionner une miniature s'il s'agit d'une vidéo en positionnant cette dernière au moment souhaité.
 
 Une fois le début de l'upload initié il est possible de suivre l'avancement fichier par fichier de l'upload via une barre de chargement retraçant en direct l'avancée pour chacun d'eux.
 
 ## Modifier des tags et catégories
 
 Une page complète est allouée à la modification des tags et catégories.  
-Elle est accessible depuis le menu déroulant en bas à droite de la galerie si le rôle du compte utilisateur le permet.  
+Elle est accessible depuis le menu déroulant en bas à gauche de la galerie si le rôle du compte utilisateur le permet.  
 Une fois ouverte celle-ci permet de visualiser toutes les catégories existantes ainsi que tous les tags et les modifier à sa guise.
 
 À noter : il est impossible d'effectuer une modification qui impliquerait qu'une catégorie devienne identique à un autre ou encore qu'un tag d'une catégorie devienne identique à un autre tag de la même catégorie.
@@ -188,7 +188,7 @@ Sur cette dernière sont visibles les informations relatives à son compte tel q
   
 Il y est également possible de :  
 
-- **Modifier sa photo de profil** : D'un simple clique sur cette dernière.  
+- **Modifier sa photo de profil** : D'un simple clic sur cette dernière.  
 - **Modifier son mot de passe** : Via le bouton qui ouvre un formulaire avec aide pour effectuer le changement.  
 - **Changer le thème** : Via le bouton qui alterne le thème de l'utilisateur (Clair ou Sombre) avec souvenir des préférences de chacun.
 
