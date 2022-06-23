@@ -76,10 +76,7 @@ for ($i = 1; $i <= $totalChunkNumber; $i++) {
 // Creation d'une image de preview sans changer le format
 if ($type == 'image') {
     $image = imagecreatefromjpeg($filePath . $id . "." . $extension);
-    $width = imagesx($image);
-    $height = imagesy($image);
-    $ratio = $width / $height;
-    $image = imagescale($image, 400 * $ratio, 400);
+    $image = imagescale($image, 600);
     imagejpeg($image, $filePath . $id . "-preview.jpg");
 }
 
