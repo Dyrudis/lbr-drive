@@ -19,6 +19,9 @@ upload = [
     },*/
 ];
 
+let totalSize = 0;
+let totalSizeUploaded = 0;
+
 let dropArea = $("#drop-area"),
     dropContainer = $(".drop"),
     center = dropContainer.find(".center > div"),
@@ -333,10 +336,13 @@ $("#uploadButton").on("click", () => {
             dom.find(".tags").append(noTag);
         }
     });
+    totalSize = upload.reduce((acc, e) => acc + e.file.size, 0);
+    $("#totalProgressBar").css("opacity", "1");
     uploadFiles();
 
     // Hide the button
     $("#uploadButton").fadeOut();
+    $("#uploadButton").off("click");
 });
 
 async function uploadFiles() {
@@ -395,6 +401,7 @@ async function uploadFiles() {
                 // Send next chunk
                 blob = file.slice(uploaded, uploaded + chunkSize);
                 sendChunk();
+                totalSizeUploaded += chunkSize;
             } else {
                 // Upload finished
                 uploaded = total;
@@ -402,8 +409,15 @@ async function uploadFiles() {
 
                 // Upload the next file
                 uploadFiles();
+                totalSizeUploaded += total % chunkSize;
             }
+
             dom.find(".progressBar .progress").css("width", (uploaded / total) * 100 + "%");
+            $("#totalProgress").css("width", (totalSizeUploaded / totalSize) * 100 + "%");
+
+            if (totalSizeUploaded == totalSize) {
+                $("#totalProgressBar").css("opacity", "0");
+            }
         };
     }
 }

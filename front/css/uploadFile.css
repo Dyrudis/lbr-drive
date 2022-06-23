@@ -427,7 +427,22 @@
     width: 0;
     background: var(--primary);
     border-radius: 40px;
-    transition: all 0.5s ease;
+    transition: all 0.4s ease;
+}
+#totalProgressBar {
+    opacity: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    height: 25px;
+    border-radius: 50px;
+    transition: opacity 0.5s ease;
+}
+#totalProgress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: 50px;
+    transition: all 0.4s ease;
 }
 
 @-webkit-keyframes move {
