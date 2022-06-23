@@ -454,7 +454,7 @@ Il y est également possible de :
           success: (res) => console.log(JSON.parse(res)),
       });
       ```
-          
+
   - [`updateTag.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/tag/updateTag.php)
     - Modifie le nom (`name`) et la catégorie (`IDCategorie`) du tag dont l'id est `IDTag`.
     - Retourne `"OK"` si l'opération s'est correctement déroulée.
@@ -469,8 +469,8 @@ Il y est également possible de :
       ```
 
 - ### Dossier `back/account`
-  - Ce dossier comporte 10 fichiers qui permettent de faire des requêtes au serveur du drive :
 
+  Ce dossier comporte 10 fichiers qui permettent de faire des requêtes au serveur du drive :
   - [`login.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/login.php)
     - Récupère un mail dont le nom de variable est `email` et le mot de passe dont le nom de variable est `motdepasse` afin de se connecter.
     - Le fichier peut retourner plusieurs réponse possible :
@@ -486,8 +486,8 @@ Il y est également possible de :
           data: { email: "no-reply@lesbriquesrouges.fr", motdepasse: "Azerty123" },
           success: (data) => console.log(data),
         });
-
         ```
+
   - [`logOut.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/logOut.php)
     - Lorsque le fichier est exécuté, les variables de session `"id"` et `"role"` sont détruites.
     - Puis relocalise l'utilisateur sur la page login.
@@ -524,6 +524,7 @@ Il y est également possible de :
             success: (data) => console.log(data),
           });
       ```
+
   - [`updatePassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updatePassword.php)
     - Permet de modifier le mot de passe de l'utilisateur. Le fichier récupère l'ancien mot de passe dont le nom de la variable est `"ancienMdp"` et le nouveau mot de passe dont le nom de la variable est `"nouveauMdp"`.
     - Retourne `"Succes"` en cas de modification.
@@ -538,7 +539,6 @@ Il y est également possible de :
             success: (data) => console.log(data),
           });
       ```
-
 
   - [`updateDarkMode.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateDarkMode.php)
     - Lorsque le fichier est exécuté, la variable de session `"DarkMode"` change de valeur (soit `true` soit `false`).
@@ -555,7 +555,7 @@ Il y est également possible de :
           success: (res) => console.log(res),
       });
       ```
-      
+
   - [`signUp.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/signUp.php)
     - Crée un utilisateur dont le nom est `"nom"`, prenom est `"prenom"`, email est `"email"`, description est `"description"`, role est `"role"`. Si le compte créé est un compte invité alors un tableau de tags autorisés lui est attribué dont le nom de variable est `"tags"` et si la création de compte est créé sans mot de passe temporaire alors le mot de passe est récupéré dont le nom est `"motDePasse"`.
     - Le fichier peut retourner plusieurs réponse possible :
@@ -590,7 +590,7 @@ Il y est également possible de :
           success: (res) => console.log(res),
       });
       ```
-      
+
   - [`deleteAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/deleteAccount.php)
     - Permet de suspendre un compte utilisateur. Le fichier récupère l'email du compte à suspendre dont le nom de la variable est `"emailSuppr"` ainsi que le mot de passe du compte admin qui supprime le compte dont le nom de la variable est `"mdpCompte"`.
     - Retourne `"Succes"` en cas de réussite.
@@ -605,7 +605,3 @@ Il y est également possible de :
           success: (res) => console.log(res),
       });
       ```
-
-## Front
-
-**TODO** : Compléter cette section
