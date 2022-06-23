@@ -60,8 +60,7 @@ function displayFile(file) {
         preview.on("loadeddata", masonry);
         preview[0].currentTime = file.Miniature;
         let source = $("<source />")
-            .attr("src", path)
-            .attr("type", file.Type + "/" + file.Extension);
+            .attr("src", path);
         preview.append(source);
     }
     preview.addClass("file-preview");

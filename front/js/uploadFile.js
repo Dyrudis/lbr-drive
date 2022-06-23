@@ -131,7 +131,7 @@ function addFile(file) {
         let infoHover = $("<p>").text("Choisissez un endroit de la vidéo qui sera utilisé pour la miniature dans la galerie.").addClass("infoHover");
         li.append(info);
         li.append(infoHover);
-        let source = $("<source />").attr("src", URL.createObjectURL(file)).attr("type", file.type);
+        let source = $("<source />").attr("src", URL.createObjectURL(file));
         preview.append(source);
         preview.hover(function toggleControls() {
             if (this.hasAttribute("controls")) {
