@@ -170,7 +170,7 @@ Une fois ouverte celle-ci permet de visualiser toutes les catégories existantes
 ## Créer, modifier et supprimer des comptes
 
 Les administrateurs, depuis le menu déroulant de la galerie, peuvent également être redirigés vers la page de gestion des comptes.  
-Cette dernière permet, à l'instar des tags et catégories, de modifier et supprimer (ce qui en réalité met en quarantaine) des comptes utilisateurs mais également de les créer.  
+Cette dernière permet, à l'instar des tags et catégories, de modifier et supprimer (ce qui en réalité suspend) des comptes utilisateurs mais également de les créer.  
 Il semble pertinent de mentionner qu'il faille préciser pour les comptes invités les tags autorisés d'accès.  
 De la même façon, lors d'une modification d'un compte invité il est possible de redéfinir ces tags.
 
