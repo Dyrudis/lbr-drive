@@ -605,3 +605,9 @@ Il y est également possible de :
           success: (res) => console.log(res),
       });
       ```
+- ### Dossier `back/mail`
+  Dans ce dossier, on retrouve les différents mails utilisés.
+  -  [`mailer.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/mail/mailer.php)
+     - Ce mail est utilisé lors d'une demande de réinitialisation de mot de passe.
+  - [`mailerInscription.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/mail/mailerInscription.php)
+    - Ce mail est utilisé lors d'une création d'un compte avec un mot de passe temporaire.
