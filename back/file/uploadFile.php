@@ -109,4 +109,12 @@ try {
 include '../log/registerLog.php';
 registerNewLog($mysqli, $_SESSION['id'], "Upload de fichier : " . $name);
 
+// S'il reste des chunks qui datent de plus de 24h, on les supprime
+$files = glob($chunksPath . '*');
+foreach ($files as $file) {
+    if (filemtime($file) < time() - 60 * 60 * 24) {
+        unlink($file);
+    }
+}
+
 die("OK");
