@@ -49,18 +49,18 @@ function displayFile(file) {
     delete file.CouleurTags;
 
     let path = "./upload/" + file.IDFichier + "." + file.Extension;
+    let previewPath = "./upload/" + file.IDFichier + "-preview." + file.Extension;
 
     let container = $("<div>").addClass("file-container");
     let preview;
     if (file.Type == "image") {
-        preview = $("<img />").attr("src", path);
+        preview = $("<img />").attr("src", previewPath).attr("data-path", path);
         preview.on("load", masonry);
     } else {
         preview = $("<video />");
         preview.on("loadeddata", masonry);
         preview[0].currentTime = file.Miniature;
-        let source = $("<source />")
-            .attr("src", path);
+        let source = $("<source />").attr("src", path).attr("data-path", path);
         preview.append(source);
     }
     preview.addClass("file-preview");
@@ -319,6 +319,7 @@ function displayInFullscreen(event) {
     if (multiselection) return;
 
     let preview = event.currentTarget.cloneNode(true); //.children[0].cloneNode(true);
+
     // Select "#fullscreen-container" or create it if it doesn't exist
     let container = $("#fullscreen-container");
     if (container.length == 0) {
@@ -329,6 +330,9 @@ function displayInFullscreen(event) {
     if (preview.tagName == "VIDEO") {
         preview.setAttribute("controls", "controls");
         preview.style.backgroundColor = "black";
+        preview.children[0].src = preview.children[0].dataset.path;
+    } else {
+        preview.src = preview.dataset.path;
     }
     container.append(preview);
     preview.style.width = "auto";

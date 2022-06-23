@@ -73,6 +73,16 @@ for ($i = 1; $i <= $totalChunkNumber; $i++) {
     unlink($chunksPath . $id . '-' . $i . "." . $extension);
 }
 
+// Creation d'une image de preview sans changer le format
+if ($type == 'image') {
+    $image = imagecreatefromjpeg($filePath . $id . "." . $extension);
+    $width = imagesx($image);
+    $height = imagesy($image);
+    $ratio = $width / $height;
+    $image = imagescale($image, 400 * $ratio, 400);
+    imagejpeg($image, $filePath . $id . "-preview.jpg");
+}
+
 /*--------------------------------------------*\
 |   Ajout du fichier dans la base de données   |
 \*--------------------------------------------*/
