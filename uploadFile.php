@@ -15,7 +15,7 @@ if ($role == 'lecture') {
 <!DOCTYPE html>
 
 <head>
-    <title>Mon compte</title>
+    <title>LBR Drive - Upload</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/tag.css" />

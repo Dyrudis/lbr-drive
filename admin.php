@@ -16,7 +16,7 @@ if ($role != 'admin') {
 <html>
 
 <head>
-    <title>Gestion des comptes</title>
+    <title>LBR Drive - Gestion des comptes</title>
     <link rel="stylesheet" href="front/css/alert.css" />
     <link rel="stylesheet" href="front/css/admin.css" />
     <link rel="icon" href="front/images/iconelbr.ico"/>

@@ -23,7 +23,7 @@ $role = $result[0]["Role"];
 <html lang="fr">
 
 <head>
-    <title>Mon compte</title>
+    <title>LBR Drive - Mon compte</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="front/css/alert.css" />
