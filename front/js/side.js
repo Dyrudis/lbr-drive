@@ -9,19 +9,22 @@
     $.ajax({
         type: "POST",
         url: "back/account/getAccounts.php",
-        data: {filter : true},
+        data: { filter: true },
         success: (data) => {
             allAccount = JSON.parse(data);
             let selectAccount = $("#select-utilisateur");
-            allAccount.forEach(info =>{
-                selectAccount.append($("<option />").attr("value",info.IDUtilisateur).text(info.Nom + " " + info.Prenom))
-            })
-            selectAccount.change(() =>{
+            allAccount.forEach((info) => {
+                selectAccount.append(
+                    $("<option />")
+                        .attr("value", info.IDUtilisateur)
+                        .text(info.Nom + " " + info.Prenom)
+                );
+            });
+            selectAccount.change(() => {
                 myFilesToggler.classList.remove("active");
                 userToggle = false;
                 sendFormData();
-            })
-            
+            });
         },
     });
 
@@ -169,6 +172,12 @@
             // Cache la selection multiple
             $("#selection-multiple-toggle").prev().hide();
             $("#selection-multiple-toggle").hide();
+            $("#selection-multiple").hide();
+            multiselection = false;
+            selectedFiles = [];
+            updateSize();
+            selectionMultipleToggler.removeClass("active").text("Désactivé");
+            $("#selection-multiple").css("display", "none");
         }
         //Si recherche par fichiers corbeille actif -> désactiver
         else {
@@ -190,13 +199,11 @@
         if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
 
         //Defini si la recherche concerne seulement les fichiers possédés
-        if(selectUser==""){
+        if (selectUser == "") {
             if (userToggle) formData.append("user", -1);
-        }
-        else{
+        } else {
             formData.append("user", selectUser);
         }
-
 
         //Defini le type de recherche de tags
         if (tagFilter == "Union") formData.append("typeTriTag", "Union");
