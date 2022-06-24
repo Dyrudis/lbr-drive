@@ -1,29 +1,3 @@
-:root {
-    --colorBackground: ;
-    --colorText: ;
-    --colorBox: ;
-    --colorDrop: ;
-    --colorFormAdmin: ;
-    --colorBodyAdmin: ;
-    --colorH2Admin: ;
-    --colorLabelAdmin: ;
-    --colorH3Admin: ;
-    --boxShadowAdmin: ;
-    --colorH2Tags: ;
-    --colorH3Tags: ;
-    --colorContainer: ;
-    --boxShadowTags: ;
-    --colorPreviewTags: ;
-    --inputTags: ;
-    --colorH1Logs: ;
-    --colorH3Logs: ;
-    --colorLogs: ;
-    --colorPLogs: ;
-    --colorThemeButton: ;
-    --colorThemeFont: ;
-
-}
-
 
 *,
 html,

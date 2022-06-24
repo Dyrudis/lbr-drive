@@ -487,6 +487,8 @@ selectionMultipleToggler.click(function () {
         $(".file-container").each(function () {
             unselectFile($(this));
         });
+        selectedFiles=[];
+        updateSize();
     } else {
         selectionMultipleToggler.addClass("active").text("Activé");
         $("#selection-multiple").css("display", "block");
@@ -497,7 +499,7 @@ selectionMultipleToggler.click(function () {
 function toggleSelectFile(container, file) {
     if (multiselection == false) return;
 
-    if (container.hasClass("mutliselected")) {
+    if (container.hasClass("multiSelected")) {
         unselectFile(container, file);
     } else {
         selectFile(container, file);
@@ -506,12 +508,12 @@ function toggleSelectFile(container, file) {
 }
 
 function selectFile(container, file) {
-    container.addClass("mutliselected");
+    container.addClass("multiSelected");
     selectedFiles.push(file);
 }
 
 function unselectFile(container, file) {
-    container.removeClass("mutliselected");
+    container.removeClass("multiSelected");
     selectedFiles.splice(selectedFiles.indexOf(file), 1);
 }
 

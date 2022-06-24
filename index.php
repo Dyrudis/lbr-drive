@@ -46,7 +46,7 @@ if (!isset($_SESSION['darkMode'])) {
                         <div class="actionMultiple" onclick="downloadAll()"><img src="front/images/download.png" class="undraggable pointerOnHover"></div>
                     <?php
                     } else { ?>
-                        <select id="selection-multiple-select">
+                        <select class='pre-tri' id="selection-multiple-select">
                             <option value="" selected disabled>Tag</option>
                         </select>
                         <br>
