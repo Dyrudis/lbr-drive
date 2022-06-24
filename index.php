@@ -107,7 +107,6 @@ if (!isset($_SESSION['darkMode'])) {
                         <?php } ?>
                     </div>
                     <?php if ($role == "admin") {
-                        include("back/database.php");
                         function formatBytes($bytes, $precision = 2)
                         {
                             $units = array('Octets', 'Ko', 'Mo', 'Go', 'To');
@@ -119,15 +118,20 @@ if (!isset($_SESSION['darkMode'])) {
                             return round($bytes, $precision) . ' ' . $units[$pow];
                         }
 
-                        $espaceDisk = formatBytes(disk_free_space("/"), 0);
-
-                        try {
-                            $result = query("SELECT SUM(Taille) FROM fichier");
-                        } catch (mysqli_sql_exception $e) {
-                            die('Erreur : ' . $e->getMessage() . " dans " . $e->getFile() . ":" . $e->getLine());
+                        function GetDirectorySize($path){
+                            $bytestotal = 0;
+                            $path = realpath($path);
+                            if($path!==false && $path!='' && file_exists($path)){
+                                foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object){
+                                    $bytestotal += $object->getSize();
+                                }
+                            }
+                            return $bytestotal;
                         }
 
-                        $espaceUpload = formatBytes($result[0]['SUM(Taille)'], 0);
+                        $espaceDisk = formatBytes(disk_free_space("/"), 0);
+                        $espaceUpload = formatBytes(GetDirectorySize("upload/"), 0);
+
                         echo "<p id='storage'><img src='front/images/cloud.png' >Espace utilisé : " . $espaceUpload . " sur " . $espaceDisk .  " </p>";
                     } ?>
                 </div>
