@@ -1,4 +1,5 @@
-var mdpCorrect = 0;
+var mdpCorrect = false;
+var emailCorrect = false;
 var inputMdp = document.getElementById("mdpCreationCompte");
 var selectTag = $("#boutonAddTag");
 var allTag = [];
@@ -112,27 +113,38 @@ function checkMdpTemporaire() {
         inputMdp.style.borderColor = "";
         inputMdp.required = false;
         document.getElementById("labelmdpInput").style.visibility = "hidden";
-        mdpCorrect = 1;
+        mdpCorrect = true;
     } else {
         inputMdp.disabled = false;
         inputMdp.required = true;
         inputMdp.placeholder = "";
-        mdpCorrect = 0;
+        mdpCorrect = false;
     }
-    console.log(mdpCorrect);
 }
 
 function checkMdp() {
-    const val = inputMdp.value;
+    let val = inputMdp.value;
     if (val.match(/[0-9]/g) && val.match(/[A-Z]/g) && val.match(/[a-z]/g) && val.match(/[^a-zA-Z\d]/g)) {
         document.getElementById("labelmdpInput").style.visibility = "hidden";
         inputMdp.style.borderColor = "";
-        mdpCorrect = 1;
+        mdpCorrect = true;
     } else {
         document.getElementById("labelmdpInput").style.visibility = "visible";
         inputMdp.style.borderColor = "red";
-        mdpCorrect = 0;
+        mdpCorrect = false;
     }
+}
+
+function checkEmail(){
+    let InputEmail = document.getElementById("emailCreationCompte").value;
+    //RFC2822
+    if (InputEmail.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)) {
+        emailCorrect = true;
+    }
+    else{
+        emailCorrect= false
+    }
+
 }
 
 function tagVisible() {
@@ -237,7 +249,7 @@ function submitModifCompte() {
 }
 
 function submitInfoCompte() {
-    if (document.getElementById("emailCreationCompte").value && document.getElementById("prenomCreationCompte").value && document.getElementById("nomCreationCompte").value && mdpCorrect == "1" && document.getElementById("descriptionCreationCompte").value && document.getElementById("selectRole").value) {
+    if (emailCorrect && document.getElementById("prenomCreationCompte").value && document.getElementById("nomCreationCompte").value && mdpCorrect && document.getElementById("descriptionCreationCompte").value && document.getElementById("selectRole").value) {
         $.ajax({
             type: "POST",
             url: "back/account/signUp.php",

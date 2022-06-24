@@ -60,7 +60,7 @@ if ($role != 'admin') {
             </div>
 
             <label class="emailfix">Email</label>
-            <input class="inputCreationCompte" id="emailCreationCompte" type="email" name="email" required>
+            <input class="inputCreationCompte" id="emailCreationCompte" type="email" name="email" onchange="checkEmail()" required>
 
             <label>Description</label>
             <input class="inputCreationCompte" id="descriptionCreationCompte" type="text" name="description" required>
