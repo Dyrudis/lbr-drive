@@ -296,7 +296,7 @@ p {
                                 <tbody>
                                   <tr>
                                     <td style='width:235px;'>
-                                      <img alt='' height='auto' src='./images/informations.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
+                                      <img alt='' height='auto' src='./images/informations.png' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
                                     </td>
                                   </tr>
                                 </tbody>
@@ -316,7 +316,7 @@ p {
                                 <tbody>
                                   <tr>
                                     <td style='width:235px;'>
-                                      <img alt='' height='auto' src='./images/billeterie.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
+                                      <img alt='' height='auto' src='./images/billetterie.png' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
                                     </td>
                                   </tr>
                                 </tbody>

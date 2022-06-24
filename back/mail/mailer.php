@@ -460,7 +460,7 @@ $mailer ="
                                                         </tr>
                                                         <tr>
                                                           <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                                            <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:16px;text-align:center;color:#445566;'>Vous recevez cette publicité par e-mail parce que vous vous êtes inscrit auprès de Les briques rouges et a accepté de recevoir des e-mails de notre part concernant les nouvelles fonctionnalités, les événements et les offres spéciales.</div>
+                                                            <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:16px;text-align:center;color:#445566;'>Vous recevez cet e-mail après que votre demande de réinitialisation de mot de passe au drive des Briques Rouges ait été prise en compte.</div>
                                                           </td>
                                                         </tr>
                                                         <tr>
