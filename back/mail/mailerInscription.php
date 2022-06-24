@@ -191,7 +191,7 @@ p {
               <tbody>
                 <tr>
                   <td align='center' style='font-size:0px;padding:10px 25px;padding-top:0;word-break:break-word;'>
-                    <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:bold;letter-spacing:1px;line-height:20px;text-align:center;text-transform:uppercase;color:#ffffff;'>UN FESTIVAL ORGANISÉ PAR DES ÉTUDIANTS DE L’ÉCOLE : <br /> Junia HEI-ISEN-ISA <br />
+                    <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:bold;letter-spacing:1px;line-height:20px;text-align:center;text-transform:uppercase;color:#ffffff;'>DES FESTIVALS ORGANISÉS PAR DES ÉTUDIANTS DES ÉCOLES JUNIA : <br /> HEI-ISEN-ISA <br />
                       <br />
                     </div>
                   </td>
@@ -263,12 +263,12 @@ p {
                           </tr>
                           <tr>
                             <td align='left' style='font-size:0px;padding:10px 25px;padding-top:30px;word-break:break-word;'>
-                              <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#637381;'>Vous pouvez visiter notre <a class='text-link' href='https://www.lesbriquesrouges.fr/'>site officiel</a> pour plus d'information et vous tenir au courant des différentes dates pour les prochains festivals.</div>
+                              <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#637381;'>Vous pouvez visiter notre <a class='text-link' href='https://www.lesbriquesrouges.fr/'>site officiel</a> pour plus d'informations et vous tenir au courant des différentes dates des prochains festivals.</div>
                             </td>
                           </tr>
                           <tr>
                             <td align='left' style='font-size:0px;padding:10px 25px;padding-bottom:0;word-break:break-word;'>
-                              <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#637381;'>Merci de votre confiance ainsi que votre participation.</div>
+                              <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#637381;'>Merci pour votre confiance ainsi que de votre participation.</div>
                             </td>
                           </tr>
                         </tbody>
@@ -296,7 +296,7 @@ p {
                                 <tbody>
                                   <tr>
                                     <td style='width:235px;'>
-                                      <img alt='' height='auto' src='https://www.lesbriquesrouges.fr/informations.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
+                                      <img alt='' height='auto' src='./images/informations.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
                                     </td>
                                   </tr>
                                 </tbody>
@@ -316,7 +316,7 @@ p {
                                 <tbody>
                                   <tr>
                                     <td style='width:235px;'>
-                                      <img alt='' height='auto' src='https://www.lesbriquesrouges.fr/billetterie.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
+                                      <img alt='' height='auto' src='./images/billeterie.jpg' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='235' />
                                     </td>
                                   </tr>
                                 </tbody>
@@ -386,7 +386,7 @@ p {
                                                   <tbody>
                                                     <tr>
                                                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                                        <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;font-weight:bold;line-height:1;text-align:center;color:#445566;'>suivez nous sur nos différents réseaux</div>
+                                                        <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;font-weight:bold;line-height:1;text-align:center;color:#445566;'>Suivez nous sur nos différents réseaux</div>
                                                       </td>
                                                     </tr>
                                                     <tr>
@@ -460,7 +460,7 @@ p {
                                                     </tr>
                                                     <tr>
                                                       <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                                        <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:16px;text-align:center;color:#445566;'>Vous recevez cette publicité par e-mail parce que vous vous êtes inscrit auprès de Les briques rouges et a accepté de recevoir des e-mails de notre part concernant les nouvelles fonctionnalités, les événements et les offres spéciales.</div>
+                                                        <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:16px;text-align:center;color:#445566;'>Vous recevez cet e-mail après que votre demande d'accès au drive des Briques Rouges ait été prise en compte.</div>
                                                       </td>
                                                     </tr>
                                                     <tr>
