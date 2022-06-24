@@ -75,7 +75,21 @@ for ($i = 1; $i <= $totalChunkNumber; $i++) {
 
 // Creation d'une image de preview sans changer le format
 if ($type == 'image') {
-    $image = imagecreatefromjpeg($filePath . $id . "." . $extension);
+    $image;
+    switch ($extension) {
+        case 'jpeg':
+            $image = imagecreatefromjpeg($filePath . $id . "." . $extension);
+            break;
+        case 'jpg':
+            $image = imagecreatefromjpeg($filePath . $id . "." . $extension);
+            break;
+        case 'png':
+            $image = imagecreatefrompng($filePath . $id . "." . $extension);
+            break;
+        case 'gif':
+            $image = imagecreatefromgif($filePath . $id . "." . $extension);
+            break;
+    }
     $image = imagescale($image, 600);
     imagejpeg($image, $filePath . $id . "-preview.jpg");
 }

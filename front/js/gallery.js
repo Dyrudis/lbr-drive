@@ -49,7 +49,7 @@ function displayFile(file) {
     delete file.CouleurTags;
 
     let path = "./upload/" + file.IDFichier + "." + file.Extension;
-    let previewPath = "./upload/" + file.IDFichier + "-preview." + file.Extension;
+    let previewPath = "./upload/" + file.IDFichier + "-preview.jpg";
 
     let container = $("<div>").addClass("file-container");
     let preview;
