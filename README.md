@@ -322,6 +322,7 @@ Il y est également possible de :
       - `name` : le nom du fichier.
       - `duration` : la durée de la vidéo en secondes (si c'est une vidéo).
       - `tags` : le tableau des tags associés au fichier.
+      - `id` : une ID unique qui sera attribuée au fichier.
     - Retourne `"Chunk received"` si le chunk à bien été reçu, ou `"OK"` si tous les chunks ont été fusionnés et le fichier à été correctement ajouté à la galerie.
     - Exemple d'utilisation :
 
@@ -337,6 +338,7 @@ Il y est également possible de :
               name: "Une super vidéo !",
               duration: "172",
               tags: JSON.stringify([2, 6, 7]),
+              id: makeID(),
           },
           success: (res) => console.log(res),
       });
@@ -477,7 +479,7 @@ Il y est également possible de :
       - Retourne `"firstConnect"` si c'est la première connexion du compte ou après une demande de nouveau mot de passe.
       - Retourne `"connect"` si le compte est actif.
       - Retourne `"suspendu"` si le compte est suspendu.
-      - Exemple d'utilisation :
+    - Exemple d'utilisation :
 
         ```js
         $.ajax({
@@ -494,8 +496,9 @@ Il y est également possible de :
 
   - [`setPassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/setPassword.php)
     - Permet de set un mot de passe dont le nom de variable est `nouveauMdp` d'un utilisateur connecté.
-    - Retourne `"Succes"` en cas de modification.
-    - Retourne `"Echec"`en cas d'échec.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"Succes"` en cas de modification.
+      - Retourne `"Echec"`en cas d'échec.
     - Exemple d'utilisation :
 
       ```js
@@ -517,41 +520,53 @@ Il y est également possible de :
     - Exemple d'utilisation :
 
       ```js
-          $.ajax({
-            type: "POST",
-            url: "back/account/resetPassword.php",
-            data: { email: "no-reply@lesbriquesrouges" },
-            success: (data) => console.log(data),
-          });
+      $.ajax({
+          type: "POST",
+          url: "back/account/resetPassword.php",
+          data: { email: "no-reply@lesbriquesrouges" },
+          success: (data) => console.log(data),
+      });
       ```
 
   - [`updatePassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updatePassword.php)
     - Permet de modifier le mot de passe de l'utilisateur. Le fichier récupère l'ancien mot de passe dont le nom de la variable est `"ancienMdp"` et le nouveau mot de passe dont le nom de la variable est `"nouveauMdp"`.
-    - Retourne `"Succes"` en cas de modification.
-    - Retourne `"Echec"`en cas d'échec.
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"Succes"` en cas de modification.
+      - Retourne `"Echec"`en cas d'échec.
     - Exemple d'utilisation :
 
       ```js
-          $.ajax({
-            type: "POST",
-            url: "back/account/updatePassword.php",
-            data: { ancienMdp : "motDePasse", nouveauMdp: "Azerty123" },
-            success: (data) => console.log(data),
-          });
+      $.ajax({
+          type: "POST",
+          url: "back/account/updatePassword.php",
+          data: { ancienMdp : "motDePasse", nouveauMdp: "Azerty123" },
+          success: (data) => console.log(data),
+      });
       ```
 
   - [`updateDarkMode.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateDarkMode.php)
     - Lorsque le fichier est exécuté, la variable de session `"DarkMode"` change de valeur (soit `true` soit `false`).
 
   - [`updateAvatar.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateAvatar.php)
-    - Permet de modifier la photo de profil d'un utilisateur connecté.
-    - Retourne `"OK"` si l'opération s'est correctement déroulée.
+    - Ajoute le chunk (une partie de l'avatar) envoyé dans le dossier `avatars/chunks`. Si tous les chunks ont été envoyés, l'avatar est fusionné et déplacé dans le dossier `avatars` :
+      - `chunk` : le chunk du fichier.
+      - `currentChunkNumber` : le numéro du chunk.
+      - `totalChunkNumber` : le nombre total de chunks.
+      - `extension` : l'extension du fichier.
+      - `id` : une ID unique utilisée pour regrouper les chunks.
+    - Retourne `"Chunk received"` si le chunk à bien été reçu, ou `"OK"` si tous les chunks ont été fusionnés et le fichier à été correctement ajouté à la galerie.
     - Exemple d'utilisation :
 
       ```js
       $.post({
           url: "back/account/updateAvatar.php",
-          data: { },
+          data: {
+              chunk: chunk,
+              currentChunkNumber: 13,
+              totalChunkNumber: 28,
+              extension: "png",
+              id: makeID(),
+          },
           success: (res) => console.log(res),
       });
       ```
@@ -568,7 +583,14 @@ Il y est également possible de :
       $.ajax({
           type: "POST",
           url: "back/account/signUp.php",
-          data: {nom : "Dupond", prenom : "François", email : "françois.dupond@lesbriquesrouges.fr", description : "passionné de photographie", role : "lecture", motDePasse : "Azerty123"},
+          data: {
+            nom : "Dupond",
+            prenom : "François",
+            email : "françois.dupond@lesbriquesrouges.fr",
+            description : "passionné de photographie",
+            role : "lecture",
+            motDePasse : "Azerty123",
+          },
           success: (res) => console.log(res),
       });
       ```
@@ -586,28 +608,47 @@ Il y est également possible de :
       $.ajax({
           type: "POST",
           url: "back/account/updateAccount.php",
-          data: {email : "no-reply@lesbriquesrouges", champ : "nom", valeur : "Dupond"},
+          data: {
+              email : "no-reply@lesbriquesrouges",
+              champ : "nom",
+              valeur : "Dupond",
+          },
           success: (res) => console.log(res),
       });
       ```
 
   - [`deleteAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/deleteAccount.php)
     - Permet de suspendre un compte utilisateur. Le fichier récupère l'email du compte à suspendre dont le nom de la variable est `"emailSuppr"` ainsi que le mot de passe du compte admin qui supprime le compte dont le nom de la variable est `"mdpCompte"`.
-    - Retourne `"Succes"` en cas de réussite.
-    - Retourne `"echec mdp"` si le mot de passe du compte admin est incorrect.
-  - Exemple d'utilisation :
+    - Le fichier peut retourner plusieurs réponse possible :
+      - Retourne `"Succes"` en cas de réussite.
+      - Retourne `"echec mdp"` si le mot de passe du compte admin est incorrect.
+    - Exemple d'utilisation :
 
       ```js
       $.ajax({
           type: "POST",
           url: "back/account/deleteAccount.php",
-          data: {emailSuppr : "no-reply@lesbriquesrouges.fr", mdpCompte : "Azerty123"},
+          data: { emailSuppr : "no-reply@lesbriquesrouges.fr", mdpCompte : "Azerty123" },
           success: (res) => console.log(res),
       });
       ```
+
+  - [`getAccounts.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/getAccounts.php)
+    - Retourne la liste de tous les comptes existants avec toutes les informations si l'utilisateur est admin, sinon ça ne retourne que leur ID, nom et prénom.
+    - Exemple d'utilisation :
+
+      ```js
+      $.ajax({
+          type: "GET",
+          url: "back/account/getAccounts.php",
+          success: (res) => console.log(JSON.parse(res)),
+      });
+      ```
+
 - ### Dossier `back/mail`
+
   Dans ce dossier, on retrouve les différents mails utilisés.
-  -  [`mailer.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/mail/mailer.php)
-     - Ce mail est utilisé lors d'une demande de réinitialisation de mot de passe.
+  - [`mailer.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/mail/mailer.php)
+    - Ce mail est utilisé lors d'une demande de réinitialisation de mot de passe.
   - [`mailerInscription.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/mail/mailerInscription.php)
     - Ce mail est utilisé lors d'une création d'un compte avec un mot de passe temporaire.
