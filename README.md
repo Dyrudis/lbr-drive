@@ -491,7 +491,7 @@ Il y est également possible de :
         ```
 
   - [`logOut.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/logOut.php)
-    - Lorsque le fichier est exécuté, les variables de session `"id"` et `"role"` sont détruites.
+    - Lorsque le fichier est exécuté, les variables de session `id` et `role` sont détruites.
     - Puis relocalise l'utilisateur sur la page login.
 
   - [`setPassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/setPassword.php)
@@ -529,7 +529,7 @@ Il y est également possible de :
       ```
 
   - [`updatePassword.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updatePassword.php)
-    - Permet de modifier le mot de passe de l'utilisateur. Le fichier récupère l'ancien mot de passe dont le nom de la variable est `"ancienMdp"` et le nouveau mot de passe dont le nom de la variable est `"nouveauMdp"`.
+    - Permet de modifier le mot de passe de l'utilisateur. Le fichier récupère l'ancien mot de passe dont le nom de la variable est `ancienMdp` et le nouveau mot de passe dont le nom de la variable est `nouveauMdp`.
     - Le fichier peut retourner plusieurs réponse possible :
       - Retourne `"Succes"` en cas de modification.
       - Retourne `"Echec"`en cas d'échec.
@@ -545,7 +545,7 @@ Il y est également possible de :
       ```
 
   - [`updateDarkMode.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateDarkMode.php)
-    - Lorsque le fichier est exécuté, la variable de session `"DarkMode"` change de valeur (soit `true` soit `false`).
+    - Lorsque le fichier est exécuté, la variable de session `DarkMode` change de valeur (soit `true` soit `false`).
 
   - [`updateAvatar.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateAvatar.php)
     - Ajoute le chunk (une partie de l'avatar) envoyé dans le dossier `avatars/chunks`. Si tous les chunks ont été envoyés, l'avatar est fusionné et déplacé dans le dossier `avatars` :
@@ -572,7 +572,7 @@ Il y est également possible de :
       ```
 
   - [`signUp.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/signUp.php)
-    - Crée un utilisateur dont le nom est `"nom"`, prenom est `"prenom"`, email est `"email"`, description est `"description"`, role est `"role"`. Si le compte créé est un compte invité alors un tableau de tags autorisés lui est attribué dont le nom de variable est `"tags"` et si la création de compte est créé sans mot de passe temporaire alors le mot de passe est récupéré dont le nom est `"motDePasse"`.
+    - Crée un utilisateur dont le nom est `nom`, prenom est `prenom`, email est `email`, description est `description`, role est `role`. Si le compte créé est un compte invité alors un tableau de tags autorisés lui est attribué dont le nom de variable est `tags` et si la création de compte est créé sans mot de passe temporaire alors le mot de passe est récupéré dont le nom est `motDePasse`.
     - Le fichier peut retourner plusieurs réponse possible :
       - Retourne `"compte invité créé"` s'il sagit d'un compte invité.
       - Retourne `"Email envoyé avec succès"` si le compte avec un mot de passe temporaire est bien créé.
@@ -596,7 +596,7 @@ Il y est également possible de :
       ```
 
   - [`updateAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/updateAccount.php)
-    - Permet de modifier un champ d'un compte utilisateur. le fichier récupère le compte utilisateur via son eamil dont le nom est `"Email"`, le champ dont le nom est `"champ"` ainsi que ça valeur dont le nom est `"valeur"`. Le fichier permet aussi de modifier l'ensemble des tags autorisé d'un compte invité, les tags sont représentés par un tableau qui comporte les différents id des tags.
+    - Permet de modifier un champ d'un compte utilisateur. le fichier récupère le compte utilisateur via son eamil dont le nom est `Email`, le champ dont le nom est `champ` ainsi que ça valeur dont le nom est `valeur`. Le fichier permet aussi de modifier l'ensemble des tags autorisé d'un compte invité, les tags sont représentés par un tableau qui comporte les différents id des tags.
     - Le fichier peut retourner plusieurs réponse possible :
       - Retourne `"succes invite"` si la modification des tags autorisés a réussi
       - Retourne `"echec invite"` si la modification des tags autorisés a échoué
@@ -618,7 +618,7 @@ Il y est également possible de :
       ```
 
   - [`deleteAccount.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/deleteAccount.php)
-    - Permet de suspendre un compte utilisateur. Le fichier récupère l'email du compte à suspendre dont le nom de la variable est `"emailSuppr"` ainsi que le mot de passe du compte admin qui supprime le compte dont le nom de la variable est `"mdpCompte"`.
+    - Permet de suspendre un compte utilisateur. Le fichier récupère l'email du compte à suspendre dont le nom de la variable est `emailSuppr` ainsi que le mot de passe du compte admin qui supprime le compte dont le nom de la variable est `mdpCompte`.
     - Le fichier peut retourner plusieurs réponse possible :
       - Retourne `"Succes"` en cas de réussite.
       - Retourne `"echec mdp"` si le mot de passe du compte admin est incorrect.
@@ -634,7 +634,7 @@ Il y est également possible de :
       ```
 
   - [`getAccounts.php`](https://github.com/Dyrudis/lbr-drive/blob/main/back/account/getAccounts.php)
-    - Retourne la liste de tous les comptes existants avec toutes les informations si l'utilisateur est admin, sinon ça ne retourne que leur ID, nom et prénom.
+    - Retourne la liste de tous les comptes existants avec toutes les informations si l'utilisateur est admin et que la variable `filter` vaut false. Sinon le fichier retourne la liste des id, nom et prenom des utilisateurs qui ont upload au moins un fichier.
     - Exemple d'utilisation :
 
       ```js
