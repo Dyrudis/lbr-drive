@@ -38,7 +38,7 @@ request.onload = function () {
     });
 };
 var allAccount = [];
-var divInfoCompte = document.getElementById('infoCompte');
+var divInfoCompte = document.getElementById("infoCompte");
 $.ajax({
     type: "POST",
     url: "back/account/getAccounts.php",
@@ -46,43 +46,48 @@ $.ajax({
     success: (data) => {
         console.log(JSON.parse(data));
         allAccount = JSON.parse(data);
-        allAccount.forEach(i => console.log(i));
-        var body = document.getElementById('infoCompte');
+        allAccount.forEach((i) => console.log(i));
+        var body = document.getElementById("infoCompte");
 
         // creates a <table> element and a <tbody> element
         var tbl = document.createElement("table");
         tbl.id = "tabInfoCompte";
+        var tblHead = document.createElement("thead");
         var tblBody = document.createElement("tbody");
-        row = document.createElement("tr"); 
-            ["Nom","Prenom","Email","Description","Actif"].forEach(field =>{
-                cell = document.createElement("td");
-                cellText = document.createTextNode([field]);
-                cell.appendChild(cellText);  
-                row.appendChild(cell);
-            })
-            // add the row to the end of the table body
-            tblBody.appendChild(row);
+        row = document.createElement("tr");
+        ["Nom", "Prenom", "Email", "Description", "Actif"].forEach((field, index) => {
+            cell = document.createElement("th");
+            cell.addEventListener("click", () => {
+                sortTable(index);
+            });
+            cellText = document.createTextNode([field]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        });
+        // add the row to the head of the table
+        tblHead.appendChild(row);
         // creating all cells
         for (let i = 0; i < allAccount.length; i++) {
             // creates a table row
-            row = document.createElement("tr"); 
-            ["Nom","Prenom","Email","Description","Actif"].forEach(field =>{
+            row = document.createElement("tr");
+            ["Nom", "Prenom", "Email", "Description", "Actif"].forEach((field) => {
                 cell = document.createElement("td");
                 cellText = document.createTextNode(allAccount[i][field]);
-                cell.appendChild(cellText);  
+                cell.appendChild(cellText);
                 row.appendChild(cell);
-            })
+            });
             // add the row to the end of the table body
             tblBody.appendChild(row);
         }
 
+        // put the <thead> in the <table>
+        tbl.appendChild(tblHead);
         // put the <tbody> in the <table>
         tbl.appendChild(tblBody);
         // appends <table> into <body>
         body.appendChild(tbl);
         // sets the border attribute of tbl to 2;
         tbl.setAttribute("border", "2");
-        
     },
 });
 
@@ -120,12 +125,9 @@ function checkMdp() {
 
 function tagVisible() {
     if (document.getElementById("selectModifRole").value == "invite") {
-
         document.getElementById("tagInvite").style.display = "flex";
-
     } else {
         document.getElementById("tagInvite").style.display = "none";
-
     }
 }
 
@@ -175,8 +177,7 @@ function modifTagInvite() {
         document.getElementById("labelNouvelleValeur").style.display = "none";
         document.getElementById("tagInvite2").style.display = "none";
         document.getElementById("selectModifRole").style.display = "flex";
-    }else{
-        
+    } else {
         document.getElementById("nouvelleValeur").style.display = "flex";
         document.getElementById("labelNouvelleValeur").style.display = "flex";
         document.getElementById("tagInvite2").style.display = "none";
@@ -213,11 +214,9 @@ function submitModifCompte() {
                 document.getElementById("labelNouvelleValeur").style.display = "flex";
                 document.getElementById("tagInvite2").style.display = "none";
                 document.getElementById("selectModifRole").style.display = "none";
-                
             },
         });
-    }
-    else{
+    } else {
         alert.create({
             content: "l'un des champs n'est pas respecté",
             type: "error",
@@ -248,5 +247,68 @@ function submitInfoCompte() {
             content: "L'un des champs n'est pas valide",
             type: "error",
         });
+    }
+}
+
+function sortTable(n) {
+    var table,
+        rows,
+        switching,
+        i,
+        x,
+        y,
+        shouldSwitch,
+        dir,
+        switchcount = 0;
+    table = document.getElementById("tabInfoCompte");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+        // Start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /* Loop through all table rows (except the
+      first, which contains table headers): */
+        for (i = 1; i < rows.length - 1; i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount++;
+        } else {
+            /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
     }
 }

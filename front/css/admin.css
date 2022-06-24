@@ -67,7 +67,7 @@ hr {
 }
 
 select {
-  background-color: rgba(5, 99, 195, .6);
+    background-color: rgba(5, 99, 195, 0.6);
     color: white;
     padding: 6px;
     width: auto;
@@ -327,13 +327,13 @@ input.submit {
     padding: 5px 15px 10px 15px;
 }
 
-#tagInvite2, #selectModifRole {
+#tagInvite2,
+#selectModifRole {
     display: none;
     flex-wrap: wrap;
     margin-top: 10px;
     gap: 12px;
 }
-
 
 .tag {
     background-color: rgb(118, 118, 118);
@@ -385,13 +385,37 @@ input.submit {
     height: 200%;
 }
 
-#infoCompte{
-    height: 500px;
-    width: 94%;
-    margin-left: 3%;
-    background-color: red;
+#infoCompte {
+    width: 90%;
+    max-width: 1550px;
+    margin: 0 auto 50px auto;
 }
 
-#tabInfoCompte{
-    background-color: green;
+#tabInfoCompte {
+    width: 100%;
+    border-collapse: collapse;
+    border-width: 2px;
+    border-color: var(--colorBox);
+    border-style: solid;
+    color: var(--colorText);
+}
+
+#tabInfoCompte th {
+    border-width: 2px;
+    border-color: var(--colorBox);
+    border-style: solid;
+    padding: 5px;
+    background-color: var(--colorBox);
+    cursor: pointer;
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+#tabInfoCompte th:hover {
+    filter: brightness(0.95);
+}
+#tabInfoCompte td {
+    border-width: 2px;
+    border-color: var(--colorBox);
+    border-style: solid;
+    padding: 5px;
 }
