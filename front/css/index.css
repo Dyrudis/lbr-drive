@@ -364,6 +364,7 @@ body {
     gap: 5px;
     padding: 0 0 4px 0;
     overflow-x: scroll;
+    overflow-y: hidden;
     margin-bottom: 5px;
     height: 42px;
 }
