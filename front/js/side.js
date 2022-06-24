@@ -4,6 +4,27 @@
     let tagFilter = "Intersection";
     let typeFilter = "tout-type";
     let trashToggle = false;
+    // Get all the users
+    var allAccount = [];
+    $.ajax({
+        type: "POST",
+        url: "back/account/getAccounts.php",
+        data: {filter : true},
+        success: (data) => {
+            console.log(data);
+            allAccount = JSON.parse(data);
+            let selectAccount = $("#select-utilisateur");
+            allAccount.forEach(info =>{
+                selectAccount.append($("<option />").attr("value",info.IDUtilisateur).text(info.Nom + " " + info.Prenom))
+            })
+            selectAccount.change(() =>{
+                myFilesToggler.classList.remove("active");
+                userToggle = false;
+                sendFormData();
+            })
+            
+        },
+    });
 
     var request = new XMLHttpRequest();
     request.open("get", "back/tag/getTags.php", true);
@@ -76,6 +97,7 @@
     myFilesToggler.addEventListener("click", function () {
         //Si recherche par fichiers possédés non-actif -> activer
         if (!myFilesToggler.classList.contains("active")) {
+            $("#select-utilisateur").val("");
             myFilesToggler.classList.add("active");
             userToggle = true;
         }
@@ -156,12 +178,19 @@
     //Fonction qui selon les variables globales fait la requete souhaitée
     function sendFormData() {
         let formData = new FormData();
+        let selectUser = document.getElementById("select-utilisateur").value;
 
         //Ajout des tags dans le formulaire
         if (tagTab.length > 0) formData.append("tags", JSON.stringify(tagTab));
 
         //Defini si la recherche concerne seulement les fichiers possédés
-        if (userToggle) formData.append("user", "true");
+        if(selectUser==""){
+            if (userToggle) formData.append("user", -1);
+        }
+        else{
+            formData.append("user", selectUser);
+        }
+        
 
         //Defini le type de recherche de tags
         if (tagFilter == "Union") formData.append("typeTriTag", "Union");

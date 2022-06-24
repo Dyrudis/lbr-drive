@@ -68,6 +68,9 @@ if (!isset($_SESSION['darkMode'])) {
                 </div>
                 <h1 class="barre-title">Fonctions de tri</h1>
                 <div id="tri-primaire">
+                    <select class="pre-tri" id="select-utilisateur">
+                        <option value="" default>Tous les utilisateurs</option>
+                    </select>
                     <div class="pre-tri" id="toggle-mes-fichiers">
                         <p>Mes fichiers</p>
                     </div>

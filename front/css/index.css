@@ -150,6 +150,13 @@ body {
     justify-content: space-evenly;
 }
 
+#select-utilisateur{
+    grid-column: 1/3;
+    width: 275px;
+    outline: none;
+    border: none;
+}
+
 .active {
     background-color: rgb(17, 150, 208) !important;
 }

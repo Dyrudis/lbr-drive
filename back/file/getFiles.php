@@ -29,7 +29,13 @@ if (isset($_POST['tags'])) {
 if (isset($_POST['user'])) {
     $user = "AND fichier.IDUtilisateur = ? ";
     $typeToBind .= "i";
-    $argsToBind[] = $id;
+    if($_POST['user']==-1){
+        $argsToBind[] = $id;
+    }
+    else{
+        $argsToBind[] = $_POST['user'];
+    }
+    
 }
 
 //Get incoming string from post

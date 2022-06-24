@@ -3,16 +3,25 @@ include("../database.php");
 session_start();
 
 $id = $_SESSION['id'];
-
-//vérification des droits 
-$authorized = ['admin'];
-if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $authorized)) {
-    die("Vous n'avez pas les droits pour suspendre un compte");
+$role = $_SESSION['role'];
+if(isset($_POST['filter'])){
+    $filter = $_POST['filter'];
 }
+else{
+    $filter = false;
+}
+    
 
 
 try{
-    $result = query("SELECT * FROM utilisateur");
+    if($filter== true){
+        $result = query("SELECT utilisateur.IDUtilisateur,utilisateur.Nom,Prenom FROM utilisateur,fichier WHERE fichier.IDUtilisateur = utilisateur.IDUtilisateur 
+            AND utilisateur.IDUtilisateur != ? GROUP BY fichier.IDUtilisateur ","i",$id);
+    }
+    else if($role == 'admin'){
+        $result = query("SELECT IDUtilisateur,Nom,Prenom,Email,Role,Description,Actif FROM utilisateur");
+        
+    }
     echo json_encode($result);
 
 } catch(Exception $e){
