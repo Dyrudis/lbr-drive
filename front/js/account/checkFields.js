@@ -44,9 +44,7 @@ $.ajax({
     url: "back/account/getAccounts.php",
     data: {},
     success: (data) => {
-        console.log(JSON.parse(data));
         allAccount = JSON.parse(data);
-        allAccount.forEach((i) => console.log(i));
         var body = document.getElementById("infoCompte");
 
         // creates a <table> element and a <tbody> element
@@ -55,7 +53,7 @@ $.ajax({
         var tblHead = document.createElement("thead");
         var tblBody = document.createElement("tbody");
         row = document.createElement("tr");
-        ["Nom", "Prenom", "Email", "Description", "Actif"].forEach((field, index) => {
+        ["Nom", "Prenom", "Email", "Description", "Role", "Etat"].forEach((field, index) => {
             cell = document.createElement("th");
             cell.addEventListener("click", () => {
                 sortTable(index);
@@ -68,9 +66,23 @@ $.ajax({
         tblHead.appendChild(row);
         // creating all cells
         for (let i = 0; i < allAccount.length; i++) {
+            if (allAccount[i]["Role"] == "admin") {
+                allAccount[i]["Role"] = "Administrateur";
+            } else if (allAccount[i]["Role"] == "ecriture") {
+                allAccount[i]["Role"] = "Ecriture";
+            } else if (allAccount[i]["Role"] == "invite") {
+                allAccount[i]["Role"] = "Invité";
+            } else if (allAccount[i]["Role"] == "lecture") {
+                allAccount[i]["Role"] = "Lecture";
+            }
+            if (allAccount[i]["Actif"] == 1 || allAccount[i]["Actif"] == 2) {
+                allAccount[i]["Actif"] = "Actif";
+            } else if (allAccount[i]["Actif"] == 0) {
+                allAccount[i]["Actif"] = "Supendu";
+            }
             // creates a table row
             row = document.createElement("tr");
-            ["Nom", "Prenom", "Email", "Description", "Actif"].forEach((field) => {
+            ["Nom", "Prenom", "Email", "Description", "Role", "Actif"].forEach((field) => {
                 cell = document.createElement("td");
                 cellText = document.createTextNode(allAccount[i][field]);
                 cell.appendChild(cellText);
