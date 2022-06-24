@@ -133,6 +133,9 @@ if ($role != 'admin') {
 
         </form>
     </div>
+    <div id="infoCompte">
+        <h2>Info sur les comptes :</h2>
+    </div>
 </body>
 
 </html>

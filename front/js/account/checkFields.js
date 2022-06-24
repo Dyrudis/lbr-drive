@@ -37,6 +37,54 @@ request.onload = function () {
         selectTag.val("");
     });
 };
+var allAccount = [];
+var divInfoCompte = document.getElementById('infoCompte');
+$.ajax({
+    type: "POST",
+    url: "back/account/getAccounts.php",
+    data: {},
+    success: (data) => {
+        console.log(JSON.parse(data));
+        allAccount = JSON.parse(data);
+        allAccount.forEach(i => console.log(i));
+        var body = document.getElementById('infoCompte');
+
+        // creates a <table> element and a <tbody> element
+        var tbl = document.createElement("table");
+        tbl.id = "tabInfoCompte";
+        var tblBody = document.createElement("tbody");
+        row = document.createElement("tr"); 
+            ["Nom","Prenom","Email","Description","Actif"].forEach(field =>{
+                cell = document.createElement("td");
+                cellText = document.createTextNode([field]);
+                cell.appendChild(cellText);  
+                row.appendChild(cell);
+            })
+            // add the row to the end of the table body
+            tblBody.appendChild(row);
+        // creating all cells
+        for (let i = 0; i < allAccount.length; i++) {
+            // creates a table row
+            row = document.createElement("tr"); 
+            ["Nom","Prenom","Email","Description","Actif"].forEach(field =>{
+                cell = document.createElement("td");
+                cellText = document.createTextNode(allAccount[i][field]);
+                cell.appendChild(cellText);  
+                row.appendChild(cell);
+            })
+            // add the row to the end of the table body
+            tblBody.appendChild(row);
+        }
+
+        // put the <tbody> in the <table>
+        tbl.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tbl);
+        // sets the border attribute of tbl to 2;
+        tbl.setAttribute("border", "2");
+        
+    },
+});
 
 function checkMdpTemporaire() {
     const checkBox = document.getElementById("mdpTemporaire").checked;

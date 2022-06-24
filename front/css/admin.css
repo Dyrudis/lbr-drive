@@ -384,3 +384,14 @@ input.submit {
 .wrapperscroll {
     height: 200%;
 }
+
+#infoCompte{
+    height: 500px;
+    width: 94%;
+    margin-left: 3%;
+    background-color: red;
+}
+
+#tabInfoCompte{
+    background-color: green;
+}
