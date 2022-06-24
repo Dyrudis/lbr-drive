@@ -38,6 +38,8 @@ request.onload = function () {
         selectTag.val("");
     });
 };
+
+//recupérer tous les utilisateurs
 var allAccount = [];
 var divInfoCompte = document.getElementById("infoCompte");
 $.ajax({
