@@ -11,7 +11,6 @@
         url: "back/account/getAccounts.php",
         data: {filter : true},
         success: (data) => {
-            console.log(data);
             allAccount = JSON.parse(data);
             let selectAccount = $("#select-utilisateur");
             allAccount.forEach(info =>{
@@ -118,9 +117,16 @@
             triTagToggler.innerText = "Union";
             tagFilter = "Union";
         }
-        //Si recherche par union actif -> switch intersection
-        else {
+        //Si recherche par union actif -> switch inversé
+        else if (triTagToggler.classList.contains("Union")) {
             triTagToggler.classList.remove("Union");
+            triTagToggler.classList.add("Inversé");
+            triTagToggler.innerText = "Inversé";
+            tagFilter = "Inversé";
+        }
+        //Si recherche par reverse actif -> switch intersection
+        else {
+            triTagToggler.classList.remove("Inversé");
             triTagToggler.classList.add("Intersection");
             triTagToggler.innerText = "Intersection";
             tagFilter = "Intersection";
@@ -190,10 +196,12 @@
         else{
             formData.append("user", selectUser);
         }
-        
+
 
         //Defini le type de recherche de tags
         if (tagFilter == "Union") formData.append("typeTriTag", "Union");
+        else if (tagFilter == "Intersection") formData.append("typeTriTag", "Intersection");
+        else formData.append("typeTriTag", "Reverse");
 
         //Defini le type de fichier recherché
         if (typeFilter == "tout-type") formData.append("fileType", "tout-type");

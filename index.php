@@ -70,17 +70,17 @@ if (!isset($_SESSION['darkMode'])) {
                     <select class="pre-tri" id="select-utilisateur">
                         <option value="" default>Tous les utilisateurs</option>
                     </select>
-                    <div class="pre-tri" id="toggle-mes-fichiers">
-                        <p>Mes fichiers</p>
-                    </div>
-                    <div class="pre-tri Corbeille" id="toggle-corbeille">
-                        <p>Corbeille</p>
-                    </div>
                     <div class="pre-tri tout-type" id="toggle-type-fichier">
                         <p>Image / Vidéo</p>
                     </div>
                     <div class="pre-tri Intersection" id="toggle-type-tri-tag">
                         <p>Intersection</p>
+                    </div>
+                    <div class="pre-tri" id="toggle-mes-fichiers">
+                        <p>Mes fichiers</p>
+                    </div>
+                    <div class="pre-tri" id="toggle-corbeille">
+                        <p>Corbeille</p>
                     </div>
                 </div>
 

@@ -311,7 +311,6 @@ function daysUntil30Days(date) {
     let dateToday = new Date();
     let dateAfter30Days = new Date(new Date(date).getTime() + 30 * 24 * 60 * 60 * 1000);
     let diff = dateAfter30Days.getTime() - dateToday.getTime();
-    console.log(dateToday.getDate() + "   " + new Date("2020-06-10").getDate());
     return Math.round(diff / (1000 * 60 * 60 * 24)) + " jour(s) avant suppression !";
 }
 

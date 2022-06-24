@@ -55,7 +55,7 @@ $role = $result[0]["Role"];
                     echo "<p class='tag undraggable' id='role-compte'>" . $role . "</p>";
                     ?>
                 </div>
-                <p>Modifiez votre photo et vos données personnelles</p>
+                <p>Vous pouvez modifier votre avatar et votre mot de passe.</p>
             </div>
 
         </div>

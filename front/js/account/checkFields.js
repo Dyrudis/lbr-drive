@@ -8,7 +8,6 @@ var request = new XMLHttpRequest();
 request.open("get", "back/tag/getTags.php", true);
 request.send();
 request.onload = function () {
-    console.log(JSON.parse(this.responseText));
 
     let tags = JSON.parse(this.responseText);
     tags.forEach(function (tag) {
@@ -34,7 +33,6 @@ request.onload = function () {
             allTag.push(tagID);
             selectTag.before(newTag);
         }
-        console.log(allTag);
         selectTag.val("");
     });
 };
@@ -168,7 +166,6 @@ function modifTagInvite() {
         request.open("get", "back/tag/getTags.php", true);
         request.send();
         request.onload = function () {
-            console.log(JSON.parse(this.responseText));
 
             let tags2 = JSON.parse(this.responseText);
             tags2.forEach(function (tag) {
@@ -194,7 +191,6 @@ function modifTagInvite() {
                     allTag2.push(tagID2);
                     selectTag2.before(newTag2);
                 }
-                console.log(allTag2);
                 selectTag2.val("");
             });
         };
@@ -218,7 +214,6 @@ function submitModifCompte() {
             url: "back/account/updateAccount.php",
             data: { email: document.getElementById("emailModifCompte").value, champ: document.getElementById("selectChamp").value, nouveauRole: document.getElementById("addRole").value, valeur: document.getElementById("nouvelleValeur").value, tags: JSON.stringify(allTag2) },
             success: (data) => {
-                console.log(data);
                 if (data == "Succes") {
                     alert.create({
                         content: "Compte modifié",

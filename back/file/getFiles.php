@@ -10,7 +10,7 @@ $tab = [];
 //string pour requete seulement fichiers à soi
 $user = "";
 //bool qui retient quel type de tri de tag effectuer (true = intersection)
-$tri = true;
+$tri = "Intersection";
 //string qui retient quel type de fichier à afficher (image, video, les deux)
 $type = "";
 //string qui retient si on affiche la corbeille ou non
@@ -40,7 +40,8 @@ if (isset($_POST['user'])) {
 
 //Get incoming string from post
 if (isset($_POST['typeTriTag'])) {
-    $tri = false;
+    //$tri = false;
+    $tri = $_POST['typeTriTag'];
 }
 
 //Get incoming bool from post
@@ -114,7 +115,7 @@ try {
 $filteredResult = [];
 
 //Recherche de type INTERSECTION
-if ($tri || !$tab) {
+if ($tri == "Intersection" || !$tab) {
     //Filters and returns only rows containing AT LEAST the researched tags
 
     foreach ($result as $row) {
@@ -128,13 +129,26 @@ if ($tri || !$tab) {
 }
 
 //Recherche de type UNION
-else {
+else if ($tri == "Union") {
 
     foreach ($result as $row) {
         $tags = explode(',', $row['IDTags']);
         $tags = array_map('intval', $tags);
 
         if (array_intersect($tags, $tab)) {
+            $filteredResult[] = $row;
+        }
+    }
+}
+
+//Recherche par reverse
+else {
+
+    foreach ($result as $row) {
+        $tags = explode(',', $row['IDTags']);
+        $tags = array_map('intval', $tags);
+
+        if (!array_intersect($tags, $tab)) {
             $filteredResult[] = $row;
         }
     }

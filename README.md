@@ -71,11 +71,13 @@ On y retrouve deux parties :
 
     - Le tri par *Type de fichier*, par défaut sur Image / Vidéo, permet l'affichage des Images et/ou Vidéos.
 
-    - Le *Type de filtrage par tag*, par défaut sur Intersection, qui modifiera le comportement du tri par tags en alternant entre Intersection et Union :
+    - Le *Type de filtrage par tag*, par défaut sur Intersection, qui modifiera le comportement du tri par tags en alternant entre Intersection, Union et Inversé :
 
       - Le mode Intersection cherchera à afficher les fichiers comportant au moins tous les tags sélectionnés (Il faut que soit associé à chaque fichier le tag *a* ET *b* etc.).
 
       - Le mode Union, lui, autorisera l'apparition de tout fichier ayant au moins un des tags du tri par tag (Il faut que soit associé à chaque fichier le tag *a* OU *b* etc.).  
+
+      - Le mode Inversé, pour finir, cherchera des fichiers qui ne possèdent pas les tags sélectionnés.  
 
   - Le **Tri par tags**, filtrant l'affichage des fichiers selon une sélection de tags appartenant à des catégories :
 
@@ -253,7 +255,7 @@ Il y est également possible de :
     - Permet de récupérer la liste des fichiers qui correspondent aux critères de selections envoyés en paramètre :
       - `user` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui appartiennent à la personne qui fait la requête.
       - `tags` : un tableau d'id de tags pour trier les fichiers retournés.
-      - `typeTriTag` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui possèdent tous les tags présents dans le tableau `tags` (intersection). Sinon, tous les fichiers qui possèdent au moins l'un des tags présents dans le tableau `tags` seront retournés (union).
+      - `typeTriTag` : une string qui, lorsqu'elle vaut `Intersection`, permet de ne retourner que les fichiers qui possèdent tous les tags présents dans le tableau `tags`. Si sa valeur est `Union`, tous les fichiers qui possèdent au moins l'un des tags présents dans le tableau `tags` seront retournés. Finalement, si elle vaut `Inversé`, elle renverra tout fichier qui ne possède pas les tags sélectionnés.
       - `corbeille` : un booléen qui, lorsqu'il vaut `true`, permet de ne retourner que les fichiers qui sont dans la corbeille.
       - `fileType` : une chaine de caractères qui permet de ne retourner que les fichiers qui sont du type demandé ("image", "video", sinon les deux).
     - Retourne la liste des fichiers qui correspondent aux critères de selections sous forme de chaine de caractères JSON.

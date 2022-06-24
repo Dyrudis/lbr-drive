@@ -145,7 +145,6 @@ function addFile(file) {
         });
         preview.on("timeupdate", function () {
             updateTimestamp(this.currentTime, file);
-            console.log(upload);
         });
     }
     let text = $("<div />").addClass("text");
