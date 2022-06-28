@@ -66,7 +66,7 @@ try{
         echo"Succes"; 
 
         // INSERT LOG
-        if($champ != "Email") registerNewLog($mysqli, $_SESSION['id'], "Modification de l'adresse email de l'utilisateur " . $email . " pour : " . $valeur);
+        if($champ == "Email") registerNewLog($mysqli, $_SESSION['id'], "Modification de l'adresse email de l'utilisateur " . $email . " pour : " . $valeur);
         else registerNewLog($mysqli, $_SESSION['id'], "Modification du champ : " . $champ . " pour l'utilisateur : " . $email);
     }
 } catch (Exception $e) {
