@@ -86,7 +86,7 @@ try {
     FROM classifier, fichier, utilisateur, tag, categorie
     WHERE fichier.IDFichier = classifier.IDFichier AND fichier.IDUtilisateur = utilisateur.IDUtilisateur AND classifier.IDTag = tag.IDTag AND tag.IDCategorie = categorie.IDCategorie " . $user . $type . $corbeille .
         "GROUP BY fichier.IDFichier
-        ORDER BY fichier.Date";
+        ORDER BY fichier.Date DESC";
 
     $result = query($sql, $typeToBind, ...$argsToBind);
 
